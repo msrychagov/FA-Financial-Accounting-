@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		F58A8D3A2DF8721C005986FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F58A8D1C2DF8721A005986FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F58A8D232DF8721A005986FC;
+			remoteInfo = "FA (Financial Accounting)";
+		};
+		F58A8D442DF8721C005986FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F58A8D1C2DF8721A005986FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F58A8D232DF8721A005986FC;
+			remoteInfo = "FA (Financial Accounting)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F58A8D242DF8721A005986FC /* FA (Financial Accounting).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FA (Financial Accounting).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F58A8D392DF8721C005986FC /* FA (Financial Accounting)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F58A8D432DF8721C005986FC /* FA (Financial Accounting)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F58A8D262DF8721A005986FC /* FA (Financial Accounting) */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "FA (Financial Accounting)";
+			sourceTree = "<group>";
+		};
+		F58A8D3C2DF8721C005986FC /* FA (Financial Accounting)Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "FA (Financial Accounting)Tests";
+			sourceTree = "<group>";
+		};
+		F58A8D462DF8721C005986FC /* FA (Financial Accounting)UITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "FA (Financial Accounting)UITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F58A8D212DF8721A005986FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D362DF8721C005986FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D402DF8721C005986FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F58A8D1B2DF8721A005986FC = {
+			isa = PBXGroup;
+			children = (
+				F58A8D262DF8721A005986FC /* FA (Financial Accounting) */,
+				F58A8D3C2DF8721C005986FC /* FA (Financial Accounting)Tests */,
+				F58A8D462DF8721C005986FC /* FA (Financial Accounting)UITests */,
+				F58A8D252DF8721A005986FC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F58A8D252DF8721A005986FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F58A8D242DF8721A005986FC /* FA (Financial Accounting).app */,
+				F58A8D392DF8721C005986FC /* FA (Financial Accounting)Tests.xctest */,
+				F58A8D432DF8721C005986FC /* FA (Financial Accounting)UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F58A8D232DF8721A005986FC /* FA (Financial Accounting) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F58A8D4D2DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)" */;
+			buildPhases = (
+				F58A8D202DF8721A005986FC /* Sources */,
+				F58A8D212DF8721A005986FC /* Frameworks */,
+				F58A8D222DF8721A005986FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F58A8D262DF8721A005986FC /* FA (Financial Accounting) */,
+			);
+			name = "FA (Financial Accounting)";
+			packageProductDependencies = (
+			);
+			productName = "FA (Financial Accounting)";
+			productReference = F58A8D242DF8721A005986FC /* FA (Financial Accounting).app */;
+			productType = "com.apple.product-type.application";
+		};
+		F58A8D382DF8721C005986FC /* FA (Financial Accounting)Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F58A8D502DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)Tests" */;
+			buildPhases = (
+				F58A8D352DF8721C005986FC /* Sources */,
+				F58A8D362DF8721C005986FC /* Frameworks */,
+				F58A8D372DF8721C005986FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F58A8D3B2DF8721C005986FC /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F58A8D3C2DF8721C005986FC /* FA (Financial Accounting)Tests */,
+			);
+			name = "FA (Financial Accounting)Tests";
+			packageProductDependencies = (
+			);
+			productName = "FA (Financial Accounting)Tests";
+			productReference = F58A8D392DF8721C005986FC /* FA (Financial Accounting)Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F58A8D422DF8721C005986FC /* FA (Financial Accounting)UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F58A8D532DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)UITests" */;
+			buildPhases = (
+				F58A8D3F2DF8721C005986FC /* Sources */,
+				F58A8D402DF8721C005986FC /* Frameworks */,
+				F58A8D412DF8721C005986FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F58A8D452DF8721C005986FC /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F58A8D462DF8721C005986FC /* FA (Financial Accounting)UITests */,
+			);
+			name = "FA (Financial Accounting)UITests";
+			packageProductDependencies = (
+			);
+			productName = "FA (Financial Accounting)UITests";
+			productReference = F58A8D432DF8721C005986FC /* FA (Financial Accounting)UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F58A8D1C2DF8721A005986FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					F58A8D232DF8721A005986FC = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					F58A8D382DF8721C005986FC = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = F58A8D232DF8721A005986FC;
+					};
+					F58A8D422DF8721C005986FC = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = F58A8D232DF8721A005986FC;
+					};
+				};
+			};
+			buildConfigurationList = F58A8D1F2DF8721A005986FC /* Build configuration list for PBXProject "FA (Financial Accounting)" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F58A8D1B2DF8721A005986FC;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F58A8D252DF8721A005986FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F58A8D232DF8721A005986FC /* FA (Financial Accounting) */,
+				F58A8D382DF8721C005986FC /* FA (Financial Accounting)Tests */,
+				F58A8D422DF8721C005986FC /* FA (Financial Accounting)UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F58A8D222DF8721A005986FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D372DF8721C005986FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D412DF8721C005986FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F58A8D202DF8721A005986FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D352DF8721C005986FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F58A8D3F2DF8721C005986FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F58A8D3B2DF8721C005986FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F58A8D232DF8721A005986FC /* FA (Financial Accounting) */;
+			targetProxy = F58A8D3A2DF8721C005986FC /* PBXContainerItemProxy */;
+		};
+		F58A8D452DF8721C005986FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F58A8D232DF8721A005986FC /* FA (Financial Accounting) */;
+			targetProxy = F58A8D442DF8721C005986FC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F58A8D4B2DF8721C005986FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F58A8D4C2DF8721C005986FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F58A8D4E2DF8721C005986FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FA (Financial Accounting)/Preview Content\"";
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F58A8D4F2DF8721C005986FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"FA (Financial Accounting)/Preview Content\"";
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F58A8D512DF8721C005986FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FA (Financial Accounting).app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FA (Financial Accounting)";
+			};
+			name = Debug;
+		};
+		F58A8D522DF8721C005986FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FA (Financial Accounting).app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FA (Financial Accounting)";
+			};
+			name = Release;
+		};
+		F58A8D542DF8721C005986FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "FA (Financial Accounting)";
+			};
+			name = Debug;
+		};
+		F58A8D552DF8721C005986FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7KVC9GS82W;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "msrychagov.FA--Financial-Accounting-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "FA (Financial Accounting)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F58A8D1F2DF8721A005986FC /* Build configuration list for PBXProject "FA (Financial Accounting)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F58A8D4B2DF8721C005986FC /* Debug */,
+				F58A8D4C2DF8721C005986FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F58A8D4D2DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F58A8D4E2DF8721C005986FC /* Debug */,
+				F58A8D4F2DF8721C005986FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F58A8D502DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F58A8D512DF8721C005986FC /* Debug */,
+				F58A8D522DF8721C005986FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F58A8D532DF8721C005986FC /* Build configuration list for PBXNativeTarget "FA (Financial Accounting)UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F58A8D542DF8721C005986FC /* Debug */,
+				F58A8D552DF8721C005986FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F58A8D1C2DF8721A005986FC /* Project object */;
+}
