@@ -6,8 +6,8 @@
 //
 import Foundation
 
-struct BankAccountDTO: Codable {
-    let id: Int
+struct BankAccount: Equatable {
+    let id: String
     let name: String
     let balance: Decimal
     let currency: String

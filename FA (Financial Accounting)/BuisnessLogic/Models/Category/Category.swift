@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct CategoryDTO: Codable {
-    let id: Int
+struct Category: Equatable {
+    let id: String
     let name: String
     let emoji: String
-    let isIncome: Bool
+    let isIncome: Direction
 }
 
-enum Direction: String {
+enum Direction: String, Equatable {
     case income
     case outcome
 }

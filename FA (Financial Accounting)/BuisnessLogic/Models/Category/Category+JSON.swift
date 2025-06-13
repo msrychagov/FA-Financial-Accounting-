@@ -9,24 +9,16 @@ import Foundation
 import CoreData
 
 extension Category {
-    static func parse(jsonObject: Any, in context: NSManagedObjectContext) -> Category? {
+    static func parse(jsonObject: Any) -> Category? {
         guard let dict = jsonObject as? [String: Any] else { return nil }
         
         guard let emoji = dict["emoji"] as? String,
               let name = dict["name"] as? String,
-              let id = dict["id"] as? Int,
+              let id = dict["id"] as? String,
               let isIncome = dict["isIncome"] as? String
         else { return nil }
-        
-        let request: NSFetchRequest<Category> = Category.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %d", id)
-        let cat = (try? context.fetch(request).first) ?? Category(context: context)
 
-        cat.id = Int64(id)
-        cat.name = name
-        cat.emoji = emoji
-        cat.direction = Direction(rawValue: isIncome)!
-        
+        let cat = Category(id: id, name: name, emoji: emoji, isIncome: Direction(rawValue: isIncome)!)
         
         return cat
               
@@ -37,8 +29,10 @@ extension Category {
             "emoji" : emoji,
             "name" : name,
             "id" : id,
-            "IsIncome" : isIncome
+            "isIncome" : isIncome.rawValue
         ]
         return dict
     }
 }
+
+

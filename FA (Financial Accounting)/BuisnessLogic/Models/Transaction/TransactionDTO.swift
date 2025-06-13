@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct TransactionDTO: Codable {
-    let id: Int
-    let account: BankAccountDTO
-    let category: CategoryDTO
+struct Transaction {
+    let id: String
+    let account: BankAccount
+    let category: Category
     let amount: Decimal
     let transactionDate: Date
     let comment: String
