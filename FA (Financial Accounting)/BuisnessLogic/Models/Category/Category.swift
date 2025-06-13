@@ -8,7 +8,7 @@
 import Foundation
 
 struct Category: Equatable {
-    let id: String
+    let id: Int
     let name: String
     let emoji: String
     let isIncome: Direction

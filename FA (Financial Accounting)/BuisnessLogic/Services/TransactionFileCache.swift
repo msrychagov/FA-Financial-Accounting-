@@ -7,14 +7,14 @@
 import Foundation
 
 final class TransactionFileCache {
-    private(set) var transactions: [String: Transaction] = [:]
+    private(set) var transactions: [Int: Transaction] = [:]
     
     
     func add(_ transaction: Transaction) {
         transactions[transaction.id] = transaction
     }
     
-    func remove(_ id: String) {
+    func remove(_ id: Int) {
         transactions[id] = nil
     }
     
@@ -37,7 +37,7 @@ final class TransactionFileCache {
 }
 
 extension TransactionFileCache {
-    private func getJSONData(from transactions: [String: Transaction]) -> [Any] {
+    private func getJSONData(from transactions: [Int: Transaction]) -> [Any] {
         var result: [Any] = []
         for transaction in transactions.values {
             result.append(transaction.jsonObject)

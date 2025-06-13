@@ -14,7 +14,8 @@ extension Transaction {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         
-        guard let id = dict["id"] as? String,
+        guard let idString = dict["id"] as? String,
+              let id = Int(idString),
               let amountString = dict["amount"] as? String,
               let amount = Decimal(string: amountString),
               let account = BankAccount.parse(jsonObject: dict["account"] ?? [:]),

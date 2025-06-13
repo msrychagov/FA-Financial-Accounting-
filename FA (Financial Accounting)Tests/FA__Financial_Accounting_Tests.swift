@@ -18,9 +18,9 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         fileCache = TransactionFileCache()
         formatter = ISO8601DateFormatter()
         formatter!.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let testCategory = Category(id: "1", name: "Зарплата", emoji: "💰", isIncome: .income)
+        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income)
         testAccount = BankAccount(id: "1", name: "Основной счёт", balance: 1000.00, currency: "RUB")
-        testTransaction = Transaction(id: "1",
+        testTransaction = Transaction(id: 1,
                                       account: testAccount!,
                                       category: testCategory,
                                       amount: 500.00,
@@ -44,7 +44,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         let parsedCategory = Category.parse(jsonObject: categoryJSON)
         XCTAssertNotNil(parsedCategory, "parse(jsonObject:) должен вернуть не-nil для корректных данных")
         
-        XCTAssertEqual(parsedCategory?.id, "1")
+        XCTAssertEqual(parsedCategory?.id, 1)
         XCTAssertEqual(parsedCategory?.name, "Зарплата")
         XCTAssertEqual(parsedCategory?.emoji, "💰")
         XCTAssertEqual(parsedCategory?.isIncome, .income)
@@ -86,9 +86,9 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         ]
         let transaction = Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNotNil(transaction, "Не удалось распарсить транзакцию")
-        XCTAssertEqual(transaction?.id, "1")
+        XCTAssertEqual(transaction?.id, 1)
         XCTAssertEqual(transaction?.account, testAccount)
-        XCTAssertEqual(transaction?.category, Category(id: "1", name: "Зарплата", emoji: "💰", isIncome: .income))
+        XCTAssertEqual(transaction?.category, Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income))
         XCTAssertEqual(transaction?.amount, 500.00)
         XCTAssertEqual(transaction?.transactionDate, formatter!.date(from: "2025-06-13T17:44:11.107Z"))
         XCTAssertEqual(transaction?.comment, "Зарплата за месяц")

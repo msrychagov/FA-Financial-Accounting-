@@ -8,7 +8,7 @@
 import Foundation
 
 struct Transaction {
-    let id: String
+    let id: Int
     let account: BankAccount
     let category: Category
     let amount: Decimal
