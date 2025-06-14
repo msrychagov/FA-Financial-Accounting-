@@ -74,7 +74,7 @@ extension Transaction {
                            updatedAt: updatedAt)
     }
     
-    var csvRaw: String {
+    var csvRow: String {
         let parts: [String] = [
             String(id),
             account.csvRow,
@@ -89,6 +89,11 @@ extension Transaction {
     }
     
     static var csvHeader: String {
-        return "id\(BankAccount.csvHeader),\(Category.csvHeader),amount,date,comment,created_at,updated_at"
+        return "id,\(BankAccount.csvHeader),\(Category.csvHeader),amount,date,comment,created_at,updated_at"
+    }
+    
+    static func toCSV(_ transactions: [Transaction]) -> String {
+        let lines = [csvHeader] + transactions.map { $0.csvRow }
+          return lines.joined(separator: "\n")
     }
 }

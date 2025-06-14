@@ -334,9 +334,12 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     }
     
     func testCSVParse() {
-        let str = "id,accountId,accountName,accountBalance,accountCurrency,categoryId,categoryName,categoryEmoji,categoryIsIncome,amount,transactionDate,comment,createdAt,updatedAt" + "\n" + "1,1,Основной счёт,1000.00,RUB,1,Зарплата,💰,income,500.00,2025-06-14T03:23:46.577Z,Зарплата за месяц,2025-06-14T03:23:46.577Z,2025-06-14T03:23:46.577Z"
-        print(Transaction.parse(csv: str))
+        let transaactionStr = "id,accountId,accountName,accountBalance,accountCurrency,categoryId,categoryName,categoryEmoji,categoryIsIncome,amount,transactionDate,comment,createdAt,updatedAt" + "\n" + "1,1,Основной счёт,1000.00,RUB,1,Зарплата,💰,income,500.00,2025-06-13T17:44:11.107Z,Зарплата за месяц,2025-06-13T17:44:11.107Z,2025-06-13T17:44:11.107Z"
+        let transaction = Transaction.parse(csv: transaactionStr)
+        XCTAssertNotNil(transaction)
+        XCTAssertEqual(transaction.first!, testTransaction!)
     }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
