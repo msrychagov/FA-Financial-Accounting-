@@ -6,13 +6,10 @@
 //
 
 import Foundation
-import CoreData
 
 extension Transaction {
     static func parse(jsonObject: Any) -> Transaction? {
         guard let dict = jsonObject as? [String: Any] else { return nil }
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         
         guard let idString = dict["id"] as? String,
               let id = Int(idString),

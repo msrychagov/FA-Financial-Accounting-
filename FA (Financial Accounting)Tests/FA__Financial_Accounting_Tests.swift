@@ -50,6 +50,67 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(parsedCategory?.isIncome, .income)
     }
     
+    func testCategoryIncorrectIntParse() {
+        // Некорректное значение id
+        let categoryJSON: Any = [
+            "id": "a",
+            "name": "Зарплата",
+            "emoji": "💰",
+            "isIncome": "income"
+        ]
+        let parsedCategory = Category.parse(jsonObject: categoryJSON)
+        XCTAssertNil(parsedCategory)
+    }
+    
+    func testCategoryIncorrectDirectionParse() {
+        // Некорректное rawValue для Direction
+        let categoryJSON: Any = [
+            "id": "22",
+            "name": "Зарплата",
+            "emoji": "💰",
+            "isIncome": "iincome"
+        ]
+        let parsedCategory = Category.parse(jsonObject: categoryJSON)
+        XCTAssertNil(parsedCategory)
+    }
+    
+    func testCategoryIncorrectJSON1Parse() {
+        // Отсутствует поле name
+        let categoryJSON: Any = [
+            "id": "22",
+            "emoji": "💰",
+            "isIncome": "income"
+        ]
+        let parsedCategory = Category.parse(jsonObject: categoryJSON)
+        XCTAssertNil(parsedCategory)
+    }
+    
+    func testCategoryIncorrectJSON2Parse() {
+        // Некорректный ключ(emojji)
+        let categoryJSON: Any = [
+            "id": "22",
+            "name": "Зарплата",
+            "emojji": "💰",
+            "isIncome": "income"
+        ]
+        let parsedCategory = Category.parse(jsonObject: categoryJSON)
+        XCTAssertNil(parsedCategory)
+    }
+    
+    func testCategoryIncorrectJSON3Parse() {
+        // Некорректный JSON
+        let categoryJSON: Any = "aaa"
+        let parsedCategory = Category.parse(jsonObject: categoryJSON)
+        XCTAssertNil(parsedCategory)
+    }
+    
+    func testCategoryEncoding() {
+        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income)
+        let jsonCategory = testCategory.jsonObject
+        let category = Category.parse(jsonObject: jsonCategory)
+        XCTAssertEqual(category, testCategory)
+    }
+    
     func testBankAccountParse() {
         let bankAccountJSON: Any = [
             "id": "1",
@@ -63,8 +124,62 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(parsedBankAccount, testAccount)
     }
     
+    func testBankAccountIncorrectJSON1Parse() {
+        let bankAccountJSON: Any = ""
+        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        
+        XCTAssertNil(parsedBankAccount)
+    }
+    
+    func testBankAccountIncorrectJSON2Parse() {
+        // Отсутствует поле id
+        let bankAccountJSON: Any = [
+            "name": "Основной счёт",
+            "balance": "1000.00",
+            "currency": "RUB"
+        ]
+        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        
+        XCTAssertNil(parsedBankAccount)
+    }
+    
+    func testBankAccountIncorrectJSON3Parse() {
+        // Некорректный ключ(naame)
+        let bankAccountJSON: Any = [
+            "id": "1",
+            "naame": "Основной счёт",
+            "balance": "1000.00",
+            "currency": "RUB"
+        ]
+        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        
+        XCTAssertNil(parsedBankAccount)
+    }
+    
+    func testBankAccountIncorrectDecimalParse() {
+        // Некорректный ключ(naame)
+        let bankAccountJSON: Any = [
+            "id": "1a",
+            "naame": "Основной счёт",
+            "balance": "aaa",
+            "currency": "RUB"
+        ]
+        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        
+        XCTAssertNil(parsedBankAccount)
+    }
+    
+    
+    
+    func testAccountEncoding() {
+        let jsonAccount = testAccount?.jsonObject
+        let account = BankAccount.parse(jsonObject: jsonAccount)
+        XCTAssertNotNil(account)
+        XCTAssertEqual(account, testAccount)
+    }
+    
     func testTransactionParse() {
-        let transactionJSON: [String: Any] = [
+        let transactionJSON: Any = [
             "id": "1",
             "account": [
                 "id": "1",
@@ -94,6 +209,114 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(transaction?.comment, "Зарплата за месяц")
         XCTAssertEqual(transaction?.createdAt, formatter!.date(from: "2025-06-13T17:44:11.107Z"))
         XCTAssertEqual(transaction?.updatedAt, formatter!.date(from: "2025-06-13T17:44:11.107Z"))
+    }
+    
+    
+    func testTransactionBadIncorrectIntParse() {
+        // Некорректное значение id
+        let transactionJSON: Any = [
+            "id": "1mmm",
+            "account": [
+                "id": "1",
+                "name": "Основной счёт",
+                "balance": "1000.00",
+                "currency": "RUB"
+            ],
+            "category": [
+                "id": "1",
+                "name": "Зарплата",
+                "emoji": "💰",
+                "isIncome": "income"
+            ],
+            "amount": "500.00",
+            "transactionDate": "2025-06-13T17:44:11.107Z",
+            "comment": "Зарплата за месяц",
+            "createdAt": "2025-06-13T17:44:11.107Z",
+            "updatedAt": "2025-06-13T17:44:11.107Z"
+        ]
+        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        XCTAssertNil(transaction)
+    }
+    
+    func testTransactionBadIncorrectDecimalParse() {
+        // Некорректное значение счета
+        let transactionJSON: Any = [
+            "id": "1",
+            "account": [
+                "id": "1",
+                "name": "Основной счёт",
+                "balance": "1000.00",
+                "currency": "RUB"
+            ],
+            "category": [
+                "id": "1",
+                "name": "Зарплата",
+                "emoji": "💰",
+                "isIncome": "income"
+            ],
+            "amount": "mmm",
+            "transactionDate": "2025-06-13T17:44:11.107Z",
+            "comment": "Зарплата за месяц",
+            "createdAt": "2025-06-13T17:44:11.107Z",
+            "updatedAt": "2025-06-13T17:44:11.107Z"
+        ]
+        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        XCTAssertNil(transaction)
+    }
+    
+    func testTransactionBadIncorrectAccountParse() {
+        // Некорректное значение вложенного типа
+        let transactionJSON: Any = [
+            "id": "1",
+            "account": "mmm",
+            "category": [
+                "id": "1",
+                "name": "Зарплата",
+                "emoji": "💰",
+                "isIncome": "income"
+            ],
+            "amount": "500.00",
+            "transactionDate": "2025-06-13T17:44:11.107Z",
+            "comment": "Зарплата за месяц",
+            "createdAt": "2025-06-13T17:44:11.107Z",
+            "updatedAt": "2025-06-13T17:44:11.107Z"
+        ]
+        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        XCTAssertNil(transaction)
+    }
+    
+    func testTransactionJSONWithoutIdParse() {
+        // Отсутствует поле id
+        let transactionJSON: Any = [
+            "account": [
+                "id": "1",
+                "name": "Основной счёт",
+                "balance": "1000.00",
+                "currency": "RUB"
+            ],
+            "category": [
+                "id": "1",
+                "name": "Зарплата",
+                "emoji": "💰",
+                "isIncome": "income"
+            ],
+            "amount": "500.00",
+            "transactionDate": "2025-06-13T17:44:11.107Z",
+            "comment": "Зарплата за месяц",
+            "createdAt": "2025-06-13T17:44:11.107Z",
+            "updatedAt": "2025-06-13T17:44:11.107Z"
+        ]
+        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        XCTAssertNil(transaction)
+    }
+    
+    
+    
+    func testTransactionJSONEncoding() {
+        let transactionJSON = testTransaction?.jsonObject
+        let transaction = Transaction.parse(jsonObject: transactionJSON!)
+        XCTAssertNotNil(transaction)
+        XCTAssertEqual(transaction, testTransaction)
     }
     
     func testSaveFile() {

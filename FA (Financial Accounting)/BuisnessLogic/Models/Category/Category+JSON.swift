@@ -16,10 +16,11 @@ extension Category {
               let name = dict["name"] as? String,
               let idString = dict["id"] as? String,
               let id = Int(idString),
-              let isIncome = dict["isIncome"] as? String
+              let isIncomeString = dict["isIncome"] as? String,
+              let isIncome = Direction(rawValue: isIncomeString)
         else { return nil }
 
-        let cat = Category(id: id, name: name, emoji: emoji, isIncome: Direction(rawValue: isIncome)!)
+        let cat = Category(id: id, name: name, emoji: emoji, isIncome:isIncome)
         
         return cat
               
