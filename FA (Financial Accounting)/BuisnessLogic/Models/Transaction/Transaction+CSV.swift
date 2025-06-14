@@ -89,7 +89,7 @@ extension Transaction {
     }
     
     static var csvHeader: String {
-        return "id,\(BankAccount.csvHeader),\(Category.csvHeader),amount,date,comment,created_at,updated_at"
+        return "id,\(BankAccount.csvHeader),\(Category.csvHeader),amount,transactionDate,comment,createdAt,updatedAt"
     }
     
     static func toCSV(_ transactions: [Transaction]) -> String {

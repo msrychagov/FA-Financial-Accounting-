@@ -340,6 +340,13 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(transaction.first!, testTransaction!)
     }
     
+    func testCSVEncode() {
+        let transactionCSV = Transaction.toCSV([testTransaction!])
+        let transaction = Transaction.parse(csv: transactionCSV)
+        XCTAssertNotNil(transaction)
+        XCTAssertEqual(transaction.first!, testTransaction!)
+        
+    }
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
