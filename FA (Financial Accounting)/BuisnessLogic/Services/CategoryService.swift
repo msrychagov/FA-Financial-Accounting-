@@ -1,17 +1,15 @@
+//
+//  CategoryService.swift
+//  FA (Financial Accounting)
+//
+//  Created by Михаил Рычагов on 14.06.2025.
+//
 
 final class CategoryService {
-    func categories() async -> [Category] {
-        let categories: [Category] = [
-            Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: .outcome),
-            Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
-            Category(id: 3, name: "Подработка", emoji: "💸", isIncome: .income),
-            Category(id: 4, name: "Спортзал", emoji: "🏋️‍♂️", isIncome: .outcome),
-        ]
-        
-        return categories
-    }
+    let categoriesService: CategoriesService = CategoriesService()
     
-    func selectCategories(by direction: Direction) async -> [Category] {
-        return await categories().filter { $0.isIncome == direction }
+    func category(id: Int) async -> Category? {
+        let categories = await categoriesService.categories()
+        return categories.first(where: { $0.id == id })
     }
 }
