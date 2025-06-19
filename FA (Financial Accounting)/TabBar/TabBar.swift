@@ -38,7 +38,5 @@ struct TabBar: View {
                 }
             
         }
-        
-        
     }
 }

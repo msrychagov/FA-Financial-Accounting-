@@ -10,6 +10,6 @@ import SwiftUI
 
 public struct IncomeView: View {
     public var body: some View {
-        Text("IncomeView")
+        TransactionListView(direction: .income)
     }
 }
