@@ -6,13 +6,11 @@
 //
 
 import Foundation
+import Observation
 
-@MainActor
-final class TransactionListModel: ObservableObject {
-    // Загулшка транзакций, так как крашится при использовании сервиса - надо разбираться
-    @Published
+@Observable
+final class TransactionListModel {
     var transactions: [Transaction] = []
-    
     var direction: Direction
     
     var sum: Decimal {
@@ -25,10 +23,10 @@ final class TransactionListModel: ObservableObject {
     
     init(direction: Direction) {
         self.direction = direction
-        Task {
-            try await loadTransactions()
-            filter()
-        }
+//        Task {
+//            try await fetch()
+//            filter()
+//        }
     }
     var service: TransactionsService = TransactionsService()
 
@@ -36,22 +34,12 @@ final class TransactionListModel: ObservableObject {
         transactions = transactions.filter { $0.category.isIncome == direction }
     }
     
-    func loadTransactions() async throws {
-        let calendar = Calendar.current
-        /// Установил 03:00:00, потому что по дефолту дата получается, как я понял, в UTC,
-        /// т.е. если указать bySettingHour: 0, stratOfDay будет 21:00 предыдущего дня
-        let startOfToday = calendar.date(
-            bySettingHour: 3,
-            minute: 0,
-            second: 0,
-            of: Date()
-        )!
-        let endOfToday = calendar.date(byAdding: DateComponents(day:1, second: -1), to: startOfToday)!
-        let transactionsFromService = try await service.fetchTransactions(
-            startDate: startOfToday,
-            endDate: endOfToday
+    func fetch(startDate: Date, endDate: Date) async throws {
+        transactions = try await service.fetchTransactions(
+            startDate: startDate,
+            endDate: endDate
         )
-        self.transactions = transactionsFromService
+        filter()
     }
     
 }

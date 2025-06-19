@@ -8,26 +8,22 @@
 import SwiftUI
 
 struct TransactionListView: View {
-    
     // MARK: Properties
-    @StateObject
-    var transactionListModel: TransactionListModel
-    
+    @State var transactionsListModel: TransactionListModel
     
     // MARK: Constants
     enum Constants {
         enum Titles {
-            static let income: String = "Доходы"
-            static let outcome: String = "Расходы"
+            static let income: String = "Доходы сегодня"
+            static let outcome: String = "Расходы сегодня"
         }
         enum ToolBar {
-            static let trailingLabel: Image = Image(systemName: "clock")
-            static let trailintTintColor: Color = .black
+            static let clockLabel: Image = Image(systemName: "clock")
+            static let tintColor: Color = Color(red: 0.111, green: 0.093, blue: 0.183)
         }
         
         enum SumRaw {
             static let title: String = "Всего"
-            static let cornerRadius: CGFloat = 12
         }
         
         enum TransactionsList {
@@ -35,12 +31,7 @@ struct TransactionListView: View {
         }
     }
     
-    // MARK: Lifecycle
-    init (direction: Direction) {
-        _transactionListModel = StateObject(wrappedValue: TransactionListModel(direction: direction)
-                                            )
-    }
-    
+    // MARK: View
     var body: some View {
         NavigationStack {
             List {
@@ -48,17 +39,24 @@ struct TransactionListView: View {
                 transactionsList
             }
             .navigationTitle(
-                transactionListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
+                transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
             )
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        MyHistoryView()
+                        MyHistoryView(transactionsList: transactionsListModel)
                     } label: {
-                        Constants.ToolBar.trailingLabel
-                            .tint(Constants.ToolBar.trailintTintColor)
+                        Constants.ToolBar.clockLabel
                     }
+                    
                 }
+                
+            }
+            .task {
+                try? await transactionsListModel.fetch(
+                    startDate: startOfToday,
+                    endDate: generalEnd
+                )
             }
         }
     }
@@ -69,17 +67,16 @@ struct TransactionListView: View {
             HStack {
                 Text(Constants.SumRaw.title)
                 Spacer()
-                Text("\(formatted(transactionListModel.sum))")
+                Text("\(formatted(transactionsListModel.sum))")
             }
-            .cornerRadius(Constants.SumRaw.cornerRadius)
         }
     }
     
     private var transactionsList: some View {
         Section(Constants.TransactionsList.title) {
-            ForEach(transactionListModel.transactions) { transaction in
+            ForEach(transactionsListModel.transactions) { transaction in
                 NavigationLink {
-                    IncomeView()
+                    Text("See soon")
                 } label: {
                     HStack {
                         Text(transaction.category.emoji)
@@ -93,20 +90,16 @@ struct TransactionListView: View {
         }
     }
     
-    // MARK: Methods
-    private func formatted(_ value: Decimal)-> String {
-        let fmt = NumberFormatter()
-        fmt.numberStyle = .decimal
-        fmt.groupingSeparator = " " // неправый пробел
-        fmt.maximumFractionDigits = 0
-        return (fmt.string(from: NSDecimalNumber(decimal: value)) ?? "0") + " ₽"
-    }
 }
 
 #Preview("Income") {
-    TransactionListView(direction: .income)
+    TransactionListView(
+        transactionsListModel: TransactionListModel(direction: .income)
+    )
 }
 
 #Preview("OutCome") {
-    TransactionListView(direction: .outcome)
+    TransactionListView(
+        transactionsListModel: TransactionListModel(direction: .outcome)
+    )
 }

@@ -9,6 +9,6 @@ import SwiftUI
 
 public struct OutComeView: View {
     public var body: some View {
-        TransactionListView(direction: .outcome)
+        TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome))
     }
 }
