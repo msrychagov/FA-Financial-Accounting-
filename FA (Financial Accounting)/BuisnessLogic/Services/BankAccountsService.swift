@@ -29,6 +29,7 @@ final class BankAccountsService {
         return updatedAccount
     }
     
+    // Аналогично CategoriesService
     func bankAccount(id: String) async throws -> BankAccount? {
         let accounts = try await bankAccounts()
         return accounts.first(where: { $0.id == id })

@@ -74,6 +74,7 @@ final class TransactionsService {
         return transactions
     }
     
+    // Добавил метод для получения транзакции по id
     func transaction(id: Int) async throws -> Transaction? {
         let transactions = try await transactions()
         return transactions.first(where: { $0.id == id })

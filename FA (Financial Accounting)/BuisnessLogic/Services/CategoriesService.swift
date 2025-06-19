@@ -15,6 +15,7 @@ final class CategoriesService {
         return try await categories().filter { $0.isIncome == direction }
     }
     
+    // Добавил метод для получения категории по id, т.к. при изменении Transaction передается categoryId, а вернуть нужно Transaction, где поле - Category
     func category(id: Int) async throws -> Category? {
         let categories = try await categories()
         return categories.first(where: { $0.id == id })
