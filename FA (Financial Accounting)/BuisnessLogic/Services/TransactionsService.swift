@@ -16,7 +16,7 @@ final class TransactionsService {
                         account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                         category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
                         amount: 500.00,
-                        transactionDate: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
+                        transactionDate: formatter.date(from: "2025-06-19T23:42:34.083Z")!,
                         comment: "Зарплата за месяц",
                         createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                         updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),

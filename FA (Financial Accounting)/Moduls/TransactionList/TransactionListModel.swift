@@ -11,24 +11,7 @@ import Foundation
 final class TransactionListModel: ObservableObject {
     // Загулшка транзакций, так как крашится при использовании сервиса - надо разбираться
     @Published
-    var transactions: [Transaction] = [
-        Transaction(id: 1,
-                    account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
-                    category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
-                    amount: 500.00,
-                    transactionDate: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                    comment: "Зарплата за месяц",
-                    createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                    updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
-        Transaction(id: 2,
-                    account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
-                    category: Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: .outcome),
-                    amount: -30.00,
-                    transactionDate: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                    comment: "Покупка футболки",
-                    createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                    updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
-    ]
+    var transactions: [Transaction] = []
     
     var direction: Direction
     
@@ -42,20 +25,33 @@ final class TransactionListModel: ObservableObject {
     
     init(direction: Direction) {
         self.direction = direction
+        Task {
+            try await loadTransactions()
+            filter()
+        }
+    }
+    var service: TransactionsService = TransactionsService()
+
+    func filter() {
         transactions = transactions.filter { $0.category.isIncome == direction }
     }
-//    var service: TransactionsService = TransactionsService()
-//
-//    
-//    init() {
-//            // опционально: можно сразу подгрузить,
-//            // а не через .task вьюхи
-//            Task { await loadTransactions() }
-//        }
-//    
-//    func loadTransactions() async {
-//        let transactionsFromService = await service.transactions()
-//        self.transactions = transactionsFromService
-//    }
+    
+    func loadTransactions() async throws {
+        let calendar = Calendar.current
+        /// Установил 03:00:00, потому что по дефолту дата получается, как я понял, в UTC,
+        /// т.е. если указать bySettingHour: 0, stratOfDay будет 21:00 предыдущего дня
+        let startOfToday = calendar.date(
+            bySettingHour: 3,
+            minute: 0,
+            second: 0,
+            of: Date()
+        )!
+        let endOfToday = calendar.date(byAdding: DateComponents(day:1, second: -1), to: startOfToday)!
+        let transactionsFromService = try await service.fetchTransactions(
+            startDate: startOfToday,
+            endDate: endOfToday
+        )
+        self.transactions = transactionsFromService
+    }
     
 }
