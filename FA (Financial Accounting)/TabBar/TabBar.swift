@@ -36,7 +36,7 @@ struct TabBar: View {
                     Image(systemName: "gearshape.fill")
                     Text("Настройки")
                 }
-            
         }
     }
 }
+

@@ -82,6 +82,7 @@ struct TransactionListView: View {
                     IncomeView()
                 } label: {
                     HStack {
+                        Text(transaction.category.emoji)
                         Text(transaction.comment)
                         Spacer()
                         Text("\(formatted(transaction.amount))")
