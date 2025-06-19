@@ -347,6 +347,12 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(transaction.first!, testTransaction!)
         
     }
+    
+    func testTransactionService() async throws {
+        let service = TransactionsService()
+        let loadedTransactions = try? await service.transactions()
+        XCTAssertNotNil(loadedTransactions)
+    }
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
