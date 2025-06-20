@@ -40,8 +40,16 @@ struct MyHistoryView: View {
     
     var criterias: some View {
         Section {
-            DateView(name: "Начало", date: $startDate)
-            DateView(name: "Конец", date: $endDate)
+            DateView(
+                border: .start,
+                mainDate: $startDate,
+                otherDate: $endDate
+            )
+            DateView(
+                border: .end,
+                mainDate: $endDate,
+                otherDate: $startDate
+            )
             sum
         }
     }
