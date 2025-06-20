@@ -13,8 +13,9 @@ enum SortCriteria {
 }
 @Observable
 final class TransactionListModel {
-    var transactions: [Transaction] = []
-    var direction: Direction
+    private(set) var transactions: [Transaction] = []
+    let direction: Direction
+    private let service: TransactionsService = TransactionsService()
     
     var sum: Decimal {
         var sum: Decimal = 0
@@ -24,6 +25,7 @@ final class TransactionListModel {
         return sum
     }
     
+    // Добавить TransactionService
     init(direction: Direction) {
         self.direction = direction
         //        Task {
@@ -31,7 +33,6 @@ final class TransactionListModel {
         //            filter()
         //        }
     }
-    var service: TransactionsService = TransactionsService()
     
     func filter() {
         transactions = transactions.filter { $0.category.isIncome == direction }

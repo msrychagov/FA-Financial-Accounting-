@@ -48,11 +48,11 @@ struct TransactionListView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        MyHistoryView(transactionsList: transactionsListModel)
+                        MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction))
                     } label: {
                         Constants.ToolBar.clockLabel
                     }
-//                    .foregroundColor(Constants.ToolBar.tintColor)
+                    .foregroundColor(Constants.ToolBar.tintColor)
                 }
             }
             .toolbarColorScheme(.light, for: .navigationBar)

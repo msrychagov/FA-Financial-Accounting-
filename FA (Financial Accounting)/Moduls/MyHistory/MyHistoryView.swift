@@ -8,7 +8,7 @@ import SwiftUI
 
 
 struct MyHistoryView: View {
-    @Bindable
+    @State
     var transactionsList: TransactionListModel
     @State
     var startDate: Date = startHistory

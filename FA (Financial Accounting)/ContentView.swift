@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    
+    private let trasnactionsService = TransactionsService()
     var body: some View {
         TabBar()
     }

@@ -23,6 +23,8 @@ struct DateView: View {
                 displayedComponents: [.date]
             )
         }
+        
+        
     }
     
     private var dateBinding: Binding<Date> {
