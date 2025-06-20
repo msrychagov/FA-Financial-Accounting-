@@ -15,7 +15,7 @@ final class TransactionsService {
             Transaction(id: 1,
                         account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                         category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
-                        amount: 500.00,
+                        amount: 1000.00,
                         transactionDate: formatter.date(from: "2025-06-20T23:42:34.083Z")!,
                         comment: "Зарплата за месяц",
                         createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
@@ -28,6 +28,14 @@ final class TransactionsService {
                         comment: "Покупка футболки",
                         createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                         updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+            Transaction(id: 3,
+                        account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
+                        category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
+                        amount: 500.00,
+                        transactionDate: formatter.date(from: "2025-06-20T23:43:34.083Z")!,
+                        comment: "Подработка",
+                        createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
+                        updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!)
         ]
         
         return transactions

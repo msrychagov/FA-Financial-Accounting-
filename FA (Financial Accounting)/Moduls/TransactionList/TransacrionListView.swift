@@ -19,7 +19,11 @@ struct TransactionListView: View {
         }
         enum ToolBar {
             static let clockLabel: Image = Image(systemName: "clock")
-            static let tintColor: Color = Color(red: 0.111, green: 0.093, blue: 0.183)
+            static let tintColor: Color = Color(
+                red: 111.0 / 255.0,
+                green: 93.0 / 255.0,
+                blue: 183.0 / 255.0
+            )
         }
         
         enum SumRaw {
@@ -48,10 +52,13 @@ struct TransactionListView: View {
                     } label: {
                         Constants.ToolBar.clockLabel
                     }
-                    
+//                    .foregroundColor(Constants.ToolBar.tintColor)
                 }
-                
             }
+            .toolbarColorScheme(.light, for: .navigationBar)
+//            .toolbarBackground(.visible, for: .navigationBar)
+//            .toolbarBackground(Color.blue, for: .navigationBar)
+//            .tint(Constants.ToolBar.tintColor)
             .task {
                 try? await transactionsListModel.fetch(
                     startDate: startOfToday,
@@ -63,12 +70,35 @@ struct TransactionListView: View {
     
     // MARK: InsideViews
     private var sum: some View {
+        
         Section {
+            HStack {
+                Menu("Сортировать по") {
+                    Menu("Дате") {
+                        Button("По возрастанию") {
+                            transactionsListModel.sort(by: .date, ascending: true)
+                        }
+                        Button("По убыванию") {
+                            transactionsListModel.sort(by: .date, ascending: false)
+                        }
+                    }
+                    Menu("Сумме") {
+                        Button("По возрастанию") {
+                            transactionsListModel.sort(by: .amount, ascending: true)
+                        }
+                        Button("По убыванию") {
+                            transactionsListModel.sort(by: .amount, ascending: false)
+                        }
+                    }
+                }
+            }
+            
             HStack {
                 Text(Constants.SumRaw.title)
                 Spacer()
                 Text("\(formatted(transactionsListModel.sum))")
             }
+            
         }
     }
     

@@ -21,6 +21,22 @@ struct MyHistoryView: View {
                 transactionsListSection
             }
             .navigationTitle("Моя история")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        Text("Анализ")
+                    } label: {
+                        Image(systemName: "newspaper")
+                    }
+                }
+            }
+            .tint(
+                Color(
+                    red: 111.0 / 255.0,
+                    green: 93.0 / 255.0,
+                    blue: 183.0 / 255.0
+                )
+            )
             .task {
                 try? await transactionsList.fetch(
                     startDate: startDate,
@@ -36,6 +52,7 @@ struct MyHistoryView: View {
                 }
             }
         }
+        
     }
     
     var criterias: some View {

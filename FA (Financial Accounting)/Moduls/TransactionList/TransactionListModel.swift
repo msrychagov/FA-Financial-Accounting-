@@ -8,6 +8,9 @@
 import Foundation
 import Observation
 
+enum SortCriteria {
+    case date, amount
+}
 @Observable
 final class TransactionListModel {
     var transactions: [Transaction] = []
@@ -23,15 +26,36 @@ final class TransactionListModel {
     
     init(direction: Direction) {
         self.direction = direction
-//        Task {
-//            try await fetch()
-//            filter()
-//        }
+        //        Task {
+        //            try await fetch()
+        //            filter()
+        //        }
     }
     var service: TransactionsService = TransactionsService()
-
+    
     func filter() {
         transactions = transactions.filter { $0.category.isIncome == direction }
+    }
+    
+    func sort(by criteria: SortCriteria, ascending: Bool) {
+        switch criteria {
+        case .amount:
+            switch ascending {
+            case true:
+                transactions.sort(by: { $0.amount < $1.amount } )
+            case false:
+                transactions.sort(by: { $0.amount > $1.amount })
+            }
+        case .date:
+            switch ascending {
+            case true:
+                transactions.sort(by: { $0.transactionDate < $1.transactionDate })
+            case false:
+                transactions.sort (by: { $0.transactionDate > $1.transactionDate })
+            }
+        }
+        
+        
     }
     
     func fetch(startDate: Date, endDate: Date) async throws {
