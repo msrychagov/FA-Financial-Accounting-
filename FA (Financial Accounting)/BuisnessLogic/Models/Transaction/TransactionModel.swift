@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Transaction: Equatable, Identifiable {
+struct Transaction: Equatable {
     let id: Int
     let account: BankAccount
     let category: Category
     let amount: Decimal
     let transactionDate: Date
-    var comment: String
+    let comment: String
     let createdAt: Date
     let updatedAt: Date
 }
