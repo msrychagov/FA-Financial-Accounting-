@@ -22,6 +22,13 @@ struct FA__Financial_Accounting_App: App {
 //
         UITabBar.appearance().tintColor = .white
         
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().standardAppearance   = tabBarAppearance
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        } else {
+            UITabBar.appearance().standardAppearance = tabBarAppearance
+        }
+        
         
 //        let appearance = UINavigationBarAppearance()
 //        appearance.configureWithOpaqueBackground()

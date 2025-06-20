@@ -13,27 +13,27 @@ struct TabBar: View {
         TabView {
             IncomeView()
                 .tabItem {
-                    Image(systemName: "plus")
+                    Image("income")
                     Text("Доходы")
                 }
             OutComeView()
                 .tabItem {
-                    Image(systemName: "minus")
+                    Image("outcome")
                     Text("Расходы")
                 }
             AccountView()
                 .tabItem {
-                    Image(systemName: "person.circle")
+                    Image("account")
                     Text("Счёт")
                 }
             CategoriesView()
                 .tabItem {
-                    Image(systemName: "list.bullet")
+                    Image("categories")
                     Text("Статьи")
                 }
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image("settings")
                     Text("Настройки")
                 }
         }

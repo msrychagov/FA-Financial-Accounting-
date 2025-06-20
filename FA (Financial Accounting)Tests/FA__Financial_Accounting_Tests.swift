@@ -350,8 +350,45 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     
     func testTransactionService() async throws {
         let service = TransactionsService()
-        let loadedTransactions = try? await service.transactions()
+        var loadedTransactions = try? await service.transactions()
+        loadedTransactions?.sort(by: {$0.amount > $1.amount })
+        print(loadedTransactions)
         XCTAssertNotNil(loadedTransactions)
+    }
+    
+    func testDate() async throws {
+        let dateFromJSON: String = "2025-06-19T23:42:34.083Z"
+        let formattedDateFromJSON: Date = (formatter?.date(from: dateFromJSON))!
+        let now = Date()
+        let calendar = Calendar.current
+        let startOfToday = calendar.date(
+            bySettingHour: 3,
+            minute: 0,
+            second: 0,
+            of: now
+        )!
+        let endOfToday = calendar.date(byAdding: DateComponents(day:1, second: -1), to: startOfToday)!
+        let service = TransactionsService()
+        
+        let transactionsFromService = try await service.fetchTransactions(
+            startDate: startOfToday,
+            endDate: endOfToday
+        )
+        
+        print(transactionsFromService)
+        print(startOfToday)
+        print(endOfToday)
+        print(formattedDateFromJSON)
+        print(startOfToday <= formattedDateFromJSON && endOfToday >= formattedDateFromJSON)
+        
+        XCTAssertLessThan(startOfToday, formattedDateFromJSON)
+        XCTAssertLessThan(formattedDateFromJSON, endOfToday)
+    }
+    
+    func testSorting() async throws {
+        var numbers = [3, 1, 4, 2]
+        numbers.sort(by: >)
+        print(numbers)
     }
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
