@@ -21,6 +21,7 @@ struct MyHistoryView: View {
                 transactionsListSection
             }
             .navigationTitle("Моя история")
+            .toolbarColorScheme(.dark)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
@@ -28,15 +29,17 @@ struct MyHistoryView: View {
                     } label: {
                         Image(systemName: "newspaper")
                     }
+                    .foregroundColor(
+                        Color(
+                            red: 111.0 / 255.0,
+                            green: 93.0 / 255.0,
+                            blue: 183.0 / 255.0
+                        )
+                    )
                 }
+                
             }
-            .tint(
-                Color(
-                    red: 111.0 / 255.0,
-                    green: 93.0 / 255.0,
-                    blue: 183.0 / 255.0
-                )
-            )
+            
             .task {
                 try? await transactionsList.fetch(
                     startDate: startDate,

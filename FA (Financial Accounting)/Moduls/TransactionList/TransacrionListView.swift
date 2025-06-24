@@ -70,6 +70,7 @@ struct TransactionListView: View {
                     )
                 }
         }
+            .accentColor(Constants.ToolBar.tintColor)
         
         }
     }
