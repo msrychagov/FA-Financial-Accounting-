@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct FA__Financial_Accounting_App: App {
     init() {
+//        UIDatePicker.appearance().tintColor = UIColor.systemGreen
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
         tabBarAppearance.backgroundColor = .white

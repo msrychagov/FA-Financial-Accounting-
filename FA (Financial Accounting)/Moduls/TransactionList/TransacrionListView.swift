@@ -63,15 +63,6 @@ struct TransactionListView: View {
                         alignment: .bottomTrailing
                       )
                       .ignoresSafeArea(edges: .bottom)
-    //            .toolbar {
-    //                ToolbarItem(placement: .bottomBar) {
-    //                    HStack {
-    //                        Spacer()
-    //                        plusButton
-    //                            .offset(y: -20)
-    //                    }
-    //                }
-    //            }
                 .task {
                     try? await transactionsListModel.fetch(
                         startDate: startOfToday,
@@ -142,7 +133,7 @@ struct TransactionListView: View {
             Image(systemName: "plus")
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.white)
-//                .padding(20)
+                .padding(20)
         }
         .frame(width: 56, height: 56)
         .background(.accent)
