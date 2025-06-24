@@ -77,12 +77,7 @@ struct MyHistoryView: View {
                 NavigationLink {
                     Text("See soon")
                 } label: {
-                    HStack {
-                        Text(transaction.category.emoji)
-                        Text(transaction.comment)
-                        Spacer()
-                        Text("\(formatted(transaction.amount))")
-                    }
+                    TransactionCell(transaction: transaction)
                     
                 }
             }
