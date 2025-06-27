@@ -11,7 +11,7 @@ public struct AccountView: View {
     // MARK: Constants
     private enum Constants {
         enum Balance {
-            static let emoji: String = "💰"
+            static let emoji: String = ""
             static let text: String = "Баланс"
         }
         enum Currency {
@@ -31,60 +31,42 @@ public struct AccountView: View {
     @State
     private var showingCurrencyDialog = false
     
+    @State
+    private var currency: Currency = .rub
+    
     // MARK: Views
     public var body: some View {
         NavigationStack {
             List {
-                balance
-                currencyList
+                BalanceView(balance: viewModel.account?.balance ?? 0, backgroundColor: .accent)
+                    .listRowSeparator(.hidden)
+                Section {}
+                currencyRow
             }
             .tint(.secondAccent)
             .navigationTitle("Мой счёт")
             .toolbar {
                 ToolbarItem {
-                    NavigationLink("Сохранить") {
-                        
+                    NavigationLink("Редактировать") {
+                        EdditingAccountView()
                     }
                     .tint(.secondAccent)
                 }
             }
-            .task {
-                try? await viewModel.fetchAccount()
-            }
         }
     }
     
-    private var balance: some View {
-        Section {
-            HStack {
-                Text(Constants.Balance.emoji)
-                Text(Constants.Balance.text)
-                Spacer()
-                Text("\(viewModel.account?.balance ?? 0.00)")
-            }
+    private var currencyRow: some View {
+        HStack {
+            Text("Валюта")
+            Spacer()
+            Text(currency.rawValue)
         }
-    }
-    
-    private var currencyList: some View {
-        Section {
-            Button {
-                showingCurrencyDialog = true
-            } label: {
-                HStack {
-                    Text(Constants.Currency.titleText)
-                        .tint(Constants.Currency.titleColor)
-                    Spacer()
-                    Image(systemName: Constants.Currency.imageSystemName)
-                        .tint(Constants.Currency.chevronColor)
-                }
-                
-            }
-        }
-        .confirmationDialog("Валюта", isPresented: $showingCurrencyDialog, titleVisibility: .visible) {
-            Button("Российский рубль ₽")   { }
-            Button("Американский доллар $"){  }
-            Button("Евро €") {}
-        }
+        .padding(12)
+        .background(RoundedRectangle(cornerRadius: 12).fill(.accent.opacity(0.2)))
+        .listRowBackground(Color.clear)
+        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+
     }
 }
 

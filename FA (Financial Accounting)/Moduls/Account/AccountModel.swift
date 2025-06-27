@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 final class AccountModel {
     private(set) var account: BankAccount?
     private let service: BankAccountsService
@@ -13,6 +14,9 @@ final class AccountModel {
     
     init(service: BankAccountsService) {
         self.service = service
+        Task {
+            try await fetchAccount()
+        }
     }
     
     func fetchAccount() async throws {
