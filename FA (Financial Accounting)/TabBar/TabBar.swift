@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct TabBar: View {
+    // MARK: Variables
+    let transactionsService: TransactionsService
+    let accountsService: BankAccountsService
     var body: some View {
         TabView {
             IncomeView()
@@ -21,7 +24,7 @@ struct TabBar: View {
                     Image("outcome")
                     Text("Расходы")
                 }
-            AccountView()
+            AccountView(viewModel: AccountModel(service: accountsService))
                 .tabItem {
                     Image("account")
                     Text("Счёт")

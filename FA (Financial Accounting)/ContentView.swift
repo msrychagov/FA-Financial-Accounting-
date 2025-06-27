@@ -10,8 +10,12 @@ import CoreData
 
 struct ContentView: View {
     private let trasnactionsService = TransactionsService()
+    private let bankAccountsService = BankAccountsService()
     var body: some View {
-        TabBar()
+        TabBar(
+            transactionsService: trasnactionsService,
+            accountsService: bankAccountsService
+        )
     }
 }
 
