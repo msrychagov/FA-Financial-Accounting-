@@ -10,16 +10,8 @@ import SwiftUI
 final class AccountModel {
     private(set) var account: BankAccount?
     private let service: BankAccountsService
-    var balance: Decimal = 0 {
-        didSet {
-            account?.balance = balance
-        }
-    }
-    var currency: Currency = .rub {
-        didSet {
-            account?.currency = currency.rawValue
-        }
-    }
+    var balance: Decimal = 0
+    var currency: Currency = .rub
     
     
     init(service: BankAccountsService) {
