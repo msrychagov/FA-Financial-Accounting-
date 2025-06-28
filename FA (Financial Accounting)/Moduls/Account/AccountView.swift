@@ -34,6 +34,8 @@ public struct AccountView: View {
     @State
     private var currency: Currency = .rub
     
+    @State private var isBalanceHidden: Bool = false
+    
     
     // MARK: Views
     public var body: some View {
@@ -41,12 +43,19 @@ public struct AccountView: View {
             List {
                 BalanceCell(
                     balance: viewModel.balance ?? 0.00,
-                    backgroundColor: .accent
+                    backgroundColor: .accent, isHidden: isBalanceHidden
                 )
-                    .listRowSeparator(.hidden)
+                .listRowSeparator(.hidden)
                 Section {}
                 currencyRow
             }
+            .background(
+                ShakeDetector {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        isBalanceHidden.toggle()
+                    }
+                }
+            )
             .refreshable {
                 do {
                     try await viewModel.fetchAccount()
@@ -78,7 +87,7 @@ public struct AccountView: View {
         .background(RoundedRectangle(cornerRadius: 12).fill(.accent.opacity(0.2)))
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-
+        
     }
 }
 

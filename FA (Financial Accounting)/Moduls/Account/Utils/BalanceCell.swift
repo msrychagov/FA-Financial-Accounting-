@@ -12,12 +12,16 @@ struct BalanceCell: View {
     
     var backgroundColor: Color
     
+    var isHidden: Bool // новый параметр
+    
     var body: some View {
         HStack {
             Text("💰")
             Text("Баланс")
             Spacer()
             Text("\(balance)")
+                .redacted(reason: isHidden ? .placeholder : [])
+                .animation(.easeInOut(duration: 0.3), value: isHidden)
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12/*, style: .continuous*/).fill(backgroundColor))
