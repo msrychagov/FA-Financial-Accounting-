@@ -47,6 +47,14 @@ public struct AccountView: View {
                 Section {}
                 currencyRow
             }
+            .refreshable {
+                do {
+                    try await viewModel.fetchAccount()
+                }
+                catch {
+                    print("Не удалось обновить счёт:", error)
+                }
+            }
             .tint(.secondAccent)
             .navigationTitle("Мой счёт")
             .toolbar {
