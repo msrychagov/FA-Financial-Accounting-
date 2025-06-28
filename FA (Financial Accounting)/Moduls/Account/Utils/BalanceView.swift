@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct BalanceView: View {
+    @Binding
     var balance: Decimal
+    
+    
     var backgroundColor: Color
     
     var body: some View {
@@ -17,7 +20,7 @@ struct BalanceView: View {
             Text("Баланс")
             Spacer()
             /// Немнго отошел от дизайна - не показываю валюту в поле баланса, потому что она есть ниже
-            Text("\(balance ?? 0.00)")
+            Text(balance, format: .number.precision(.fractionLength(2)))
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12/*, style: .continuous*/).fill(backgroundColor))

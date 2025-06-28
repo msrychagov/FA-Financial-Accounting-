@@ -10,11 +10,35 @@ import SwiftUI
 struct EdditingAccountView: View {
     @State
     var showingCurrencyDialog: Bool = false
+    
+    @State
+    var curCurrency: Currency = .rub
+    
+    @State
+    var prevCurrency: Currency = .rub
+    
+    @State
+    var balance: Decimal = 1000.00
+    
     var body: some View {
         NavigationStack {
             List {
-                BalanceView(balance: 1000.00, backgroundColor: .white)
+                BalanceView(
+                    balance: $balance,
+                    backgroundColor: .white
+                )
                 currencyList
+            }
+            .onChange(of: curCurrency) { newValue in
+                switch prevCurrency {
+                case .rub:
+                    balance *= newValue.rateFromRub
+                case .usd:
+                    balance *= newValue.rateFromUsd
+                case .eur:
+                    balance *= newValue.rateFromEur
+                }
+                prevCurrency = newValue
             }
             .tint(.secondAccent)
             .navigationTitle("Мой счет")
@@ -30,6 +54,8 @@ struct EdditingAccountView: View {
                     Text("Валюта")
                         .tint(.black)
                     Spacer()
+                    Text(curCurrency.rawValue)
+                        .tint(.secondary)
                     Image(systemName: "chevron.right")
                         .tint(.secondary)
                 }
@@ -37,9 +63,15 @@ struct EdditingAccountView: View {
             }
         }
         .confirmationDialog("Валюта", isPresented: $showingCurrencyDialog, titleVisibility: .visible) {
-            Button("Российский рубль ₽")   { }
-            Button("Американский доллар $"){  }
-            Button("Евро €") {}
+            Button("Российский рубль ₽")   {
+                curCurrency = .rub
+            }
+            Button("Американский доллар $"){
+                curCurrency = .usd
+            }
+            Button("Евро €") {
+                curCurrency = .eur
+            }
         }
     }
 }

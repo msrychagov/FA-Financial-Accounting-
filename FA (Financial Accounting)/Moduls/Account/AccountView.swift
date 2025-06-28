@@ -38,8 +38,8 @@ public struct AccountView: View {
     public var body: some View {
         NavigationStack {
             List {
-                BalanceView(balance: viewModel.account?.balance ?? 0, backgroundColor: .accent)
-                    .listRowSeparator(.hidden)
+//                BalanceView(balance: viewModel.account?.balance ?? 0.00, backgroundColor: .accent)
+//                    .listRowSeparator(.hidden)
                 Section {}
                 currencyRow
             }
