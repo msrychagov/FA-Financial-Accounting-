@@ -35,13 +35,15 @@ public struct AccountView: View {
     private var currency: Currency = .rub
     
     
-    
     // MARK: Views
     public var body: some View {
         NavigationStack {
             List {
-//                BalanceView(balance: viewModel.account?.balance ?? 0.00, backgroundColor: .accent)
-//                    .listRowSeparator(.hidden)
+                BalanceCell(
+                    balance: viewModel.balance ?? 0.00,
+                    backgroundColor: .accent
+                )
+                    .listRowSeparator(.hidden)
                 Section {}
                 currencyRow
             }
@@ -50,7 +52,7 @@ public struct AccountView: View {
             .toolbar {
                 ToolbarItem {
                     NavigationLink("Редактировать") {
-                        EdditingAccountView(curCurrency: $currency)
+                        EdditingAccountView(curCurrency: $currency, balance: $viewModel.balance)
                     }
                     .tint(.secondAccent)
                 }

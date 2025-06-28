@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EdditingAccountView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     @State
     var showingCurrencyDialog: Bool = false
     
@@ -17,15 +19,14 @@ struct EdditingAccountView: View {
     @State
     var prevCurrency: Currency = .rub
     
-    @State
-    var balance: Decimal = 1000.00
+    @Binding
+    var balance: Decimal
     
     var body: some View {
         NavigationStack {
             List {
-                BalanceCell(
-                    balance: $balance,
-                    backgroundColor: .white
+                BalanceRow(
+                    balance: $balance
                 )
                 currencyList
             }
@@ -43,6 +44,15 @@ struct EdditingAccountView: View {
             }
             .tint(.secondAccent)
             .navigationTitle("Мой счет")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Сохранить") {
+                        dismiss()
+                    }
+                    .tint(.secondAccent)
+                }
+            }
         }
     }
     

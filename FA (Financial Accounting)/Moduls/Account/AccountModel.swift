@@ -6,11 +6,11 @@
 //
 import SwiftUI
 
-
+@Observable
 final class AccountModel {
     private(set) var account: BankAccount?
     private let service: BankAccountsService
-    private(set) var balance: Decimal?
+    var balance: Decimal = 0
     
     
     init(service: BankAccountsService) {
