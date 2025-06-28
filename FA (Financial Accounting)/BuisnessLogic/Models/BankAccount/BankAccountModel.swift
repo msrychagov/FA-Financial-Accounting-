@@ -10,5 +10,5 @@ struct BankAccount: Equatable {
     let id: String
     let name: String
     var balance: Decimal
-    let currency: String
+    var currency: String
 }

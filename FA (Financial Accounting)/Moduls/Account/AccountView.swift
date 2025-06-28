@@ -31,8 +31,6 @@ public struct AccountView: View {
     @State
     private var showingCurrencyDialog = false
     
-    @State
-    private var currency: Currency = .rub
     
     @State private var isBalanceHidden: Bool = false
     
@@ -58,7 +56,7 @@ public struct AccountView: View {
             )
             .refreshable {
                 do {
-                    try await viewModel.fetchAccount()
+                    try await viewModel.refreshAccount()
                 }
                 catch {
                     print("Не удалось обновить счёт:", error)
@@ -70,7 +68,7 @@ public struct AccountView: View {
                 ToolbarItem {
                     NavigationLink("Редактировать") {
                         EdditingAccountView(
-                            viewModel: $viewModel, curCurrency: $currency
+                            viewModel: $viewModel
                         )
                     }
                     .tint(.secondAccent)
@@ -83,7 +81,7 @@ public struct AccountView: View {
         HStack {
             Text("Валюта")
             Spacer()
-            Text(currency.rawValue)
+            Text(viewModel.currency.rawValue)
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12).fill(.accent.opacity(0.2)))

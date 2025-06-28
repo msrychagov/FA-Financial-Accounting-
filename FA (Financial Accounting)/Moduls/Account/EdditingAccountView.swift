@@ -16,9 +16,6 @@ struct EdditingAccountView: View {
     @State
     var showingCurrencyDialog: Bool = false
     
-    @Binding
-    var curCurrency: Currency
-    
     @State
     var prevCurrency: Currency = .rub
 //    
@@ -34,7 +31,7 @@ struct EdditingAccountView: View {
                 currencyList
             }
             .scrollDismissesKeyboard(.immediately)
-            .onChange(of: curCurrency) { newValue in
+            .onChange(of: viewModel.currency) { newValue in
                 switch prevCurrency {
                 case .rub:
                     viewModel.balance *= newValue.rateFromRub
@@ -68,7 +65,7 @@ struct EdditingAccountView: View {
                     Text("Валюта")
                         .tint(.black)
                     Spacer()
-                    Text(curCurrency.rawValue)
+                    Text(viewModel.currency.rawValue)
                         .tint(.secondary)
                     Image(systemName: "chevron.right")
                         .tint(.secondary)
@@ -78,13 +75,13 @@ struct EdditingAccountView: View {
         }
         .confirmationDialog("Валюта", isPresented: $showingCurrencyDialog, titleVisibility: .visible) {
             Button("Российский рубль ₽")   {
-                curCurrency = .rub
+                viewModel.currency = .rub
             }
             Button("Американский доллар $"){
-                curCurrency = .usd
+                viewModel.currency = .usd
             }
             Button("Евро €") {
-                curCurrency = .eur
+                viewModel.currency = .eur
             }
         }
     }

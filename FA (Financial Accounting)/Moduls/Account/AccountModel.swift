@@ -15,6 +15,11 @@ final class AccountModel {
             account?.balance = balance
         }
     }
+    var currency: Currency = .rub {
+        didSet {
+            account?.currency = currency.rawValue
+        }
+    }
     
     
     init(service: BankAccountsService) {
@@ -25,12 +30,8 @@ final class AccountModel {
         }
     }
     
-    func putAccount() async throws{
-        
-    }
-    
-    func fetchAccount() async throws {
-        
+    func refreshAccount() async throws {
+        account = try await service.putBankAccount(account: account!, newBalance: balance, newCurrency: currency.rawValue)
     }
     
     
