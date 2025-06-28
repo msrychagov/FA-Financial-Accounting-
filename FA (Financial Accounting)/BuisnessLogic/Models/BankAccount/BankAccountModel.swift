@@ -9,6 +9,6 @@ import Foundation
 struct BankAccount: Equatable {
     let id: String
     let name: String
-    let balance: Decimal
+    var balance: Decimal
     let currency: String
 }

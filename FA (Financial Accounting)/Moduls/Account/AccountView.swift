@@ -69,7 +69,9 @@ public struct AccountView: View {
             .toolbar {
                 ToolbarItem {
                     NavigationLink("Редактировать") {
-                        EdditingAccountView(curCurrency: $currency, balance: $viewModel.balance)
+                        EdditingAccountView(
+                            viewModel: $viewModel, curCurrency: $currency
+                        )
                     }
                     .tint(.secondAccent)
                 }

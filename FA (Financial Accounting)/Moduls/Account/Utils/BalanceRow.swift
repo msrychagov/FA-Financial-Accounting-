@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct BalanceRow: View {
-    @Binding var balance: Decimal
+    @Binding var viewModel: AccountModel
     @FocusState private var isFocused: Bool
     @State private var textValue: String = ""
     
@@ -42,15 +42,15 @@ struct BalanceRow: View {
                 // Обновляем отображение при смене фокуса
                 .onChange(of: isFocused) { focused in
                     let formatter = makeFormatter()
-                    textValue = formatter.string(from: NSDecimalNumber(decimal: balance)) ?? ""
+                    textValue = formatter.string(from: NSDecimalNumber(decimal: viewModel.balance)) ?? ""
                 }
-                .onChange(of: balance) { newBalance in
+                .onChange(of: viewModel.balance) { newBalance in
                     let formatter = makeFormatter()
                     textValue = formatter.string(from: NSDecimalNumber(decimal: newBalance)) ?? ""
                 }
             }
             .onAppear {
-                textValue = makeFormatter().string(from: NSDecimalNumber(decimal: balance)) ?? ""
+                textValue = makeFormatter().string(from: NSDecimalNumber(decimal: viewModel.balance)) ?? ""
             }
             .onTapGesture {
                 isFocused = true
@@ -77,9 +77,9 @@ struct BalanceRow: View {
         // Обновить привязанный баланс
         let plainString = singleDecimal.replacingOccurrences(of: decimalSeparator, with: ".")
         if let decimal = Decimal(string: plainString) {
-            balance = decimal
+            viewModel.balance = decimal
         } else if singleDecimal.isEmpty {
-            balance = .zero
+            viewModel.balance = .zero
         }
     }
 }

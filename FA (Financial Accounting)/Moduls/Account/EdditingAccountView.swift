@@ -10,6 +10,9 @@ import SwiftUI
 struct EdditingAccountView: View {
     @Environment(\.dismiss) private var dismiss
     
+    @Binding
+    var viewModel: AccountModel
+    
     @State
     var showingCurrencyDialog: Bool = false
     
@@ -18,15 +21,15 @@ struct EdditingAccountView: View {
     
     @State
     var prevCurrency: Currency = .rub
-    
-    @Binding
-    var balance: Decimal
+//    
+//    @Binding
+//    var balance: Decimal
     
     var body: some View {
         NavigationStack {
             List {
                 BalanceRow(
-                    balance: $balance
+                    viewModel: $viewModel
                 )
                 currencyList
             }
@@ -34,11 +37,11 @@ struct EdditingAccountView: View {
             .onChange(of: curCurrency) { newValue in
                 switch prevCurrency {
                 case .rub:
-                    balance *= newValue.rateFromRub
+                    viewModel.balance *= newValue.rateFromRub
                 case .usd:
-                    balance *= newValue.rateFromUsd
+                    viewModel.balance *= newValue.rateFromUsd
                 case .eur:
-                    balance *= newValue.rateFromEur
+                    viewModel.balance *= newValue.rateFromEur
                 }
                 prevCurrency = newValue
             }

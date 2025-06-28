@@ -10,20 +10,29 @@ import SwiftUI
 final class AccountModel {
     private(set) var account: BankAccount?
     private let service: BankAccountsService
-    var balance: Decimal = 0
+    var balance: Decimal = 0 {
+        didSet {
+            account?.balance = balance
+        }
+    }
     
     
     init(service: BankAccountsService) {
         self.service = service
         Task {
-            try await fetchAccount()
+            account = try await service.fetchFirst()
+            balance = account?.balance ?? 0
         }
     }
     
-    func fetchAccount() async throws {
-        account = try await service.fetchFirst()
-        balance = account?.balance ?? 0
+    func putAccount() async throws{
+        
     }
+    
+    func fetchAccount() async throws {
+        
+    }
+    
     
     
 }
