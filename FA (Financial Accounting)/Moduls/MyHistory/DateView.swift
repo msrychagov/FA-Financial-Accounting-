@@ -17,11 +17,31 @@ struct DateView: View {
     @Binding var otherDate: Date
     var body: some View {
         HStack {
-            DatePicker(
-                border == .start ? "Начало" : "Конец",
-                selection: dateBinding,
-                displayedComponents: [.date]
-            )
+            Text(border == .start ? "Начало" : "Конец")
+            Spacer()
+            ZStack {
+                Text(
+                    $mainDate.wrappedValue,
+                    format: Date.FormatStyle()
+                        .day()
+                        .month()
+                        .year()
+                )
+                .font(.callout)
+                .frame(width: 120, height: 35)
+                .background(.accent.opacity(0.2))
+                .cornerRadius(8)
+                
+                DatePicker(
+                    "",
+                    selection: dateBinding,
+                    displayedComponents: [.date]
+                )
+                .labelsHidden()
+                .blendMode(.destinationOver)
+                .tint(.accent)
+            }
+            
         }
         
         

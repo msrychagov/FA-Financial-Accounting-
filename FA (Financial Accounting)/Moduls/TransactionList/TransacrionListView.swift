@@ -37,34 +37,41 @@ struct TransactionListView: View {
     
     // MARK: View
     var body: some View {
-        NavigationStack {
-            List {
-                sum
-                transactionsList
-            }
-            .navigationTitle(
-                transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
-            )
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction))
-                    } label: {
-                        Constants.ToolBar.clockLabel
-                    }
-                    .foregroundColor(Constants.ToolBar.tintColor)
+        GeometryReader { geo in
+            NavigationStack {
+                List {
+                    sum
+                    transactionsList
                 }
-            }
-            .toolbarColorScheme(.light, for: .navigationBar)
-//            .toolbarBackground(.visible, for: .navigationBar)
-//            .toolbarBackground(Color.blue, for: .navigationBar)
-//            .tint(Constants.ToolBar.tintColor)
-            .task {
-                try? await transactionsListModel.fetch(
-                    startDate: startOfToday,
-                    endDate: generalEnd
+                .navigationTitle(
+                    transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
                 )
-            }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction))
+                        } label: {
+                            Constants.ToolBar.clockLabel
+                        }
+                        .foregroundColor(Constants.ToolBar.tintColor)
+                    }
+                }
+                .overlay(
+                        plusButton
+                          .padding(.bottom, geo.safeAreaInsets.bottom + 16)
+                        .padding(.trailing, 16),
+                        alignment: .bottomTrailing
+                      )
+                      .ignoresSafeArea(edges: .bottom)
+                .task {
+                    try? await transactionsListModel.fetch(
+                        startDate: startOfToday,
+                        endDate: generalEnd
+                    )
+                }
+        }
+            .accentColor(Constants.ToolBar.tintColor)
+        
         }
     }
     
@@ -108,16 +115,28 @@ struct TransactionListView: View {
                 NavigationLink {
                     Text("See soon")
                 } label: {
-                    HStack {
-                        Text(transaction.category.emoji)
-                        Text(transaction.comment)
-                        Spacer()
-                        Text("\(formatted(transaction.amount))")
-                    }
+                    TransactionCell(transaction: transaction)
                     
                 }
             }
         }
+    }
+    
+    private var plusButton: some View {
+        Button {
+            
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(.white)
+                .padding(20)
+        }
+        .frame(width: 56, height: 56)
+        .background(.accent)
+        .clipShape(Circle())
+        
+        
+        
     }
     
 }

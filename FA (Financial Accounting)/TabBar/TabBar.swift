@@ -9,31 +9,34 @@
 import SwiftUI
 
 struct TabBar: View {
+    // MARK: Variables
+    let transactionsService: TransactionsService
+    let accountsService: BankAccountsService
     var body: some View {
         TabView {
             IncomeView()
                 .tabItem {
-                    Image(systemName: "plus")
+                    Image("income")
                     Text("Доходы")
                 }
             OutComeView()
                 .tabItem {
-                    Image(systemName: "minus")
+                    Image("outcome")
                     Text("Расходы")
                 }
-            AccountView()
+            AccountView(viewModel: AccountModel(service: accountsService))
                 .tabItem {
-                    Image(systemName: "person.circle")
+                    Image("account")
                     Text("Счёт")
                 }
             CategoriesView()
                 .tabItem {
-                    Image(systemName: "list.bullet")
+                    Image("categories")
                     Text("Статьи")
                 }
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image("settings")
                     Text("Настройки")
                 }
         }
