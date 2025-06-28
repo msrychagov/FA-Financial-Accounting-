@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct BalanceView: View {
+struct BalanceCell: View {
     @Binding
     var balance: Decimal
-    
+    @FocusState
+    var isFocused: Bool
     
     var backgroundColor: Color
     
@@ -19,12 +20,23 @@ struct BalanceView: View {
             Text("💰")
             Text("Баланс")
             Spacer()
-            /// Немнго отошел от дизайна - не показываю валюту в поле баланса, потому что она есть ниже
-            Text(balance, format: .number.precision(.fractionLength(2)))
+            TextField(
+                "",
+                value: $balance,
+                format: .number
+            )
+            .keyboardType(.decimalPad)
+            .multilineTextAlignment(.trailing)
+            .focused($isFocused)
+            .frame(minWidth: 80)
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12/*, style: .continuous*/).fill(backgroundColor))
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        
+        .onTapGesture {
+              isFocused = true
+            }
     }
 }

@@ -34,6 +34,8 @@ public struct AccountView: View {
     @State
     private var currency: Currency = .rub
     
+    
+    
     // MARK: Views
     public var body: some View {
         NavigationStack {
@@ -48,7 +50,7 @@ public struct AccountView: View {
             .toolbar {
                 ToolbarItem {
                     NavigationLink("Редактировать") {
-                        EdditingAccountView()
+                        EdditingAccountView(curCurrency: $currency)
                     }
                     .tint(.secondAccent)
                 }

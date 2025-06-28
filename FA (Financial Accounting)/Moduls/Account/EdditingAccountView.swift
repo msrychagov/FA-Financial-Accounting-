@@ -11,8 +11,8 @@ struct EdditingAccountView: View {
     @State
     var showingCurrencyDialog: Bool = false
     
-    @State
-    var curCurrency: Currency = .rub
+    @Binding
+    var curCurrency: Currency
     
     @State
     var prevCurrency: Currency = .rub
@@ -23,12 +23,13 @@ struct EdditingAccountView: View {
     var body: some View {
         NavigationStack {
             List {
-                BalanceView(
+                BalanceCell(
                     balance: $balance,
                     backgroundColor: .white
                 )
                 currencyList
             }
+            .scrollDismissesKeyboard(.immediately)
             .onChange(of: curCurrency) { newValue in
                 switch prevCurrency {
                 case .rub:
@@ -76,6 +77,6 @@ struct EdditingAccountView: View {
     }
 }
 
-#Preview {
-    EdditingAccountView()
-}
+//#Preview {
+//    EdditingAccountView(curCurrency: .rub)
+//}

@@ -10,6 +10,7 @@ import SwiftUI
 final class AccountModel {
     private(set) var account: BankAccount?
     private let service: BankAccountsService
+    private(set) var balance: Decimal?
     
     
     init(service: BankAccountsService) {
@@ -21,6 +22,7 @@ final class AccountModel {
     
     func fetchAccount() async throws {
         account = try await service.fetchFirst()
+        balance = account?.balance ?? 0
     }
     
     

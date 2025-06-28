@@ -15,7 +15,7 @@ enum Currency: String, CaseIterable {
         switch self {
         case .rub: return 1
         case .usd: return 0.013  // 1₽ = 0.013$
-        case .eur: return Decimal(string: "0.011")!  // 1₽ = 0.011€
+        case .eur: return Decimal(string: "0.011")!
         }
       }
     
