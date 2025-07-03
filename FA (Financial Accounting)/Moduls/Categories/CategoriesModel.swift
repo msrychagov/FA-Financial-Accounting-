@@ -38,7 +38,9 @@ final class CategoriesModel: ObservableObject {
             categories = allCategories
         } else {
             categories = allCategories.filter {
-                $0.name.lowercased().levenshteinDistance(to: inputText.lowercased()) <= 3 || $0.name.lowercased().contains(inputText.lowercased())
+                $0.name.lowercased().levenshteinDistance(
+                    to: inputText.lowercased()
+                ) <= 3 || $0.name.lowercased().contains(inputText.lowercased())
             }
         }
     }

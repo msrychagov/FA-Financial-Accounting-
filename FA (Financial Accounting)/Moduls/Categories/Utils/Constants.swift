@@ -30,5 +30,9 @@ extension CategoriesView {
             static let foregroundColor: Color = .accent.opacity(0.2)
             static let dividerLeadingPadding: CGFloat = 24
         }
+        
+        enum Search {
+            static let placeholder: String = "Поиск"
+        }
     }
 }

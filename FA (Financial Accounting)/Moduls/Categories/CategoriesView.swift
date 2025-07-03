@@ -29,7 +29,7 @@ public struct CategoriesView: View {
     
     private var search: some View {
         TextField(
-            "Поиск",
+            Constants.Search.placeholder,
             text: $model.query
         )
     }
