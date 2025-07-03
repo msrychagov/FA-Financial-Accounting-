@@ -2,10 +2,17 @@
 final class CategoriesService {
     func categories() async throws -> [Category] {
         let categories: [Category] = [
-            Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: .outcome),
+            Category(id: 1, name: "Подработка", emoji: "💸", isIncome: .income),
             Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
-            Category(id: 3, name: "Подработка", emoji: "💸", isIncome: .income),
-            Category(id: 4, name: "Спортзал", emoji: "🏋️‍♂️", isIncome: .outcome),
+            Category(id: 3, name: "Аренда квартиры", emoji: "🏠", isIncome: .outcome),
+            Category(id: 4, name: "Одежда", emoji: "👔", isIncome: .outcome),
+            Category(id: 5, name: "На собачку", emoji: "🐕", isIncome: .outcome),
+            Category(id: 6, name: "Ремонт квартиры", emoji: "🔨", isIncome: .outcome),
+            Category(id: 7, name: "Продукты", emoji: "🍬", isIncome: .outcome),
+            Category(id: 8, name: "Спортзал", emoji: "🏋️‍♀️", isIncome: .outcome),
+            Category(id: 9, name: "Медицина", emoji: "💊", isIncome: .outcome),
+            Category(id: 10, name: "Аптека", emoji: "💜", isIncome: .outcome),
+            Category(id: 11, name: "Машина", emoji: "🚗", isIncome: .outcome)
         ]
         
         return categories

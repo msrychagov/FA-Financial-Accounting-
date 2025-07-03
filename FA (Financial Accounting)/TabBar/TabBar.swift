@@ -29,7 +29,7 @@ struct TabBar: View {
                     Image("account")
                     Text("Счёт")
                 }
-            CategoriesView()
+            CategoriesView(model: CategoriesModel(categoriesService: CategoriesService()))
                 .tabItem {
                     Image("categories")
                     Text("Статьи")
