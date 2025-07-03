@@ -26,15 +26,17 @@ public struct CategoriesView: View {
     
     //MARK: ViewElements
     private var title: some View {
-        Section(header:
-                    Text(Constants.TitleSection.title)
-            .font(Constants.TitleSection.font)
-                        .bold()
-                        .textCase(Constants.TitleSection.textCase)
-                        .foregroundStyle(Constants.TitleSection.foregroundStyle)
-        ) {
+        Section(header: titleSectionHeader) {
             Text("Здесь будет поиск")
         }
+    }
+    
+    private var titleSectionHeader: some View {
+        Text(Constants.TitleSection.title)
+            .font(Constants.TitleSection.font)
+            .bold()
+            .textCase(Constants.TitleSection.textCase)
+            .foregroundStyle(Constants.TitleSection.foregroundStyle)
     }
     
     private var categoriesList: some View {
