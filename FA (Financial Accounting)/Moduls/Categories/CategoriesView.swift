@@ -9,7 +9,8 @@ import SwiftUI
 
 public struct CategoriesView: View {
     //MARK: Variables
-    let model: CategoriesModel
+    @StateObject var model: CategoriesModel
+    @State private var categoryName: String = ""
     
     //MARK: Body
     public var body: some View {
@@ -17,18 +18,20 @@ public struct CategoriesView: View {
             title
             categoriesList
         }
-        
-        
-        .task {
-            try? await model.loadCategories()
-        }
     }
     
     //MARK: ViewElements
     private var title: some View {
         Section(header: titleSectionHeader) {
-            Text("Здесь будет поиск")
+            search
         }
+    }
+    
+    private var search: some View {
+        TextField(
+            "Поиск",
+            text: $model.query
+        )
     }
     
     private var titleSectionHeader: some View {

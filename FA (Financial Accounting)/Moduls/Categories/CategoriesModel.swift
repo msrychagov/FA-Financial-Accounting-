@@ -5,17 +5,41 @@
 //  Created by Михаил Рычагов on 03.07.2025.
 //
 import Foundation
+import Combine
 
-@Observable
-final class CategoriesModel {
+final class CategoriesModel: ObservableObject {
     private let service: CategoriesService
-    private(set) var categories: [Category] = []
+    private var allCategories: [Category] = []
+    @Published var categories: [Category] = []
+    @Published var query: String = ""
+    private var cancellables = Set<AnyCancellable>()
     
     init(categoriesService: CategoriesService) {
         self.service = categoriesService
+        Task {
+            try? await loadCategories()
+        }
+        $query
+//            .removeDuplicates()
+//            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.filter(by: text)
+            }
+            .store(in: &cancellables)
     }
     
     func loadCategories() async throws {
-        categories = try await service.categories()
+        allCategories = try await service.categories()
+        categories = allCategories
+    }
+    
+    func filter(by inputText: String) {
+        if inputText.isEmpty {
+            categories = allCategories
+        } else {
+            categories = allCategories.filter {
+                $0.name.lowercased().contains(inputText.lowercased())
+            }
+        }
     }
 }
