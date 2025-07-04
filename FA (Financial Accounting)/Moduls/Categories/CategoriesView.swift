@@ -44,7 +44,7 @@ public struct CategoriesView: View {
     
     private var categoriesList: some View {
         Section(Constants.CategoriesList.title) {
-            ForEach(model.categories) { category in
+            ForEach(model.filteredCategories) { category in
                 categoryCell(category)
             }
         }
