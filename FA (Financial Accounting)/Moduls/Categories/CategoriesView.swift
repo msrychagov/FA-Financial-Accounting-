@@ -14,25 +14,30 @@ public struct CategoriesView: View {
     
     //MARK: Body
     public var body: some View {
-        List {
-            title
-            categoriesList
+        NavigationView {
+            List {
+//                title
+                categoriesList
+            }
+            .navigationTitle(Constants.TitleSection.title)
+            .searchable(text: $model.query, prompt: "Поиск")
         }
+        
     }
     
     //MARK: ViewElements
-    private var title: some View {
-        Section(header: titleSectionHeader) {
-            search
-        }
-    }
-    
-    private var search: some View {
-        TextField(
-            Constants.Search.placeholder,
-            text: $model.query
-        )
-    }
+//    private var title: some View {
+//        Section(header: titleSectionHeader) {
+//            search
+//        }
+//    }
+//    
+//    private var search: some View {
+//        TextField(
+//            Constants.Search.placeholder,
+//            text: $model.query
+//        )
+//    }
     
     private var titleSectionHeader: some View {
         Text(Constants.TitleSection.title)
