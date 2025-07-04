@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct CategoriesView: View {
     //MARK: Variables
-    @StateObject var model: CategoriesModel
+    @StateObject var model: CategoriesViewModel
     @State private var categoryName: String = ""
     
     //MARK: Body

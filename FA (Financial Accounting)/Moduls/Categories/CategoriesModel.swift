@@ -7,10 +7,10 @@
 import Foundation
 import Combine
 
-final class CategoriesModel: ObservableObject {
+final class CategoriesViewModel: ObservableObject {
     private let service: CategoriesService
     private var allCategories: [Category] = []
-    @Published var categories: [Category] = []
+    @Published var filteredCategories: [Category] = []
     @Published var query: String = ""
     private var cancellables = Set<AnyCancellable>()
     
@@ -28,16 +28,18 @@ final class CategoriesModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    // сервис
     func loadCategories() async throws {
         allCategories = try await service.categories()
-        categories = allCategories
+        filteredCategories = allCategories
     }
     
     func filter(by inputText: String) {
         if inputText.isEmpty {
-            categories = allCategories
+            filteredCategories = allCategories
         } else {
-            categories = allCategories.filter {
+            // Раскладка
+            filteredCategories = allCategories.filter {
                 $0.name.lowercased().levenshteinDistance(
                     to: inputText.lowercased()
                 ) <= 3 || $0.name.lowercased().contains(inputText.lowercased())
