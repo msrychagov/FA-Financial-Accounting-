@@ -44,15 +44,22 @@ public struct CategoriesView: View {
     
     private var categoriesList: some View {
         Section(Constants.CategoriesList.title) {
-            ForEach(model.filteredCategories) { category in
-                categoryCell(category)
+            ForEach(model.filteredCategories.indices, id: \.self) { idx in
+                categoryCell(
+                    model.filteredCategories[idx],
+                    isLast: idx == model.filteredCategories.count - 1
+                )
             }
+            
         }
+        
+        /// Убралдефолтный разделитель, так как по макету нужно,
+        /// чтобы он начинался с названия категории
         .listRowSeparator(Constants.CategoriesList.listRowSeparator)
         .listRowInsets(Constants.CategoriesList.listRowInsets)
     }
     
-    private func categoryCell(_ category: Category) -> some View {
+    private func categoryCell(_ category: Category, isLast: Bool) -> some View {
         VStack(alignment: Constants.CategoryCell.vstackAligment) {
             HStack {
                 Text(category.emoji)
@@ -64,11 +71,14 @@ public struct CategoriesView: View {
                     )
                 Text(category.name)
             }
+            
+            // Свой разделитель
             Divider()
                 .padding(.leading, Constants.CategoryCell.dividerLeadingPadding)
+                .padding(.trailing, Constants.CategoryCell.dividerTrailingPadding)
+                .opacity(isLast ? 0 : 1)
+            
         }
-        
-        
     }
 }
 

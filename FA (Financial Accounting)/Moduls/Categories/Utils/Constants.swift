@@ -19,7 +19,7 @@ extension CategoriesView {
         enum CategoriesList {
             static let title: String = "Статьи"
             static let listRowSeparator: Visibility = .hidden
-            static let listRowInsets: EdgeInsets = .init(top: 8, leading: 16, bottom: 0, trailing: 16)
+            static let listRowInsets: EdgeInsets = .init(top: 12, leading: 16, bottom: 0, trailing: 16)
         }
         
         enum CategoryCell {
@@ -29,6 +29,7 @@ extension CategoriesView {
             static let circleFrame: CGFloat = 22
             static let foregroundColor: Color = .accent.opacity(0.2)
             static let dividerLeadingPadding: CGFloat = 24
+            static let dividerTrailingPadding: CGFloat = -20
         }
         
         enum Search {
