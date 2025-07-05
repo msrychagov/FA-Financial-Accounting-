@@ -16,9 +16,13 @@ public struct CategoriesView: View {
     public var body: some View {
         NavigationView {
             List {
-//                title
-                categoriesList(direction: .income)
-                categoriesList(direction: .outcome)
+                //                title
+                if !model.byDirectionCategories(.income).isEmpty {
+                    categoriesList(direction: .income)
+                }
+                if !model.byDirectionCategories(.outcome).isEmpty {
+                    categoriesList(direction: .outcome)
+                }
             }
             .navigationTitle(Constants.TitleSection.title)
             .searchable(text: $model.query, prompt: "Поиск")
@@ -27,18 +31,18 @@ public struct CategoriesView: View {
     }
     
     //MARK: ViewElements
-//    private var title: some View {
-//        Section(header: titleSectionHeader) {
-//            search
-//        }
-//    }
-//    
-//    private var search: some View {
-//        TextField(
-//            Constants.Search.placeholder,
-//            text: $model.query
-//        )
-//    }
+    //    private var title: some View {
+    //        Section(header: titleSectionHeader) {
+    //            search
+    //        }
+    //    }
+    //
+    //    private var search: some View {
+    //        TextField(
+    //            Constants.Search.placeholder,
+    //            text: $model.query
+    //        )
+    //    }
     
     private var titleSectionHeader: some View {
         Text(Constants.TitleSection.title)
@@ -49,8 +53,10 @@ public struct CategoriesView: View {
     }
     
     private func categoriesList(direction: Direction) -> some View {
-        Section(
-            direction == .income ? Constants.CategoriesList.incomeTitle : Constants.CategoriesList.outComeTitle
+        Section(header:
+                    Text(direction == .income ? Constants.CategoriesList.incomeTitle : Constants.CategoriesList.outComeTitle)
+            .padding(.bottom, Constants.CategoriesList.sectionHeaderBottomPadding)
+                
         ) {
             ForEach(model.byDirectionCategories(direction).indices, id: \.self) { idx in
                 categoryCell(
@@ -60,7 +66,6 @@ public struct CategoriesView: View {
             }
             
         }
-        
         /// Убралдефолтный разделитель, так как по макету нужно,
         /// чтобы он начинался с названия категории
         .listRowSeparator(Constants.CategoriesList.listRowSeparator)
@@ -87,6 +92,7 @@ public struct CategoriesView: View {
                 .opacity(isLast ? 0 : 1)
             
         }
+        
     }
 }
 

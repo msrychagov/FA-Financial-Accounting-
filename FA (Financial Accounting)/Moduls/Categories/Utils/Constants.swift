@@ -21,6 +21,7 @@ extension CategoriesView {
             static let outComeTitle: String = "Расходы"
             static let listRowSeparator: Visibility = .hidden
             static let listRowInsets: EdgeInsets = .init(top: 12, leading: 16, bottom: 0, trailing: 16)
+            static let sectionHeaderBottomPadding: CGFloat = 8
         }
         
         enum CategoryCell {
