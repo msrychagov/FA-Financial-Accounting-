@@ -1,6 +1,13 @@
 
 final class CategoriesService {
-    func categories() async throws -> [Category] {
+    private(set) var categories: [Category] = []
+    
+    init() {
+        Task {
+            categories = try await loadCategories()
+        }
+    }
+    private func categoriesFromServer() -> [Category] {
         let categories: [Category] = [
             Category(id: 1, name: "Подработка", emoji: "💸", isIncome: .income),
             Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
@@ -18,13 +25,17 @@ final class CategoriesService {
         return categories
     }
     
+    func loadCategories() async throws -> [Category] {
+        categoriesFromServer()
+    }
+    
     func selectCategories(by direction: Direction) async throws -> [Category] {
-        return try await categories().filter { $0.isIncome == direction }
+        return categories.filter { $0.isIncome == direction }
     }
     
     // Добавил метод для получения категории по id, т.к. при изменении Transaction передается categoryId, а вернуть нужно Transaction, где поле - Category
     func category(id: Int) async throws -> Category? {
-        let categories = try await categories()
+//        let categories = try await categories()
         return categories.first(where: { $0.id == id })
     }
 }

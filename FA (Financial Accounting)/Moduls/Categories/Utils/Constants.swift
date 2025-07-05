@@ -17,7 +17,8 @@ extension CategoriesView {
         }
         
         enum CategoriesList {
-            static let title: String = "Статьи"
+            static let incomeTitle: String = "Доходы"
+            static let outComeTitle: String = "Расходы"
             static let listRowSeparator: Visibility = .hidden
             static let listRowInsets: EdgeInsets = .init(top: 12, leading: 16, bottom: 0, trailing: 16)
         }

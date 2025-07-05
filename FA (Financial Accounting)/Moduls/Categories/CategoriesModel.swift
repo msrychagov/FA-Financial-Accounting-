@@ -9,41 +9,35 @@ import Combine
 
 final class CategoriesViewModel: ObservableObject {
     private let service: CategoriesService
-    private var allCategories: [Category] = []
-    @Published var filteredCategories: [Category] = []
+    @Published var toShowCategories: [Category] = []
     @Published var query: String = ""
     private var cancellables = Set<AnyCancellable>()
     
     init(categoriesService: CategoriesService) {
         self.service = categoriesService
-        Task {
-            try? await loadCategories()
-        }
         $query
 //            .removeDuplicates()
 //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
             .sink { [weak self] text in
-                self?.filter(by: text)
+                self?.filterBySearching(text)
             }
             .store(in: &cancellables)
     }
     
-    // сервис
-    func loadCategories() async throws {
-        allCategories = try await service.categories()
-        filteredCategories = allCategories
-    }
-    
-    func filter(by inputText: String) {
+    func filterBySearching(_ inputText: String) {
         if inputText.isEmpty {
-            filteredCategories = allCategories
+            toShowCategories = service.categories
         } else {
             // Раскладка
-            filteredCategories = allCategories.filter {
+            toShowCategories = service.categories.filter {
                 $0.name.lowercased().levenshteinDistance(
                     to: inputText.lowercased()
                 ) <= 3 || $0.name.lowercased().contains(inputText.lowercased())
             }
         }
+    }
+    
+    func byDirectionCategories(_ direction: Direction) -> [Category] {
+        return toShowCategories.filter { $0.isIncome == direction }
     }
 }

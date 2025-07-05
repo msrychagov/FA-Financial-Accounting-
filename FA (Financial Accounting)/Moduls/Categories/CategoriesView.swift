@@ -17,7 +17,8 @@ public struct CategoriesView: View {
         NavigationView {
             List {
 //                title
-                categoriesList
+                categoriesList(direction: .income)
+                categoriesList(direction: .outcome)
             }
             .navigationTitle(Constants.TitleSection.title)
             .searchable(text: $model.query, prompt: "Поиск")
@@ -47,12 +48,14 @@ public struct CategoriesView: View {
             .foregroundStyle(Constants.TitleSection.foregroundStyle)
     }
     
-    private var categoriesList: some View {
-        Section(Constants.CategoriesList.title) {
-            ForEach(model.filteredCategories.indices, id: \.self) { idx in
+    private func categoriesList(direction: Direction) -> some View {
+        Section(
+            direction == .income ? Constants.CategoriesList.incomeTitle : Constants.CategoriesList.outComeTitle
+        ) {
+            ForEach(model.byDirectionCategories(direction).indices, id: \.self) { idx in
                 categoryCell(
-                    model.filteredCategories[idx],
-                    isLast: idx == model.filteredCategories.count - 1
+                    model.byDirectionCategories(direction)[idx],
+                    isLast: idx == model.byDirectionCategories(direction).count - 1
                 )
             }
             
