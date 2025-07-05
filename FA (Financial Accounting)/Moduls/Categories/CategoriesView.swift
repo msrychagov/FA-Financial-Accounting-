@@ -25,7 +25,7 @@ public struct CategoriesView: View {
                 }
             }
             .navigationTitle(Constants.TitleSection.title)
-            .searchable(text: $model.query, prompt: "Поиск")
+            .searchable(text: $model.query, prompt: Constants.Search.placeholder)
         }
         
     }
