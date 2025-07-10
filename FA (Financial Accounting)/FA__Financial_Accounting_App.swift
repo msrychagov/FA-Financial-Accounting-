@@ -10,28 +10,35 @@ import SwiftUI
 @main
 struct FA__Financial_Accounting_App: App {
     init() {
-//        UIDatePicker.appearance().tintColor = UIColor.systemGreen
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = .white
-        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = .accent
-        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.accent]
-        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = .lightGray
-        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
-        UITabBar.appearance().standardAppearance = tabBarAppearance
-        
-//
-        UITabBar.appearance().tintColor = .white
-        
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().standardAppearance   = tabBarAppearance
-            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
-        } else {
-            UITabBar.appearance().standardAppearance = tabBarAppearance
+        tabBar()
+        navBar()
+    }
+    
+    private func navBar () {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = .systemGroupedBackground
+        navBarAppearance.shadowColor = .clear
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        if #available (iOS 15.0, *) {
+            UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
         }
         
     }
     
+    private func tabBar() {
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .systemBackground
+        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = .accent
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.accent]
+        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = .lightGray
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
+        
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
+    }
     
     var body: some Scene {
         WindowGroup {

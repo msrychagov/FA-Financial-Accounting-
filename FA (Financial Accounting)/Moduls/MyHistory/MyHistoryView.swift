@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyHistoryView: View {
     @State
+    var showingAnalysis = false
+    @State
     var transactionsList: TransactionListModel
     @State
     var startDate: Date = startHistory
@@ -21,25 +23,18 @@ struct MyHistoryView: View {
                 transactionsListSection
             }
             .navigationTitle("Моя история")
-            .toolbarColorScheme(.dark)
+//            .toolbarColorScheme(.dark)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        Text("Анализ")
+                        AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate)
                     } label: {
                         Image(systemName: "newspaper")
                     }
-                    .foregroundColor(
-                        Color(
-                            red: 111.0 / 255.0,
-                            green: 93.0 / 255.0,
-                            blue: 183.0 / 255.0
-                        )
-                    )
+                    .foregroundColor(.secondAccent)
                 }
                 
             }
-            
             .task {
                 try? await transactionsList.fetch(
                     startDate: startDate,
@@ -96,6 +91,13 @@ struct MyHistoryView: View {
             Text("\(formatted(transactionsList.sum))")
         }
     }
+}
+
+private struct ScrollOffsetKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = nextValue()
+  }
 }
 
 
