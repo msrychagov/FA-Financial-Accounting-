@@ -9,7 +9,6 @@ import UIKit
 final class AnalysisViewController: UIViewController {
     //MARK: - Variables
     private let vm: AnalysisViewModel
-    private let titleLabel: TitleLabel = TitleLabel()
     private let dateAndSumSection: UITableView = UITableView(frame: .zero, style: .insetGrouped)
     private let actionMenuButton: UIButton = UIButton()
     

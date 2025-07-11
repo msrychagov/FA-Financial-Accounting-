@@ -95,13 +95,6 @@ struct MyHistoryView: View {
     }
 }
 
-private struct ScrollOffsetKey: PreferenceKey {
-  static var defaultValue: CGFloat = 0
-  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-    value = nextValue()
-  }
-}
-
 
 #Preview("Income") {
     MyHistoryView(
