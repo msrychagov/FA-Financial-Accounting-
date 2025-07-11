@@ -10,6 +10,8 @@ import SwiftUI
 struct TransactionListView: View {
     // MARK: Properties
     @State var transactionsListModel: TransactionListModel
+    @State var selectedTransaction: Transaction?
+    @State var isShowingAddTransactionView: Bool = false
     
     // MARK: Constants
     enum Constants {
@@ -38,7 +40,7 @@ struct TransactionListView: View {
     // MARK: View
     var body: some View {
         GeometryReader { geo in
-            NavigationStack {
+            NavigationView {
                 List {
                     sum
                     transactionsList
@@ -57,22 +59,25 @@ struct TransactionListView: View {
                     }
                 }
                 .overlay(
-                        plusButton
-                          .padding(.bottom, geo.safeAreaInsets.bottom + 16)
+                    plusButton
+                        .padding(.bottom, geo.safeAreaInsets.bottom + 16)
                         .padding(.trailing, 16),
-                        alignment: .bottomTrailing
-                      )
-                      .ignoresSafeArea(edges: .bottom)
+                    alignment: .bottomTrailing
+                )
+                .ignoresSafeArea(edges: .bottom)
                 .task {
                     try? await transactionsListModel.fetch(
                         startDate: startOfToday,
                         endDate: generalEnd
                     )
                 }
-        }
+            }
+            .fullScreenCover(item: $selectedTransaction) {_ in
+                ManageTransactionView(model: ManageTransactionViewModelImp())
+            }
             .accentColor(Constants.ToolBar.tintColor)
-        
         }
+        
     }
     
     // MARK: InsideViews
@@ -112,19 +117,19 @@ struct TransactionListView: View {
     private var transactionsList: some View {
         Section(Constants.TransactionsList.title) {
             ForEach(transactionsListModel.transactions) { transaction in
-                NavigationLink {
-                    Text("See soon")
+                Button {
+                    selectedTransaction = transaction
                 } label: {
                     TransactionCell(transaction: transaction)
-                    
                 }
+                .tint(.primary)
             }
         }
     }
     
     private var plusButton: some View {
         Button {
-            
+            isShowingAddTransactionView = true
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 16, weight: .bold))
@@ -134,6 +139,9 @@ struct TransactionListView: View {
         .frame(width: 56, height: 56)
         .background(.accent)
         .clipShape(Circle())
+        .fullScreenCover(isPresented: $isShowingAddTransactionView) {
+            ManageTransactionView(model: ManageTransactionViewModelImp())
+        }
         
         
         
