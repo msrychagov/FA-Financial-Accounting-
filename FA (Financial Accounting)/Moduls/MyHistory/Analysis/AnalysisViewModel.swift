@@ -20,8 +20,21 @@ final class AnalysisViewModel {
     func loadData(startDate: Date, endDate: Date) async throws {
         let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
         transactions = allTransactions.filter { $0.category.isIncome == self.direction }
+    }
+    
+    func setUpCategories() {
         let categoriesSet = Set(transactions.map { $0.category })
         categories = Array(categoriesSet)
+        sort(by: .ascending)
+    }
+    
+    func sort(by sortingType: SortingType) {
+        if sortingType == .ascending {
+            categories.sort { percent(for: $0) < percent(for: $1) }
+        } else {
+            categories.sort { percent(for: $0) > percent(for: $1) }
+        }
+        
     }
     
     private func sum(for category: Category) -> Decimal {

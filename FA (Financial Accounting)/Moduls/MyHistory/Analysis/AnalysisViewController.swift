@@ -11,7 +11,8 @@ final class AnalysisViewController: UIViewController {
     private let vm: AnalysisViewModel
     private let titleLabel: TitleLabel = TitleLabel()
     private let dateAndSumSection: UITableView = UITableView(frame: .zero, style: .insetGrouped)
-    private let m: UIView = UIView()
+    private let actionMenuButton: UIButton = UIButton()
+    
     
     
     //MARK: - Lyfecycle
@@ -27,6 +28,7 @@ final class AnalysisViewController: UIViewController {
         super.viewDidLoad()
         Task {
             try await vm.loadData(startDate: startHistory, endDate: generalEnd)
+            vm.setUpCategories()
             dateAndSumSection.reloadData()
         }
         configureUI()
@@ -36,7 +38,31 @@ final class AnalysisViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .systemGroupedBackground
         configureTitleLabel()
+//        configureActionMenuButton()
         configureDateAndSumSection()
+    }
+    
+    private func configureActionMenuButton() {
+        if #available(iOS 14.0, *) {
+          // 1. Создаём действия
+          let scan = UIAction(title: "Сканировать", image: UIImage(systemName: "doc.text.viewfinder")) { _ in /*…*/ }
+          let pin  = UIAction(title: "Закрепить",  image: UIImage(systemName: "pin.fill"))           { _ in /*…*/ }
+          let lock = UIAction(title: "Защитить",   image: UIImage(systemName: "lock.fill"))          { _ in /*…*/ }
+          let del  = UIAction(title: "Удалить",    image: UIImage(systemName: "trash"), attributes: .destructive) { _ in /*…*/ }
+
+          // 2. Собираем UIMenu
+          let menu = UIMenu(title: "Сортировка", children: [scan, pin, lock, del])
+
+          // 3a. Если это UIButton:
+            actionMenuButton.menu = menu
+            actionMenuButton.showsMenuAsPrimaryAction = true
+        }
+        actionMenuButton.backgroundColor = .red
+        view.addSubview(actionMenuButton)
+        actionMenuButton.setHeight(32)
+        actionMenuButton.setWidth(32)
+        actionMenuButton.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, 16)
+        actionMenuButton.pinTop(to: view.topAnchor, 16)
     }
     
     private func configureTitleLabel() {
@@ -50,6 +76,7 @@ final class AnalysisViewController: UIViewController {
         dateAndSumSection.register(DateTableCell.self, forCellReuseIdentifier: DateTableCell.reuseIdentifier)
         dateAndSumSection.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
         dateAndSumSection.register(SumCell.self, forCellReuseIdentifier: SumCell.reuseIdentifier)
+        dateAndSumSection.register(SortCell.self, forCellReuseIdentifier: SortCell.reuseIdentifier)
         dateAndSumSection.dataSource = self
         dateAndSumSection.delegate = self
 //        dateAndSumSection.contentInset = .zero
@@ -74,7 +101,7 @@ extension AnalysisViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 1: return vm.categories.count
-        default: return 3
+        default: return 4
         }
     }
     
@@ -91,11 +118,17 @@ extension AnalysisViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             switch indexPath.row {
-            case 2:
+            case 3:
                 let cell = tableView.dequeueReusableCell(withIdentifier: SumCell.reuseIdentifier, for: indexPath)
                 guard let sumCell = cell as? SumCell else { return cell }
                 sumCell.configure(sum: vm.stringSumAll())
                 return sumCell
+            case 2:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SortCell.reuseIdentifier, for: indexPath)
+                guard let sortCell = cell as? SortCell else { return cell }
+                sortCell.configure()
+                sortCell.menuDelegate = self
+                return sortCell
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: DateTableCell.reuseIdentifier, for: indexPath)
                 guard let dateCell = cell as? DateTableCell else { return cell }
@@ -127,6 +160,13 @@ extension AnalysisViewController: UITableViewDelegate {
     }
 }
 
+extension AnalysisViewController: MenuDelegate {
+    func menu(_ sortingType: SortingType) {
+        vm.sort(by: sortingType)
+        dateAndSumSection.reloadSections([1], with: .none)
+    }
+}
+
 extension AnalysisViewController: DateDelegate {
     func datePicker(cell: DateTableCell, newDate: Date) {
         let border = cell.border
@@ -153,7 +193,7 @@ extension AnalysisViewController: DateDelegate {
             UIView.performWithoutAnimation {
                 dateAndSumSection.reloadSections([1], with: .none)
                 dateAndSumSection.layoutIfNeeded()
-                dateAndSumSection.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+                dateAndSumSection.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .none)
             }
         }
         
@@ -163,5 +203,5 @@ extension AnalysisViewController: DateDelegate {
 
 
 #Preview {
-    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .outcome)
+    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .income)
 }
