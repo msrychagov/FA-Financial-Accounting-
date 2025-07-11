@@ -19,7 +19,8 @@ final class CategoriesService {
             Category(id: 8, name: "Спортзал", emoji: "🏋️‍♀️", isIncome: .outcome),
             Category(id: 9, name: "Медицина", emoji: "💊", isIncome: .outcome),
             Category(id: 10, name: "Аптека", emoji: "💜", isIncome: .outcome),
-            Category(id: 11, name: "Машина", emoji: "🚗", isIncome: .outcome)
+            Category(id: 11, name: "Машина", emoji: "🚗", isIncome: .outcome),
+            Category(id: 12, name: "Деп", emoji: "💰", isIncome: .outcome)
         ]
         
         return categories

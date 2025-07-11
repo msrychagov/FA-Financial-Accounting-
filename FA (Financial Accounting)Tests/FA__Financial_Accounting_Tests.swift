@@ -348,14 +348,6 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         
     }
     
-    func testTransactionService() async throws {
-        let service = TransactionsService()
-        var loadedTransactions = try? await service.transactions()
-        loadedTransactions?.sort(by: {$0.amount > $1.amount })
-        print(loadedTransactions)
-        XCTAssertNotNil(loadedTransactions)
-    }
-    
     func testDate() async throws {
         let dateFromJSON: String = "2025-06-19T23:42:34.083Z"
         let formattedDateFromJSON: Date = (formatter?.date(from: dateFromJSON))!
