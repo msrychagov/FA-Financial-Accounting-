@@ -7,13 +7,71 @@
 import Foundation
 
 final class AnalysisViewModel {
+    private let transactionsService: TransactionsService
+    private let categoriesService: CategoriesService = CategoriesService()
+    private(set) var categories: [Category] = []
+    private(set) var transactions: [Transaction] = []
     let startDate: Date
     let endDate: Date
+    let direction: Direction
     
-    init(startDate: Date, endDate: Date) {
+    init(startDate: Date, endDate: Date, service: TransactionsService, direction: Direction) {
+        self.transactionsService = service
         self.startDate = startDate
         self.endDate = endDate
+        self.direction = direction
     }
     
+    func loadData() async throws {
+        let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
+        transactions = allTransactions.filter { $0.category.isIncome == self.direction }
+        let categoriesSet = Set(transactions.map { $0.category })
+        categories = Array(categoriesSet)
+    }
     
+    private func sum(for category: Category) -> Decimal {
+        let decimalSum = transactions.reduce(into: Decimal(0)) { result, transaction in
+            if transaction.category.id == category.id {
+                result += transaction.amount
+            }
+        }
+        return decimalSum
+    }
+    
+    private func sumAll() -> Decimal {
+        let decimalSum = transactions.reduce(into: Decimal(0)) { result, transaction in
+            result += transaction.amount
+        }
+        return decimalSum
+    }
+    
+    private func percent(for category: Category) -> Decimal {
+        return sum(for: category) / sumAll() * 100
+    }
+}
+
+extension AnalysisViewModel {
+    func stringPercent(for category: Category) -> String {
+        let decimalPercent = percent(for: category)
+        return (makeFormatter().string(from: NSDecimalNumber(decimal: decimalPercent)) ?? "") + "%"
+    }
+    
+    func stringSum(for category: Category) -> String {
+        let decimalSum = sum(for: category)
+        return (makeFormatter().string(from: NSDecimalNumber(decimal: decimalSum)) ?? "") + " ₽"
+    }
+    
+    func stringSumAll() -> String {
+        let decimalSumAll = sumAll()
+        return (makeFormatter().string(from: NSDecimalNumber(decimal: decimalSumAll)) ?? "") + " ₽"
+    }
+    
+    private func makeFormatter(for locale: Locale = .current) -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.usesGroupingSeparator = false
+        formatter.locale = locale
+        return formatter
+    }
 }

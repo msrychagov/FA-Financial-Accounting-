@@ -15,8 +15,8 @@ final class AnalysisViewController: UIViewController {
     
     
     //MARK: - Lyfecycle
-    init(startDate: Date, endDate: Date) {
-        vm = AnalysisViewModel(startDate: startDate, endDate: endDate)
+    init(startDate: Date, endDate: Date, service: TransactionsService, direction: Direction) {
+        vm = AnalysisViewModel(startDate: startDate, endDate: endDate, service: service, direction: direction)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,6 +25,10 @@ final class AnalysisViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task {
+            try await vm.loadData()
+            dateAndSumSection.reloadData()
+        }
         configureUI()
     }
     
@@ -44,8 +48,10 @@ final class AnalysisViewController: UIViewController {
     
     private func configureDateAndSumSection() {
         dateAndSumSection.register(DateTableCell.self, forCellReuseIdentifier: DateTableCell.reuseIdentifier)
-        dateAndSumSection.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        dateAndSumSection.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
+        dateAndSumSection.register(SumCell.self, forCellReuseIdentifier: SumCell.reuseIdentifier)
         dateAndSumSection.dataSource = self
+        dateAndSumSection.delegate = self
 //        dateAndSumSection.contentInset = .zero
 //        dateAndSumSection.separatorInset = .zero
 //        dateAndSumSection.layoutMargins = .zero
@@ -67,8 +73,8 @@ extension AnalysisViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1: return 30
-        default: return 2
+        case 1: return vm.categories.count
+        default: return 3
         }
     }
     
@@ -84,20 +90,41 @@ extension AnalysisViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: DateTableCell.reuseIdentifier, for: indexPath)
-            guard let dateCell = cell as? DateTableCell else { return cell }
-            dateCell.configure(border: indexPath.row == 0 ? .start : .end)
-            dateCell.dateDelegate = self
-            return dateCell
+            switch indexPath.row {
+            case 2:
+                let cell = tableView.dequeueReusableCell(withIdentifier: SumCell.reuseIdentifier, for: indexPath)
+                guard let sumCell = cell as? SumCell else { return cell }
+                sumCell.configure(sum: vm.stringSumAll())
+                return sumCell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: DateTableCell.reuseIdentifier, for: indexPath)
+                guard let dateCell = cell as? DateTableCell else { return cell }
+                dateCell.configure(border: indexPath.row == 0 ? .start : .end)
+                dateCell.dateDelegate = self
+                return dateCell
+            }
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = ""
-            cell.accessoryType = .disclosureIndicator
+            let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reuseIdentifier, for: indexPath)
+            guard let categoryCell = cell as? CategoryTableViewCell else { return cell }
+            let category = vm.categories[indexPath.row]
+            let sum = vm.stringSum(for: category)
+            let percent = vm.stringPercent(for: category)
+            categoryCell.configure(category: category, sum: sum, percent: percent)
+            categoryCell.accessoryType = .disclosureIndicator
             return cell
         }
     }
     
     
+}
+
+extension AnalysisViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 1: return 60
+        default: return 44
+        }
+    }
 }
 
 extension AnalysisViewController: DateDelegate {
@@ -125,5 +152,5 @@ extension AnalysisViewController: DateDelegate {
 
 
 #Preview {
-    AnalysisViewController(startDate: startHistory, endDate: generalEnd)
+    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .outcome)
 }

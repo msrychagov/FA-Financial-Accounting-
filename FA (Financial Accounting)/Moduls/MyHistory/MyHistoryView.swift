@@ -27,7 +27,7 @@ struct MyHistoryView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate)
+                        AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate, direction: transactionsList.direction)
                     } label: {
                         Image(systemName: "newspaper")
                     }
