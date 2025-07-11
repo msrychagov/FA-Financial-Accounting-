@@ -37,39 +37,7 @@ final class AnalysisViewController: UIViewController {
     //MARK: - SetUp UI
     private func configureUI() {
         view.backgroundColor = .systemGroupedBackground
-        configureTitleLabel()
-//        configureActionMenuButton()
         configureDateAndSumSection()
-    }
-    
-    private func configureActionMenuButton() {
-        if #available(iOS 14.0, *) {
-          // 1. Создаём действия
-          let scan = UIAction(title: "Сканировать", image: UIImage(systemName: "doc.text.viewfinder")) { _ in /*…*/ }
-          let pin  = UIAction(title: "Закрепить",  image: UIImage(systemName: "pin.fill"))           { _ in /*…*/ }
-          let lock = UIAction(title: "Защитить",   image: UIImage(systemName: "lock.fill"))          { _ in /*…*/ }
-          let del  = UIAction(title: "Удалить",    image: UIImage(systemName: "trash"), attributes: .destructive) { _ in /*…*/ }
-
-          // 2. Собираем UIMenu
-          let menu = UIMenu(title: "Сортировка", children: [scan, pin, lock, del])
-
-          // 3a. Если это UIButton:
-            actionMenuButton.menu = menu
-            actionMenuButton.showsMenuAsPrimaryAction = true
-        }
-        actionMenuButton.backgroundColor = .red
-        view.addSubview(actionMenuButton)
-        actionMenuButton.setHeight(32)
-        actionMenuButton.setWidth(32)
-        actionMenuButton.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, 16)
-        actionMenuButton.pinTop(to: view.topAnchor, 16)
-    }
-    
-    private func configureTitleLabel() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(titleLabel)
-        titleLabel.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, 16)
-        titleLabel.pinTop(to: view.topAnchor, 16)
     }
     
     private func configureDateAndSumSection() {
@@ -87,9 +55,9 @@ final class AnalysisViewController: UIViewController {
 //            dateAndSumSection.cellLayoutMarginsFollowReadableWidth = true
 //        }
         view.addSubview(dateAndSumSection)
-        dateAndSumSection.pinTop(to: titleLabel.bottomAnchor)
+        dateAndSumSection.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         dateAndSumSection.pinBottom(to: view.bottomAnchor)
-        dateAndSumSection.pinLeft(to: titleLabel.leadingAnchor)
+        dateAndSumSection.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor)
         dateAndSumSection.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor)
     }
 }
@@ -108,7 +76,7 @@ extension AnalysisViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 1: return "Операции"
-        default: return ""
+        default: return nil
         }
     }
     
@@ -117,23 +85,29 @@ extension AnalysisViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
+            // засунуть во вью модель
+            // не через строки хардкодить, а через enum-ы
             switch indexPath.row {
             case 3:
                 let cell = tableView.dequeueReusableCell(withIdentifier: SumCell.reuseIdentifier, for: indexPath)
                 guard let sumCell = cell as? SumCell else { return cell }
                 sumCell.configure(sum: vm.stringSumAll())
+                sumCell.selectionStyle = .none
                 return sumCell
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: SortCell.reuseIdentifier, for: indexPath)
                 guard let sortCell = cell as? SortCell else { return cell }
                 sortCell.configure()
                 sortCell.menuDelegate = self
+                sortCell.selectionStyle = .none
+                
                 return sortCell
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: DateTableCell.reuseIdentifier, for: indexPath)
                 guard let dateCell = cell as? DateTableCell else { return cell }
                 dateCell.configure(border: indexPath.row == 0 ? .start : .end)
                 dateCell.dateDelegate = self
+                dateCell.selectionStyle = .none
                 return dateCell
             }
         default:
@@ -144,6 +118,7 @@ extension AnalysisViewController: UITableViewDataSource {
             let percent = vm.stringPercent(for: category)
             categoryCell.configure(category: category, sum: sum, percent: percent)
             categoryCell.accessoryType = .disclosureIndicator
+            categoryCell.selectionStyle = .none
             return cell
         }
     }
@@ -190,6 +165,7 @@ extension AnalysisViewController: DateDelegate {
         let endCell = dateAndSumSection.cellForRow(at: IndexPath(row: 1, section: 0)) as! DateTableCell
         Task {
             try await vm.loadData(startDate: startCell.getDate(), endDate: endCell.getDate())
+            vm.setUpCategories()
             UIView.performWithoutAnimation {
                 dateAndSumSection.reloadSections([1], with: .none)
                 dateAndSumSection.layoutIfNeeded()

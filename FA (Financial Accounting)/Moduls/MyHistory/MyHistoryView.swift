@@ -23,11 +23,13 @@ struct MyHistoryView: View {
                 transactionsListSection
             }
             .navigationTitle("Моя история")
-//            .toolbarColorScheme(.dark)
+            //            .toolbarColorScheme(.dark)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate, direction: transactionsList.direction)
+                            .navigationTitle("Анализ")
+                            .navigationBarTitleDisplayMode(.large)
                     } label: {
                         Image(systemName: "newspaper")
                     }

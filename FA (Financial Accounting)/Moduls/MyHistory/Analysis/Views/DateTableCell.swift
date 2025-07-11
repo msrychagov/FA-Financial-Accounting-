@@ -34,12 +34,13 @@ final class DateTableCell: UITableViewCell {
         picker.date = date
         picker.datePickerMode = .date
         picker.tintColor = .accent
+        picker.clipsToBounds = true
         picker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
         contentView.addSubview(picker)
+        
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.pinRight(to: contentView.trailingAnchor, 16)
         picker.pinVertical(to: contentView, 5)
-        picker.pinLeft(to: label.trailingAnchor)
     }
     
     func setDate(_ date: Date) {

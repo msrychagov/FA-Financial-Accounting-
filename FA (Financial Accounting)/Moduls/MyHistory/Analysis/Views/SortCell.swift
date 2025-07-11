@@ -43,7 +43,7 @@ final class SortCell: UITableViewCell {
         sortButton.setTitle("По возрастанию", for: .normal)
         sortButton.setTitleColor(.secondAccent, for: .normal)
         sortButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
-        sortButton.backgroundColor = .white
+        sortButton.backgroundColor = .clear
         contentView.addSubview(sortButton)
         sortButton.pinLeft(to: titleLabel.trailingAnchor, 8)
         sortButton.pinRight(to: contentView.trailingAnchor, 16)
