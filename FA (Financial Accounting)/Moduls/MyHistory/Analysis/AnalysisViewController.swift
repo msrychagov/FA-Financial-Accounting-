@@ -16,7 +16,7 @@ final class AnalysisViewController: UIViewController {
     
     //MARK: - Lyfecycle
     init(startDate: Date, endDate: Date, service: TransactionsService, direction: Direction) {
-        vm = AnalysisViewModel(startDate: startDate, endDate: endDate, service: service, direction: direction)
+        vm = AnalysisViewModel(service: service, direction: direction)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -26,7 +26,7 @@ final class AnalysisViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            try await vm.loadData()
+            try await vm.loadData(startDate: startHistory, endDate: generalEnd)
             dateAndSumSection.reloadData()
         }
         configureUI()
@@ -144,6 +144,17 @@ extension AnalysisViewController: DateDelegate {
             }
         } else {
             dateAndSumSection.reloadRows(at: [otherCellIndex], with: .none)
+        }
+        
+        let startCell = dateAndSumSection.cellForRow(at: IndexPath(row: 0, section: 0)) as! DateTableCell
+        let endCell = dateAndSumSection.cellForRow(at: IndexPath(row: 1, section: 0)) as! DateTableCell
+        Task {
+            try await vm.loadData(startDate: startCell.getDate(), endDate: endCell.getDate())
+            UIView.performWithoutAnimation {
+                dateAndSumSection.reloadSections([1], with: .none)
+                dateAndSumSection.layoutIfNeeded()
+                dateAndSumSection.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+            }
         }
         
         

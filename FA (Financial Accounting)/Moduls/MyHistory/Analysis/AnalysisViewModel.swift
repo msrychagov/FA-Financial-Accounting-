@@ -8,21 +8,16 @@ import Foundation
 
 final class AnalysisViewModel {
     private let transactionsService: TransactionsService
-    private let categoriesService: CategoriesService = CategoriesService()
     private(set) var categories: [Category] = []
     private(set) var transactions: [Transaction] = []
-    let startDate: Date
-    let endDate: Date
     let direction: Direction
     
-    init(startDate: Date, endDate: Date, service: TransactionsService, direction: Direction) {
+    init(service: TransactionsService, direction: Direction) {
         self.transactionsService = service
-        self.startDate = startDate
-        self.endDate = endDate
         self.direction = direction
     }
     
-    func loadData() async throws {
+    func loadData(startDate: Date, endDate: Date) async throws {
         let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
         transactions = allTransactions.filter { $0.category.isIncome == self.direction }
         let categoriesSet = Set(transactions.map { $0.category })
