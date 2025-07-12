@@ -68,7 +68,6 @@ final class TransactionListModel:ObservableObject {
         )
         filter()
         
-        print(transactions)
     }
     
 }

@@ -85,10 +85,9 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
                     accountId: accountId,
                     categoryId: categoryId,
                     amount: amount,
-                    transactionDate: date,
+                    transactionDate: newDate,
                     comment: comment
                 )
-                print(newTransaction)
                 viewState = .success
         } else {
             viewState = .errorSaving
@@ -116,7 +115,6 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
                 comment: comment
             )
                 viewState = .success
-            print(transactionsService.transactionsStorage[transactionId!])
         } else {
             viewState = .errorSaving
         }
