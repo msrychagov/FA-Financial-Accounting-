@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-public struct OutComeView: View {
-    public var body: some View {
-        TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome))
-    }
-}
+//public struct OutComeView: View {
+//    public var body: some View {
+//        TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome))
+//    }
+//}

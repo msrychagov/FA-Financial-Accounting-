@@ -25,6 +25,8 @@ struct TransactionCell: View {
             
             Spacer()
             Text("\(formatted(transaction.amount))")
+            Image(systemName: "chevron.right")
+                .foregroundStyle(.secondary)
         }
     }
     

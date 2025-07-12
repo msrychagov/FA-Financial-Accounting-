@@ -9,37 +9,33 @@ import SwiftUI
 
 struct MyHistoryView: View {
     @State
+    var showingAnalysis = false
+    @State
     var transactionsList: TransactionListModel
     @State
     var startDate: Date = startHistory
     @State
     var endDate: Date = generalEnd
     var body: some View {
-        NavigationStack {
             List {
                 criterias
                 transactionsListSection
             }
             .navigationTitle("Моя история")
-            .toolbarColorScheme(.dark)
+            //            .toolbarColorScheme(.dark)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        Text("Анализ")
+                        AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate, direction: transactionsList.direction)
+                            .navigationTitle("Анализ")
+                            .navigationBarTitleDisplayMode(.large)
                     } label: {
                         Image(systemName: "newspaper")
                     }
-                    .foregroundColor(
-                        Color(
-                            red: 111.0 / 255.0,
-                            green: 93.0 / 255.0,
-                            blue: 183.0 / 255.0
-                        )
-                    )
+                    .foregroundColor(.secondAccent)
                 }
                 
             }
-            
             .task {
                 try? await transactionsList.fetch(
                     startDate: startDate,
@@ -53,7 +49,6 @@ struct MyHistoryView: View {
                         endDate: endDate
                     )
                 }
-            }
         }
         
     }
@@ -99,11 +94,11 @@ struct MyHistoryView: View {
 }
 
 
-#Preview("Income") {
-    MyHistoryView(
-        transactionsList: TransactionListModel(direction: .income)
-    )
-}
+//#Preview("Income") {
+//    MyHistoryView(
+//        transactionsList: TransactionListModel(direction: .income)
+//    )
+//}
 
 //#Preview("OutCome") {
 //    MyHistoryView(transactionsList: TransactionListModel(direction: .outcome))

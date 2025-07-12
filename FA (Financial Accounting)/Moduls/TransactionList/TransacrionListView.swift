@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TransactionListView: View {
     // MARK: Properties
-    @State var transactionsListModel: TransactionListModel
+    @StateObject var transactionsListModel: TransactionListModel
+    @State var activeSheet: ActiveSheet?
     
     // MARK: Constants
     enum Constants {
@@ -38,7 +39,7 @@ struct TransactionListView: View {
     // MARK: View
     var body: some View {
         GeometryReader { geo in
-            NavigationStack {
+            NavigationView {
                 List {
                     sum
                     transactionsList
@@ -46,32 +47,61 @@ struct TransactionListView: View {
                 .navigationTitle(
                     transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
                 )
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction))
-                        } label: {
-                            Constants.ToolBar.clockLabel
-                        }
-                        .foregroundColor(Constants.ToolBar.tintColor)
-                    }
-                }
                 .overlay(
-                        plusButton
-                          .padding(.bottom, geo.safeAreaInsets.bottom + 16)
+                    plusButton
+                        .padding(.bottom, geo.safeAreaInsets.bottom + 16)
                         .padding(.trailing, 16),
-                        alignment: .bottomTrailing
-                      )
-                      .ignoresSafeArea(edges: .bottom)
+                    alignment: .bottomTrailing
+                )
+                .ignoresSafeArea(edges: .bottom)
                 .task {
                     try? await transactionsListModel.fetch(
                         startDate: startOfToday,
                         endDate: generalEnd
                     )
                 }
-        }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction, service: transactionsListModel.service))
+                        } label: {
+                            Constants.ToolBar.clockLabel
+                        }
+                        .foregroundColor(Constants.ToolBar.tintColor)
+                    }
+                }
+            }
+            .fullScreenCover(item: $activeSheet, onDismiss: {
+                Task {@MainActor in
+                            try? await transactionsListModel.fetch(
+                                startDate: startOfToday,
+                                endDate: generalEnd
+                            )
+                        }
+            }) {sheet in
+                switch sheet {
+                case .create:
+                    ManageTransactionView(
+                        viewModel: ManageTransactionViewModelImp(
+                            transactionsService: transactionsListModel.service,
+                            mode: .create,
+                            direction: transactionsListModel.direction
+                        ),
+                        activeSheet: $activeSheet
+                    )
+                case .edit(let transaction):
+                    ManageTransactionView(
+                        viewModel: ManageTransactionViewModelImp(
+                            transactionsService: transactionsListModel.service,
+                            mode: .put,
+                            transactionId: transaction.id,
+                            direction: transactionsListModel.direction
+                        ),
+                        activeSheet: $activeSheet
+                    )
+                }
+            }
             .accentColor(Constants.ToolBar.tintColor)
-        
         }
     }
     
@@ -112,19 +142,19 @@ struct TransactionListView: View {
     private var transactionsList: some View {
         Section(Constants.TransactionsList.title) {
             ForEach(transactionsListModel.transactions) { transaction in
-                NavigationLink {
-                    Text("See soon")
+                Button {
+                    activeSheet = .edit(transaction)
                 } label: {
                     TransactionCell(transaction: transaction)
-                    
                 }
+                .tint(.primary)
             }
         }
     }
     
     private var plusButton: some View {
         Button {
-            
+            activeSheet = .create
         } label: {
             Image(systemName: "plus")
                 .font(.system(size: 16, weight: .bold))
@@ -134,21 +164,18 @@ struct TransactionListView: View {
         .frame(width: 56, height: 56)
         .background(.accent)
         .clipShape(Circle())
-        
-        
-        
     }
     
 }
 
-#Preview("Income") {
-    TransactionListView(
-        transactionsListModel: TransactionListModel(direction: .income)
-    )
-}
-
-#Preview("OutCome") {
-    TransactionListView(
-        transactionsListModel: TransactionListModel(direction: .outcome)
-    )
-}
+//#Preview("Income") {
+//    TransactionListView(
+//        transactionsListModel: TransactionListModel(direction: .income)
+//    )
+//}
+//
+//#Preview("OutCome") {
+//    TransactionListView(
+//        transactionsListModel: TransactionListModel(direction: .outcome)
+//    )
+//}
