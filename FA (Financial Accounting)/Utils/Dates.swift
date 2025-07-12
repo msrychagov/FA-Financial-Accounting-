@@ -12,7 +12,7 @@ let calendar = Calendar.current
 ///
 
 var startOfToday: Date { calendar.date(
-    bySettingHour: 3,
+    bySettingHour: 0,
     minute: 0,
     second: 0,
     of: Date()

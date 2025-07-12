@@ -32,12 +32,16 @@ final class CategoriesViewModel: ObservableObject {
             toShowCategories = service.categories.filter {
                 $0.name.lowercased().levenshteinDistance(
                     to: inputText.lowercased()
-                ) <= 3 || $0.name.lowercased().contains(inputText.lowercased())
+                ) <= 2 || $0.name.lowercased().contains(inputText.lowercased())
             }
         }
     }
     
     func byDirectionCategories(_ direction: Direction) -> [Category] {
         return toShowCategories.filter { $0.isIncome == direction }
+    }
+    
+    func loadCategories() async throws {
+        toShowCategories = try await service.loadCategories()
     }
 }

@@ -26,6 +26,9 @@ public struct CategoriesView: View {
             }
             .navigationTitle(Constants.TitleSection.title)
             .searchable(text: $model.query, prompt: Constants.Search.placeholder)
+            .task {
+                try? await model.loadCategories()
+            }
         }
         
     }

@@ -11,11 +11,11 @@ import Observation
 enum SortCriteria {
     case date, amount
 }
-@Observable
-final class TransactionListModel {
-    private(set) var transactions: [Transaction] = []
+
+final class TransactionListModel:ObservableObject {
+    @Published private(set) var transactions: [Transaction] = []
     let direction: Direction
-    private let service: TransactionsService = TransactionsService()
+    let service: TransactionsService
     
     var sum: Decimal {
         var sum: Decimal = 0
@@ -26,12 +26,13 @@ final class TransactionListModel {
     }
     
     // Добавить TransactionService
-    init(direction: Direction) {
+    init(direction: Direction, service: TransactionsService) {
         self.direction = direction
         //        Task {
         //            try await fetch()
         //            filter()
         //        }
+        self.service = service
     }
     
     func filter() {
@@ -59,12 +60,15 @@ final class TransactionListModel {
         
     }
     
+    @MainActor
     func fetch(startDate: Date, endDate: Date) async throws {
         transactions = try await service.fetchTransactions(
             startDate: startDate,
             endDate: endDate
         )
         filter()
+        
+        print(transactions)
     }
     
 }

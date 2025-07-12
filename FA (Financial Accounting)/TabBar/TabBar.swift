@@ -14,12 +14,12 @@ struct TabBar: View {
     let accountsService: BankAccountsService
     var body: some View {
         TabView {
-            IncomeView()
+            TransactionListView(transactionsListModel: TransactionListModel(direction: .income, service: transactionsService))
                 .tabItem {
                     Image("income")
                     Text("Доходы")
                 }
-            OutComeView()
+            TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome, service: transactionsService))
                 .tabItem {
                     Image("outcome")
                     Text("Расходы")

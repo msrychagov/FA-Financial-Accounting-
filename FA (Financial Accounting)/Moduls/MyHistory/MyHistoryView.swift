@@ -17,7 +17,6 @@ struct MyHistoryView: View {
     @State
     var endDate: Date = generalEnd
     var body: some View {
-        NavigationStack {
             List {
                 criterias
                 transactionsListSection
@@ -50,7 +49,6 @@ struct MyHistoryView: View {
                         endDate: endDate
                     )
                 }
-            }
         }
         
     }
@@ -96,11 +94,11 @@ struct MyHistoryView: View {
 }
 
 
-#Preview("Income") {
-    MyHistoryView(
-        transactionsList: TransactionListModel(direction: .income)
-    )
-}
+//#Preview("Income") {
+//    MyHistoryView(
+//        transactionsList: TransactionListModel(direction: .income)
+//    )
+//}
 
 //#Preview("OutCome") {
 //    MyHistoryView(transactionsList: TransactionListModel(direction: .outcome))

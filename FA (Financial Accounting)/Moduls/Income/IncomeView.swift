@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-public struct IncomeView: View {
-    public var body: some View {
-        TransactionListView(transactionsListModel: TransactionListModel(direction: .income))
-    }
-}
+//public struct IncomeView: View {
+//    public var body: some View {
+//        TransactionListView(transactionsListModel: TransactionListModel(direction: .income))
+//    }
+//}
