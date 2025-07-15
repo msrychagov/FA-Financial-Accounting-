@@ -8,7 +8,6 @@ import Foundation
 
 final class AnalysisViewModel {
     private let transactionsService: TransactionsService
-    private(set) var categories: [Category] = []
     private(set) var transactions: [Transaction] = []
     let direction: Direction
     
@@ -17,33 +16,20 @@ final class AnalysisViewModel {
         self.direction = direction
     }
     
+    @MainActor
     func loadData(startDate: Date, endDate: Date) async throws {
         let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
         transactions = allTransactions.filter { $0.category.isIncome == self.direction }
     }
     
-    func setUpCategories() {
-        let categoriesSet = Set(transactions.map { $0.category })
-        categories = Array(categoriesSet)
-        sort(by: .ascending)
-    }
-    
+    @MainActor
     func sort(by sortingType: SortingType) {
-        if sortingType == .ascending {
-            categories.sort { percent(for: $0) < percent(for: $1) }
-        } else {
-            categories.sort { percent(for: $0) > percent(for: $1) }
+        switch sortingType {
+        case .date:
+            transactions.sort { $0.transactionDate > $1.transactionDate }
+        case .sum:
+            transactions.sort { $0.amount > $1.amount }
         }
-        
-    }
-    
-    private func sum(for category: Category) -> Decimal {
-        let decimalSum = transactions.reduce(into: Decimal(0)) { result, transaction in
-            if transaction.category.id == category.id {
-                result += transaction.amount
-            }
-        }
-        return decimalSum
     }
     
     private func sumAll() -> Decimal {
@@ -53,19 +39,20 @@ final class AnalysisViewModel {
         return decimalSum
     }
     
-    private func percent(for category: Category) -> Decimal {
-        return sum(for: category) / sumAll() * 100
+    private func percent(for transaction:
+                         Transaction) -> Decimal {
+        return transaction.amount / sumAll() * 100
     }
 }
 
 extension AnalysisViewModel {
-    func stringPercent(for category: Category) -> String {
-        let decimalPercent = percent(for: category)
+    func stringPercent(for transaction: Transaction) -> String {
+        let decimalPercent = percent(for: transaction)
         return (makeFormatter().string(from: NSDecimalNumber(decimal: decimalPercent)) ?? "") + "%"
     }
     
-    func stringSum(for category: Category) -> String {
-        let decimalSum = sum(for: category)
+    func stringSum(for transaction: Transaction) -> String {
+        let decimalSum = transaction.amount
         return (makeFormatter().string(from: NSDecimalNumber(decimal: decimalSum)) ?? "") + " ₽"
     }
     

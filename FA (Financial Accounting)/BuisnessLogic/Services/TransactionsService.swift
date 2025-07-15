@@ -14,15 +14,15 @@ final class TransactionsService {
                             account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                             category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
                             amount: 1000.00,
-                            transactionDate: formatter.date(from: "2025-07-12T20:42:34.083Z")!,
+                            transactionDate: formatter.date(from: "2025-07-11T20:42:34.083Z")!,
                             comment: "Зарплата за месяц",
                             createdAt: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
                             updatedAt: formatter.date(from: "2025-06-12T23:42:34.083Z")!),
             2:Transaction(id: 2,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", isIncome: .outcome),
-                          amount: -30.00,
-                          transactionDate: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
+                          amount: 61.00,
+                          transactionDate: formatter.date(from: "2025-07-11T23:42:34.083Z")!,
                           comment: "Покупка футболки",
                           createdAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!),
@@ -37,8 +37,8 @@ final class TransactionsService {
             4:Transaction(id: 4,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", isIncome: .outcome),
-                          amount: 30.00,
-                          transactionDate: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
+                          amount: 666.00,
+                          transactionDate: formatter.date(from: "2025-07-09T23:42:34.083Z")!,
                           comment: "Покупка футболки",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
@@ -46,8 +46,8 @@ final class TransactionsService {
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 2, name: "На собаку", emoji: "🐕", isIncome: .outcome),
                           amount: 1000.00,
-                          transactionDate: formatter.date(from: "2025-07-11T23:42:34.083Z")!,
-                          comment: "Покупка футболки",
+                          transactionDate: formatter.date(from: "2025-07-10T23:42:34.083Z")!,
+                          comment: "Купил корм",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
             6:Transaction(id: 6,
@@ -55,7 +55,7 @@ final class TransactionsService {
                           category: Category(id: 7, name: "Ремонт", emoji: "🔨", isIncome: .outcome),
                           amount: 30.00,
                           transactionDate: formatter.date(from: "2025-07-11T23:42:34.083Z")!,
-                          comment: "Покупка футболки",
+                          comment: "Покрасил стены",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
             7:Transaction(id: 7,
@@ -63,23 +63,23 @@ final class TransactionsService {
                           category: Category(id: 4, name: "Аптека", emoji: "⛑️", isIncome: .outcome),
                           amount: 30.00,
                           transactionDate: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
-                          comment: "Покупка футболки",
+                          comment: "Купил витамины",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
             8:Transaction(id: 8,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 5, name: "На любимую", emoji: "❤️", isIncome: .outcome),
                           amount: 30.00,
-                          transactionDate: formatter.date(from: "2025-01-11T23:42:34.083Z")!,
-                          comment: "Покупка футболки",
+                          transactionDate: formatter.date(from: "2025-07-13T23:42:34.083Z")!,
+                          comment: "Купил цветы",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
             9:Transaction(id: 9,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 6, name: "Ставки", emoji: "⚽️", isIncome: .outcome),
                           amount: 50000.00,
-                          transactionDate: formatter.date(from: "2025-04-11T23:42:34.083Z")!,
-                          comment: "Покупка футболки",
+                          transactionDate: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
+                          comment: "ЦСКА команда г...",
                           createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
                           updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
         ]
@@ -101,8 +101,7 @@ final class TransactionsService {
     }
     
     func createTransaction(accountId: String, categoryId: Int, amount: Decimal, transactionDate: Date, comment: String) async throws -> Transaction {
-        var transactions = try await loadTransactions()
-        let id = transactions.values.max{ a, b in a.id < b.id }!.id + 1
+        let id = transactionsStorage.values.max{ a, b in a.id < b.id }!.id + 1
         let newTransaction = try await Transaction(id: id,
                                                    account: accountsService.bankAccount(id: accountId)!,
                                                    category: categoriesService.category(id: categoryId)!,
@@ -111,8 +110,7 @@ final class TransactionsService {
                                                    comment: comment,
                                                    createdAt: Date.now,
                                                    updatedAt: Date.now)
-        transactions[id] = newTransaction
-        transactionsStorage = transactions
+        transactionsStorage[id] = newTransaction
         return newTransaction
     }
     
