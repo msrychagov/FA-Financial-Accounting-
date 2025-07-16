@@ -8,8 +8,14 @@
 import Foundation
 
 extension Transaction {
-    static func parse(jsonObject: Any) -> Transaction? {
-        guard let dict = jsonObject as? [String: Any] else { return nil }
+    static func parse(jsonObject: Any) throws -> Transaction? {
+        guard let dict = jsonObject as? [String: Any] else {
+            throw Errors.ConvertFromJson.incorrectObject
+        }
+        
+        let transactionDate = try dict.date(from: "transactionDate")
+        let createdAt = try dict.date(from: "createdAt")
+        let updatedAt = try dict.date(from: "updatedAt")
         
         guard let idString = dict["id"] as? String,
               let id = Int(idString),
@@ -17,12 +23,11 @@ extension Transaction {
               let amount = Decimal(string: amountString),
               let account = BankAccount.parse(jsonObject: dict["account"] ?? [:]),
               let category = Category.parse(jsonObject: dict["category"] ?? [:]),
-              let transactionDate = formatter.date(from: dict["transactionDate"] as! String),
-              let comment = dict["comment"] as? String,
-              let createdAt = formatter.date(from: dict["createdAt"] as! String),
-              let updatedAt = formatter.date(from: dict["updatedAt"] as! String)
+              let comment = dict["comment"] as? String
         else { return nil }
         
+        
+
         let transaction = Transaction(id: id, account: account, category: category, amount: amount, transactionDate: transactionDate, comment: comment, createdAt: createdAt, updatedAt: updatedAt)
         
         return transaction
