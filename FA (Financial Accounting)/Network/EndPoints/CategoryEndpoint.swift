@@ -13,8 +13,8 @@ enum CategoryEndpoint {
 }
 
 extension CategoryEndpoint: Endpoint {
-    var baseURL: String {
-        return "https://shmr-finance.ru/api/v1/categories"
+    var baseURL: URL {
+        return URL(string: "https://shmr-finance.ru/api/v1/categories")!
     }
     
     var path: String {
@@ -31,8 +31,8 @@ extension CategoryEndpoint: Endpoint {
         return .get
     }
     
-    var queryItems: [URLQueryItem] {
-        return []
+    var queryItems: [URLQueryItem]? {
+        return nil
     }
     
     

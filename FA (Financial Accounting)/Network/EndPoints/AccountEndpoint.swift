@@ -17,13 +17,12 @@ enum AccountEndpoint {
 
 extension AccountEndpoint: Endpoint {
     
-    var baseURL: String {
-        return "https://shmr-finance.ru/api/v1/accounts"
+    var baseURL: URL {
+        return URL(string: "https://shmr-finance.ru/api/v1/accounts")!
     }
     
     var path: String {
         switch self {
-            
         case .list, .create:
             return ""
         case .single(id: let id), .put(id: let id), .delete(id: let id):
@@ -47,8 +46,8 @@ extension AccountEndpoint: Endpoint {
         }
     }
     
-    var queryItems: [URLQueryItem] {
-        return []
+    var queryItems: [URLQueryItem]? {
+        return nil
     }
     
     

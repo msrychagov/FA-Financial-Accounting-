@@ -16,8 +16,8 @@ enum TransactionEndpoints {
 extension TransactionEndpoints: Endpoint {
     
     
-    var baseURL: String {
-        return "https://shmr-finance.ru/api/v1/transactions"
+    var baseURL: URL {
+        return URL(string: "https://shmr-finance.ru/api/v1/transactions")!
     }
     
     var path: String {
@@ -44,7 +44,7 @@ extension TransactionEndpoints: Endpoint {
         }
     }
     
-    var queryItems: [URLQueryItem] {
+    var queryItems: [URLQueryItem]? {
         switch self {
             
         case .list(accountId: let accountId, startDate: let startDate, endDate: let endDate):
@@ -53,7 +53,7 @@ extension TransactionEndpoints: Endpoint {
                 URLQueryItem(name: "endDate", value: endDate.endpointDate())
             ]
         default:
-            return []
+            return nil
         }
     }
 }

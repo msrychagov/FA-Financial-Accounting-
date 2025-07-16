@@ -8,10 +8,10 @@
 import Foundation
 
 protocol Endpoint {
-    var baseURL: String { get }
+    var baseURL: URL { get }
     var path: String { get }
     var method: EndpointType { get }
-    var queryItems: [URLQueryItem] { get }
+    var queryItems: [URLQueryItem]? { get }
 }
 
 enum EndpointType: String {
