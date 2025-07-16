@@ -16,7 +16,7 @@ final class AnalysisViewController: UIViewController {
     
     
     //MARK: - Lyfecycle
-    init(startDate: Date, endDate: Date, service: TransactionsService, direction: Direction) {
+    init(startDate: Date, endDate: Date, service: TransactionsServiceMok, direction: Direction) {
         vm = AnalysisViewModel(service: service, direction: direction)
         super.init(nibName: nil, bundle: nil)
     }
@@ -178,5 +178,5 @@ extension AnalysisViewController: DateDelegate {
 
 
 #Preview {
-    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .outcome)
+    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsServiceMok(), direction: .outcome)
 }

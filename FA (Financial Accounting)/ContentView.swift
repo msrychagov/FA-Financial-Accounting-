@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    private let trasnactionsService = TransactionsService()
-    private let bankAccountsService = BankAccountsService()
+    private let trasnactionsService = TransactionsServiceMok()
+    private let bankAccountsService = BankAccountsServiceMok()
     var body: some View {
         TabBar(
             transactionsService: trasnactionsService,

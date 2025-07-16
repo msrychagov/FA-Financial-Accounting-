@@ -1,12 +1,12 @@
 //
-//  BankAccountsService.swift
+//  BankAccountsServiceMok.swift
 //  FA (Financial Accounting)
 //
 //  Created by Михаил Рычагов on 14.06.2025.
 //
 import Foundation
 
-final class BankAccountsService {
+final class BankAccountsServiceMok {
     func bankAccounts() async throws -> [BankAccount] {
         let bankAccounts: [BankAccount] = [
             BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
@@ -29,7 +29,7 @@ final class BankAccountsService {
         return updatedAccount
     }
     
-    // Аналогично CategoriesService
+    // Аналогично CategoriesServiceMok
     func bankAccount(id: String) async throws -> BankAccount? {
         let accounts = try await bankAccounts()
         return accounts.first(where: { $0.id == id })

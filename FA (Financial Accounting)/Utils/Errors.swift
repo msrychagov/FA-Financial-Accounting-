@@ -6,7 +6,7 @@
 //
 
 enum Errors {
-    enum TransactionsService: Swift.Error {
+    enum TransactionsServiceMok: Swift.Error {
         case transactionNotFound
         case loadFromServerError
     }

@@ -6,11 +6,11 @@
 //
 import Foundation
 
-protocol DateToString {
+protocol DateToEndPointString {
     func endpointDate() -> String
 }
 
-extension Date: DateToString {
+extension Date: DateToEndPointString {
     func endpointDate() -> String {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate]

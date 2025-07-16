@@ -15,7 +15,7 @@ enum SortCriteria {
 final class TransactionListModel:ObservableObject {
     @Published private(set) var transactions: [Transaction] = []
     let direction: Direction
-    let service: TransactionsService
+    let service: TransactionsServiceMok
     
     var sum: Decimal {
         var sum: Decimal = 0
@@ -26,7 +26,7 @@ final class TransactionListModel:ObservableObject {
     }
     
     // Добавить TransactionService
-    init(direction: Direction, service: TransactionsService) {
+    init(direction: Direction, service: TransactionsServiceMok) {
         self.direction = direction
         //        Task {
         //            try await fetch()

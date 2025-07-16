@@ -34,15 +34,15 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     let mode: Mode
     private(set) var categories: [Category] = []
     private(set) var viewData: TransactionViewData?
-    private let transactionsService: TransactionsService
-    private let categoriesService: CategoriesService
-    private let accountsService: BankAccountsService
+    private let transactionsService: TransactionsServiceMok
+    private let categoriesService: CategoriesServiceMok
+    private let accountsService: BankAccountsServiceMok
     
     init(
         viewState: ViewState = .idle,
-        transactionsService: TransactionsService = TransactionsService(),
-        categoriesService: CategoriesService = CategoriesService(),
-        accountsService: BankAccountsService = BankAccountsService(),
+        transactionsService: TransactionsServiceMok = TransactionsServiceMok(),
+        categoriesService: CategoriesServiceMok = CategoriesServiceMok(),
+        accountsService: BankAccountsServiceMok = BankAccountsServiceMok(),
         mode: Mode,
         transactionId: Int? = nil,
         direction: Direction

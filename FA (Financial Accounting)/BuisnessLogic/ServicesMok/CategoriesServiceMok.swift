@@ -1,5 +1,5 @@
 
-final class CategoriesService {
+final class CategoriesServiceMok {
     private(set) var categories: [Category] = []
 
     private func categoriesFromServer() -> [Category] {

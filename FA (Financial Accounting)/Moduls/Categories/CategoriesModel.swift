@@ -8,12 +8,12 @@ import Foundation
 import Combine
 
 final class CategoriesViewModel: ObservableObject {
-    private let service: CategoriesService
+    private let service: CategoriesServiceMok
     @Published var toShowCategories: [Category] = []
     @Published var query: String = ""
     private var cancellables = Set<AnyCancellable>()
     
-    init(categoriesService: CategoriesService) {
+    init(categoriesService: CategoriesServiceMok) {
         self.service = categoriesService
         $query
 //            .removeDuplicates()
