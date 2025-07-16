@@ -5,6 +5,7 @@
 //  Created by Михаил Рычагов on 10.07.2025.
 //
 import UIKit
+import SwiftUI
 
 final class AnalysisViewController: UIViewController {
     //MARK: - Variables
@@ -27,7 +28,7 @@ final class AnalysisViewController: UIViewController {
         super.viewDidLoad()
         Task {
             try await vm.loadData(startDate: startHistory, endDate: generalEnd)
-            vm.setUpCategories()
+            vm.sort(by: .date)
             dateAndSumSection.reloadData()
         }
         configureUI()
@@ -41,7 +42,7 @@ final class AnalysisViewController: UIViewController {
     
     private func configureDateAndSumSection() {
         dateAndSumSection.register(DateTableCell.self, forCellReuseIdentifier: DateTableCell.reuseIdentifier)
-        dateAndSumSection.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.reuseIdentifier)
+        dateAndSumSection.register(TransactionTableViewCell.self, forCellReuseIdentifier: TransactionTableViewCell.reuseIdentifier)
         dateAndSumSection.register(SumCell.self, forCellReuseIdentifier: SumCell.reuseIdentifier)
         dateAndSumSection.register(SortCell.self, forCellReuseIdentifier: SortCell.reuseIdentifier)
         dateAndSumSection.dataSource = self
@@ -67,7 +68,7 @@ extension AnalysisViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 1: return vm.categories.count
+        case 1: return vm.transactions.count
         default: return 4
         }
     }
@@ -110,12 +111,12 @@ extension AnalysisViewController: UITableViewDataSource {
                 return dateCell
             }
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.reuseIdentifier, for: indexPath)
-            guard let categoryCell = cell as? CategoryTableViewCell else { return cell }
-            let category = vm.categories[indexPath.row]
-            let sum = vm.stringSum(for: category)
-            let percent = vm.stringPercent(for: category)
-            categoryCell.configure(category: category, sum: sum, percent: percent)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TransactionTableViewCell.reuseIdentifier, for: indexPath)
+            guard let categoryCell = cell as? TransactionTableViewCell else { return cell }
+            let transaction = vm.transactions[indexPath.row]
+            let sum = vm.stringSum(for: transaction)
+            let percent = vm.stringPercent(for: transaction)
+            categoryCell.configure(transaction: transaction, sum: sum, percent: percent)
             categoryCell.accessoryType = .disclosureIndicator
             categoryCell.selectionStyle = .none
             return cell
@@ -164,7 +165,6 @@ extension AnalysisViewController: DateDelegate {
         let endCell = dateAndSumSection.cellForRow(at: IndexPath(row: 1, section: 0)) as! DateTableCell
         Task {
             try await vm.loadData(startDate: startCell.getDate(), endDate: endCell.getDate())
-            vm.setUpCategories()
             UIView.performWithoutAnimation {
                 dateAndSumSection.reloadSections([1], with: .none)
                 dateAndSumSection.layoutIfNeeded()
@@ -178,5 +178,5 @@ extension AnalysisViewController: DateDelegate {
 
 
 #Preview {
-    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .income)
+    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsService(), direction: .outcome)
 }

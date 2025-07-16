@@ -10,15 +10,15 @@ final class SortCell: UITableViewCell {
     private let titleLabel: UILabel = UILabel()
     private let sortButton: UIButton = UIButton(type: .system)
     private var menu: UIMenu {
-        let up  = UIAction(title: "По возрастанию",  image: UIImage(systemName: "chevron.up"))           { _ in
-            self.sortButton.setTitle("По возрастанию", for: .normal)
-            self.menuDelegate?.menu(.ascending)
+        let date  = UIAction(title: "По дате")           { _ in
+            self.sortButton.setTitle("По дате", for: .normal)
+            self.menuDelegate?.menu(.date)
         }
-        let down = UIAction(title: "По убыванию",   image: UIImage(systemName: "chevron.down"))          { _ in
-            self.sortButton.setTitle("По убыванию", for: .normal)
-            self.menuDelegate?.menu(.descending)
+        let sum = UIAction(title: "По сумме")          { _ in
+            self.sortButton.setTitle("По сумме", for: .normal)
+            self.menuDelegate?.menu(.sum)
         }
-        return UIMenu(children: [up, down])
+        return UIMenu(children: [date, sum])
     }
     
     var menuDelegate: MenuDelegate?
@@ -40,7 +40,7 @@ final class SortCell: UITableViewCell {
     private func configureButton() {
         sortButton.menu = menu
         sortButton.showsMenuAsPrimaryAction = true
-        sortButton.setTitle("По возрастанию", for: .normal)
+        sortButton.setTitle("По дате", for: .normal)
         sortButton.setTitleColor(.secondAccent, for: .normal)
         sortButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         sortButton.backgroundColor = .clear
@@ -58,6 +58,6 @@ protocol MenuDelegate: AnyObject {
 }
 
 enum SortingType {
-    case ascending
-    case descending
+    case date
+    case sum
 }

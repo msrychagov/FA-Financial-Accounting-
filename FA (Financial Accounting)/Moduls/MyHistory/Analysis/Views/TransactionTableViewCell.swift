@@ -6,37 +6,47 @@
 //
 import UIKit
 
-final class CategoryTableViewCell: UITableViewCell {
-    private let categoryView: UIView = UIView()
+final class TransactionTableViewCell: UITableViewCell {
+    private let transactionView: UIView = UIView()
     private let numbsView: UIView = UIView()
+    private let textView: UIView = UIView()
     private let nameLabel: UILabel = UILabel()
+    private let commentLabel: UILabel = UILabel()
     private let emojiLabel: UILabel = UILabel()
     private let circleView: UIView = UIView()
     private let sumLabel: UILabel = UILabel()
     private let percentLabel: UILabel = UILabel()
     
-    static let reuseIdentifier: String = "CategoryTableViewCell"
+    static let reuseIdentifier: String = "TransactionTableViewCell"
     
-    func configure(category: Category, sum: String, percent: String) {
-        configureCategoryView()
+    func configure(transaction: Transaction, sum: String, percent: String) {
+        configureTransactionView()
         configureCircleView()
-        configureEmojiLabel(emoji: category.emoji)
-        configureNameLabel(name: category.name)
+        configureTextView()
+        configureEmojiLabel(emoji: transaction.category.emoji)
+        configureNameLabel(name: transaction.category.name)
+        configureCommentLabel(comment: transaction.comment)
         configureNumbsView()
         configurePercentLabel(percent: percent)
         configureSumLabel(sum: sum)
     }
     
-    private func configureCategoryView() {
-        contentView.addSubview(categoryView)
-        categoryView.pinLeft(to: contentView.leadingAnchor, 16)
-        categoryView.pinVertical(to: contentView)
+    private func configureTransactionView() {
+        contentView.addSubview(transactionView)
+        transactionView.pinLeft(to: contentView.leadingAnchor, 16)
+        transactionView.pinVertical(to: contentView)
+    }
+    
+    private func configureTextView() {
+        contentView.addSubview(textView)
+        textView.pinLeft(to: circleView.trailingAnchor)
+        textView.pinVertical(to: contentView)
     }
     
     private func configureNumbsView() {
         numbsView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(numbsView)
-        numbsView.pinLeft(to: categoryView.trailingAnchor)
+        numbsView.pinLeft(to: transactionView.trailingAnchor)
         numbsView.pinRight(to: contentView.trailingAnchor, 16)
         numbsView.pinVertical(to: contentView, 8)
     }
@@ -53,19 +63,31 @@ final class CategoryTableViewCell: UITableViewCell {
         circleView.translatesAutoresizingMaskIntoConstraints = false
         circleView.backgroundColor = .accent.withAlphaComponent(0.2)
         circleView.layer.cornerRadius = 11
-        categoryView.addSubview(circleView)
+        transactionView.addSubview(circleView)
         circleView.setWidth(22)
         circleView.setHeight(22)
-        circleView.pinLeft(to: categoryView.leadingAnchor)
-        circleView.pinCenterY(to: categoryView)
+        circleView.pinLeft(to: transactionView.leadingAnchor)
+        circleView.pinCenterY(to: transactionView)
     }
     
     private func configureNameLabel(name: String) {
         nameLabel.text = name
         nameLabel.font = .systemFont(ofSize: 17, weight: .regular)
-        categoryView.addSubview(nameLabel)
-        nameLabel.pinLeft(to: circleView.trailingAnchor, 12)
-        nameLabel.pinVertical(to: categoryView)
+        textView.addSubview(nameLabel)
+        nameLabel.pinLeft(to: textView.leadingAnchor, 12)
+        nameLabel.pinTop(to: textView.topAnchor, 8)
+    }
+    
+    private func configureCommentLabel(comment: String) {
+        commentLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentLabel.text = comment
+        commentLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        commentLabel.tintColor = .systemGroupedBackground
+        commentLabel.numberOfLines = 0
+        textView.addSubview(commentLabel)
+        commentLabel.pinLeft(to: textView.leadingAnchor, 12)
+        commentLabel.pinTop(to: nameLabel.bottomAnchor)
+        commentLabel.pinBottom(to: textView.bottomAnchor, 8)
     }
     
     private func configureSumLabel(sum: String) {

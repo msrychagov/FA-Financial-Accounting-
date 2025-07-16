@@ -10,4 +10,13 @@ enum Errors {
         case transactionNotFound
         case loadFromServerError
     }
+    
+    enum DateFromString: Error {
+        case incorrectStringFormat
+    }
+    
+    enum ConvertFromJson: Error {
+        case missingKey(String)
+        case incorrectObject
+    }
 }
