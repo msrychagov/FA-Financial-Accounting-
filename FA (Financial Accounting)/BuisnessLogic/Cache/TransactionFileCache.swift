@@ -30,7 +30,7 @@ final class TransactionFileCache {
         let data = try Data(contentsOf: URL)
         let loadedTransactions = try JSONSerialization.jsonObject(with: data) as! [[String: Any]]
         for transactionDict in loadedTransactions {
-            let transaction = Transaction.parse(jsonObject: transactionDict)
+            let transaction = try Transaction.parse(jsonObject: transactionDict)
             transactions[transaction!.id] = transaction
         }
     }

@@ -35,17 +35,15 @@ extension Transaction {
     }
     
     var jsonObject: Any {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         let dict: Any = [
             "id": String(id),
             "account": account.jsonObject,
             "category": category.jsonObject,
             "amount": NSDecimalNumber(decimal: amount).stringValue,
-            "transactionDate": formatter.string(from: transactionDate),
+            "transactionDate": transactionDate.toString(),
             "comment": comment,
-            "createdAt": formatter.string(from: createdAt),
-            "updatedAt": formatter.string(from: updatedAt)
+            "createdAt": createdAt.toString(),
+            "updatedAt": updatedAt.toString()
         ]
         return dict
     }

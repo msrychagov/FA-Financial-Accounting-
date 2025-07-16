@@ -1,94 +1,94 @@
 //
-//  TransactionsService.swift
+//  TransactionsServiceMok.swift
 //  FA (Financial Accounting)
 //
 //  Created by Михаил Рычагов on 14.06.2025.
 //
 import Foundation
 
-final class TransactionsService {
-    let accountsService: BankAccountsService = BankAccountsService()
-    let categoriesService: CategoriesService = CategoriesService()
+final class TransactionsServiceMok {
+    let accountsService: BankAccountsServiceMok = BankAccountsServiceMok()
+    let categoriesService: CategoriesServiceMok = CategoriesServiceMok()
     var transactionsStorage: [Int:Transaction] = [
             1 : Transaction(id: 1,
                             account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                             category: Category(id: 2, name: "Зарплата", emoji: "💰", isIncome: .income),
                             amount: 1000.00,
-                            transactionDate: formatter.date(from: "2025-07-11T20:42:34.083Z")!,
+                            transactionDate: "2025-07-11T20:42:34.083Z".convertToDate()!,
                             comment: "Зарплата за месяц",
-                            createdAt: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
-                            updatedAt: formatter.date(from: "2025-06-12T23:42:34.083Z")!),
+                            createdAt: "2025-07-12T23:42:34.083Z".convertToDate()!,
+                            updatedAt: "2025-06-12T23:42:34.083Z".convertToDate()!),
             2:Transaction(id: 2,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", isIncome: .outcome),
                           amount: 61.00,
-                          transactionDate: formatter.date(from: "2025-07-11T23:42:34.083Z")!,
+                          transactionDate: "2025-07-11T23:42:34.083Z".convertToDate()!,
                           comment: "Покупка футболки",
-                          createdAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!),
+                          createdAt: "2025-06-24T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-24T23:42:34.083Z".convertToDate()!),
             3:Transaction(id: 3,
                           account: BankAccount(id: "g5ldpb73", name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                           category: Category(id: 3, name: "Подработка", emoji: "💰", isIncome: .income),
                           amount: 500.00,
-                          transactionDate: formatter.date(from: "2025-07-12T23:43:34.083Z")!,
+                          transactionDate: "2025-07-12T23:43:34.083Z".convertToDate()!,
                           comment: "Таскал кирпичи",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             4:Transaction(id: 4,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", isIncome: .outcome),
                           amount: 666.00,
-                          transactionDate: formatter.date(from: "2025-07-09T23:42:34.083Z")!,
+                          transactionDate: "2025-07-09T23:42:34.083Z".convertToDate()!,
                           comment: "Покупка футболки",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             5:Transaction(id: 5,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 2, name: "На собаку", emoji: "🐕", isIncome: .outcome),
                           amount: 1000.00,
-                          transactionDate: formatter.date(from: "2025-07-10T23:42:34.083Z")!,
+                          transactionDate: "2025-07-10T23:42:34.083Z".convertToDate()!,
                           comment: "Купил корм",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             6:Transaction(id: 6,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 7, name: "Ремонт", emoji: "🔨", isIncome: .outcome),
                           amount: 30.00,
-                          transactionDate: formatter.date(from: "2025-07-11T23:42:34.083Z")!,
+                          transactionDate: "2025-07-11T23:42:34.083Z".convertToDate()!,
                           comment: "Покрасил стены",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             7:Transaction(id: 7,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 4, name: "Аптека", emoji: "⛑️", isIncome: .outcome),
                           amount: 30.00,
-                          transactionDate: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
+                          transactionDate: "2025-06-24T23:42:34.083Z".convertToDate()!,
                           comment: "Купил витамины",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             8:Transaction(id: 8,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 5, name: "На любимую", emoji: "❤️", isIncome: .outcome),
                           amount: 30.00,
-                          transactionDate: formatter.date(from: "2025-07-13T23:42:34.083Z")!,
+                          transactionDate: "2025-07-13T23:42:34.083Z".convertToDate()!,
                           comment: "Купил цветы",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
             9:Transaction(id: 9,
                           account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 6, name: "Ставки", emoji: "⚽️", isIncome: .outcome),
                           amount: 50000.00,
-                          transactionDate: formatter.date(from: "2025-07-12T23:42:34.083Z")!,
+                          transactionDate: "2025-07-12T23:42:34.083Z".convertToDate()!,
                           comment: "ЦСКА команда г...",
-                          createdAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!,
-                          updatedAt: formatter.date(from: "2025-06-13T23:42:34.083Z")!),
+                          createdAt: "2025-06-13T23:42:34.083Z".convertToDate()!,
+                          updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()!),
         ]
     
     func loadTransactions() async throws -> [Int:Transaction] {
         do {
             return transactionsStorage
         } catch {
-            throw Errors.TransactionsService.loadFromServerError
+            throw Errors.TransactionsServiceMok.loadFromServerError
         }
     }
     
@@ -139,7 +139,7 @@ final class TransactionsService {
     func transaction(id: Int) async throws -> Transaction {
         let transactions = try await loadTransactions()
         guard let foundedTransaction = transactions[id] else {
-            throw Errors.TransactionsService.transactionNotFound
+            throw Errors.TransactionsServiceMok.transactionNotFound
         }
         return foundedTransaction
     }

@@ -93,5 +93,5 @@ public struct AccountView: View {
 
 
 #Preview {
-    AccountView(viewModel: AccountModel(service: BankAccountsService()))
+    AccountView(viewModel: AccountModel(service: BankAccountsServiceMok()))
 }

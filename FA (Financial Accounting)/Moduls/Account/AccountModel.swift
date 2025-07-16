@@ -9,12 +9,12 @@ import SwiftUI
 @Observable
 final class AccountModel {
     private(set) var account: BankAccount?
-    private let service: BankAccountsService
+    private let service: BankAccountsServiceMok
     var balance: Decimal = 0
     var currency: Currency = .rub
     
     
-    init(service: BankAccountsService) {
+    init(service: BankAccountsServiceMok) {
         self.service = service
         Task {
             account = try await service.fetchFirst()

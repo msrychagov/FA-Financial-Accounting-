@@ -100,5 +100,5 @@ public struct CategoriesView: View {
 }
 
 #Preview {
-    CategoriesView(model: .init(categoriesService: CategoriesService()))
+    CategoriesView(model: .init(categoriesService: CategoriesServiceMok()))
 }

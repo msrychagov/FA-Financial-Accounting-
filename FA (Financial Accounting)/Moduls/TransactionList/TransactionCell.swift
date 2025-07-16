@@ -46,8 +46,8 @@ struct TransactionCell: View {
                                               account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                                               category: Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: .outcome),
                                               amount: -30.00,
-                                              transactionDate: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
+                                              transactionDate: "2025-06-24T23:42:34.083Z".convertToDate()!,
                                               comment: "Покупка футболки",
-                                              createdAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!,
-                                              updatedAt: formatter.date(from: "2025-06-24T23:42:34.083Z")!))
+                                              createdAt: "2025-06-24T23:42:34.083Z".convertToDate()!,
+                                              updatedAt: "2025-06-24T23:42:34.083Z".convertToDate()!))
 }

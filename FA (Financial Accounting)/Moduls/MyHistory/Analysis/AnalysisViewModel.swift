@@ -7,11 +7,11 @@
 import Foundation
 
 final class AnalysisViewModel {
-    private let transactionsService: TransactionsService
+    private let transactionsService: TransactionsServiceMok
     private(set) var transactions: [Transaction] = []
     let direction: Direction
     
-    init(service: TransactionsService, direction: Direction) {
+    init(service: TransactionsServiceMok, direction: Direction) {
         self.transactionsService = service
         self.direction = direction
     }

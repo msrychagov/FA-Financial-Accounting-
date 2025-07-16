@@ -10,8 +10,8 @@ import SwiftUI
 
 struct TabBar: View {
     // MARK: Variables
-    let transactionsService: TransactionsService
-    let accountsService: BankAccountsService
+    let transactionsService: TransactionsServiceMok
+    let accountsService: BankAccountsServiceMok
     var body: some View {
         TabView {
             TransactionListView(transactionsListModel: TransactionListModel(direction: .income, service: transactionsService))
@@ -29,7 +29,7 @@ struct TabBar: View {
                     Image("account")
                     Text("Счёт")
                 }
-            CategoriesView(model: CategoriesViewModel(categoriesService: CategoriesService()))
+            CategoriesView(model: CategoriesViewModel(categoriesService: CategoriesServiceMok()))
                 .tabItem {
                     Image("categories")
                     Text("Статьи")

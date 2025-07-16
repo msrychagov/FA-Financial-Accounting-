@@ -59,10 +59,10 @@ extension Transaction {
                                  emoji: fields[categoryIconIndex],
                                  isIncome: Direction(rawValue: fields[categoryIsIncomeIndex])!)
         let amount = Decimal(string: fields[amountIndex])!
-        let transactionDate = formatter.date(from: fields[transactionDateIndex])!
+        let transactionDate = fields[transactionDateIndex].convertToDate()!
         let comment = fields[commentIndex]
-        let createdAt = formatter.date(from: fields[createdAtIndex])!
-        let updatedAt = formatter.date(from: fields[updatedAtIndex])!
+        let createdAt = fields[createdAtIndex].convertToDate()!
+        let updatedAt = fields[updatedAtIndex].convertToDate()!
         
         return Transaction(id: id,
                            account: account,
@@ -80,10 +80,10 @@ extension Transaction {
             account.csvRow,
             category.csvRow,
             NSDecimalNumber(decimal: amount).stringValue,
-            formatter.string(from: transactionDate),
+            transactionDate.toString(),
             comment,
-            formatter.string(from: createdAt),
-            formatter.string(from: updatedAt)
+            createdAt.toString(),
+            updatedAt.toString()
         ]
         return parts.joined(separator: ",")
     }
