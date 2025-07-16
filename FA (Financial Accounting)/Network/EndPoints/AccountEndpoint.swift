@@ -18,7 +18,7 @@ enum AccountEndpoint {
 extension AccountEndpoint: Endpoint {
     
     var baseURL: String {
-        return "https://shmr-finance.ru/api/v1/accounts/"
+        return "https://shmr-finance.ru/api/v1/accounts"
     }
     
     var path: String {
@@ -27,7 +27,7 @@ extension AccountEndpoint: Endpoint {
         case .list, .create:
             return ""
         case .single(id: let id), .put(id: let id), .delete(id: let id):
-            return id
+            return "/\(id)"
         }
     }
     

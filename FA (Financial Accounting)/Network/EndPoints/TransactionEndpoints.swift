@@ -17,17 +17,17 @@ extension TransactionEndpoints: Endpoint {
     
     
     var baseURL: String {
-        return "https://shmr-finance.ru/api/v1/transactions/"
+        return "https://shmr-finance.ru/api/v1/transactions"
     }
     
     var path: String {
         switch self {
         case .list(accountId: let accountId, startDate: let startDate, endDate: let endDate):
-            return "account/\(accountId)/period"
+            return "/account/\(accountId)/period"
         case .create:
             return ""
         case .put(let id), .delete(let id):
-            return "\(id)"
+            return "/\(id)"
         }
     }
     
