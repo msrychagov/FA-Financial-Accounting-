@@ -19,7 +19,7 @@ extension TransactionEndpoints: Endpoint {
     }
     
     var baseURL: URL {
-        return URL(string: "https://shmr-finance.ru/api/v1/transactions")!
+        return URL(string: "\(NetworkClient.Constants.baseURL)/transactions")!
     }
     
     var path: String {

@@ -22,7 +22,7 @@ extension AccountEndpoint: Endpoint {
     
     
     var baseURL: URL {
-        return URL(string: "https://shmr-finance.ru/api/v1/accounts")!
+        return URL(string: "\(NetworkClient.Constants.baseURL)/accounts")!
     }
     
     var path: String {
