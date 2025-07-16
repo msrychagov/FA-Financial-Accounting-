@@ -13,6 +13,10 @@ enum CategoryEndpoint {
 }
 
 extension CategoryEndpoint: Endpoint {
+    var authorized: Bool {
+        true
+    }
+    
     var baseURL: URL {
         return URL(string: "https://shmr-finance.ru/api/v1/categories")!
     }

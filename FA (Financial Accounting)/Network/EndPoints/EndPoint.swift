@@ -11,6 +11,7 @@ protocol Endpoint {
     var baseURL: URL { get }
     var path: String { get }
     var method: EndpointType { get }
+    var authorized: Bool { get }
     var queryItems: [URLQueryItem]? { get }
 }
 

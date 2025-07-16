@@ -16,6 +16,10 @@ enum AccountEndpoint {
 
 
 extension AccountEndpoint: Endpoint {
+    var authorized: Bool {
+        true
+    }
+    
     
     var baseURL: URL {
         return URL(string: "https://shmr-finance.ru/api/v1/accounts")!
