@@ -11,7 +11,7 @@ extension Category {
             String(id),
             name,
             emoji,
-            isIncome.rawValue
+            direction.rawValue
         ]
         return parts.joined(separator: ",")
     }

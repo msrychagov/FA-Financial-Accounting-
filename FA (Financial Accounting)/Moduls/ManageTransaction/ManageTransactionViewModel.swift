@@ -137,7 +137,7 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
         viewState = .loading
         do {
             categories = try await categoriesService.loadCategories()
-            categories = categories.filter { $0.isIncome == direction }
+            categories = categories.filter { $0.direction == direction }
             viewState = .success
         } catch {
             viewState = .error(error.localizedDescription)

@@ -19,7 +19,7 @@ final class AnalysisViewModel {
     @MainActor
     func loadData(startDate: Date, endDate: Date) async throws {
         let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
-        transactions = allTransactions.filter { $0.category.isIncome == self.direction }
+        transactions = allTransactions.filter { $0.category.direction == self.direction }
     }
     
     @MainActor

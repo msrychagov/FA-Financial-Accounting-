@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct BankAccount: Equatable {
+struct BankAccount: Equatable, Codable {
     let id: String
     let name: String
     var balance: Decimal
