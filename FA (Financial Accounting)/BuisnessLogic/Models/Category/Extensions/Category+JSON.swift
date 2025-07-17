@@ -19,7 +19,7 @@ extension Category {
               let isIncome = dict["isIncome"] as? Bool
         else { return nil }
 
-        let cat = Category(id: id, name: name, emoji: emoji, isIncome: isIncome)
+        let cat = Category(id: id, name: name, emoji: emoji.convertToCharacter(), direction: isIncome ? .income : .outcome)
         
         return cat
               
@@ -30,7 +30,7 @@ extension Category {
             "emoji" : emoji,
             "name" : name,
             "id" : String(id),
-            "isIncome" : isIncome
+            "isIncome" : direction == .income
         ]
         return dict
     }

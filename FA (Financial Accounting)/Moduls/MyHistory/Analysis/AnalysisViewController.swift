@@ -27,7 +27,7 @@ final class AnalysisViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            try await vm.loadData(startDate: startHistory, endDate: generalEnd)
+            try await vm.loadData(startDate: Date.startBorder, endDate: Date.endBorder)
             vm.sort(by: .date)
             dateAndSumSection.reloadData()
         }
@@ -178,5 +178,5 @@ extension AnalysisViewController: DateDelegate {
 
 
 #Preview {
-    AnalysisViewController(startDate: startHistory, endDate: generalEnd, service: TransactionsServiceMok(), direction: .outcome)
+    AnalysisViewController(startDate: Date.startBorder, endDate: Date.endBorder, service: TransactionsServiceMok(), direction: .outcome)
 }

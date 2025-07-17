@@ -24,7 +24,7 @@ struct TransactionCell: View {
             }
             
             Spacer()
-            Text("\(formatted(transaction.amount))")
+            Text(transaction.amount.toString())
             Image(systemName: "chevron.right")
                 .foregroundStyle(.secondary)
         }
@@ -35,7 +35,7 @@ struct TransactionCell: View {
             Circle()
                 .foregroundStyle(.accent.opacity(0.2))
                 .frame(width: 22, height: 22)
-            Text(transaction.category.emoji)
+            Text(String(transaction.category.emoji))
                 .font(.system(size: 14))
         }
     }
@@ -43,11 +43,11 @@ struct TransactionCell: View {
 
 #Preview {
     TransactionCell(transaction:  Transaction(id: 2,
-                                              account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
-                                              category: Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: false),
+                                              account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                                              category: Category(id: 1, name: "Одежда", emoji: "🧢", direction: .outcome),
                                               amount: -30.00,
-                                              transactionDate: "2025-06-24T23:42:34.083Z".convertToDate()!,
+                                              transactionDate: "2025-06-24T23:42:34.083Z".convertToDate(),
                                               comment: "Покупка футболки",
-                                              createdAt: "2025-06-24T23:42:34.083Z".convertToDate()!,
-                                              updatedAt: "2025-06-24T23:42:34.083Z".convertToDate()!))
+                                              createdAt: "2025-06-24T23:42:34.083Z".convertToDate(),
+                                              updatedAt: "2025-06-24T23:42:34.083Z".convertToDate()))
 }

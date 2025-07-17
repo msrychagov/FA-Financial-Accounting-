@@ -13,9 +13,9 @@ struct MyHistoryView: View {
     @State
     var transactionsList: TransactionListModel
     @State
-    var startDate: Date = startHistory
+    var startDate: Date = Date.startBorder
     @State
-    var endDate: Date = generalEnd
+    var endDate: Date = Date.endBorder
     var body: some View {
             List {
                 criterias
@@ -88,7 +88,7 @@ struct MyHistoryView: View {
         HStack {
             Text("Сумма")
             Spacer()
-            Text("\(formatted(transactionsList.sum))")
+            Text(transactionsList.sum.toString())
         }
     }
 }

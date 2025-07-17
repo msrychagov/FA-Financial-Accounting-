@@ -7,7 +7,7 @@
 import Foundation
 
 struct BankAccount: Equatable, Codable {
-    let id: String
+    let id: Int
     let name: String
     var balance: Decimal
     var currency: String
