@@ -18,7 +18,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         fileCache = TransactionFileCache()
         formatter = ISO8601DateFormatter()
         formatter!.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income)
+        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: true)
         testAccount = BankAccount(id: "1", name: "Основной счёт", balance: 1000.00, currency: "RUB")
         testTransaction = Transaction(id: 1,
                                       account: testAccount!,
@@ -47,7 +47,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
         XCTAssertEqual(parsedCategory?.id, 1)
         XCTAssertEqual(parsedCategory?.name, "Зарплата")
         XCTAssertEqual(parsedCategory?.emoji, "💰")
-        XCTAssertEqual(parsedCategory?.isIncome, .income)
+        XCTAssertEqual(parsedCategory?.isIncome, true)
     }
     
     func testCategoryIncorrectIntParse() {
@@ -105,7 +105,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     }
     
     func testCategoryEncoding() {
-        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income)
+        let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: true)
         let jsonCategory = testCategory.jsonObject
         let category = Category.parse(jsonObject: jsonCategory)
         XCTAssertEqual(category, testCategory)
@@ -199,11 +199,11 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "createdAt": "2025-06-13T17:44:11.107Z",
             "updatedAt": "2025-06-13T17:44:11.107Z"
         ]
-        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNotNil(transaction, "Не удалось распарсить транзакцию")
         XCTAssertEqual(transaction?.id, 1)
         XCTAssertEqual(transaction?.account, testAccount)
-        XCTAssertEqual(transaction?.category, Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: .income))
+        XCTAssertEqual(transaction?.category, Category(id: 1, name: "Зарплата", emoji: "💰", isIncome: true))
         XCTAssertEqual(transaction?.amount, 500.00)
         XCTAssertEqual(transaction?.transactionDate, formatter!.date(from: "2025-06-13T17:44:11.107Z"))
         XCTAssertEqual(transaction?.comment, "Зарплата за месяц")
@@ -234,7 +234,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "createdAt": "2025-06-13T17:44:11.107Z",
             "updatedAt": "2025-06-13T17:44:11.107Z"
         ]
-        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNil(transaction)
     }
     
@@ -260,7 +260,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "createdAt": "2025-06-13T17:44:11.107Z",
             "updatedAt": "2025-06-13T17:44:11.107Z"
         ]
-        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNil(transaction)
     }
     
@@ -281,7 +281,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "createdAt": "2025-06-13T17:44:11.107Z",
             "updatedAt": "2025-06-13T17:44:11.107Z"
         ]
-        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNil(transaction)
     }
     
@@ -306,7 +306,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "createdAt": "2025-06-13T17:44:11.107Z",
             "updatedAt": "2025-06-13T17:44:11.107Z"
         ]
-        let transaction = Transaction.parse(jsonObject: transactionJSON)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON)
         XCTAssertNil(transaction)
     }
     
@@ -314,7 +314,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     
     func testTransactionJSONEncoding() {
         let transactionJSON = testTransaction?.jsonObject
-        let transaction = Transaction.parse(jsonObject: transactionJSON!)
+        let transaction = try? Transaction.parse(jsonObject: transactionJSON!)
         XCTAssertNotNil(transaction)
         XCTAssertEqual(transaction, testTransaction)
     }
@@ -360,7 +360,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             of: now
         )!
         let endOfToday = calendar.date(byAdding: DateComponents(day:1, second: -1), to: startOfToday)!
-        let service = TransactionsService()
+        let service = TransactionsServiceMok()
         
         let transactionsFromService = try await service.fetchTransactions(
             startDate: startOfToday,
