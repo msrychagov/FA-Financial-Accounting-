@@ -8,21 +8,21 @@
 import Foundation
 
 protocol DateBorders {
-    var startOfToday: Date { get }
-    var startBorder: Date { get }
-    var endBorder: Date { get }
+    static var startOfToday: Date { get }
+    static var startBorder: Date { get }
+    static var endBorder: Date { get }
 }
 
 extension Date: DateBorders {
-    var startOfToday: Date {
-        Calendar.current.startOfDay(for: self)
+    static var startOfToday: Date {
+        Calendar.current.startOfDay(for: Date())
     }
     
-    var startBorder: Date {
+    static var startBorder: Date {
         Calendar.current.date(byAdding: DateComponents(month: -1), to: startOfToday)!
     }
     
-    var endBorder: Date {
+    static var endBorder: Date {
         Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfToday)!
     }
     
