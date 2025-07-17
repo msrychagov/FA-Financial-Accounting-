@@ -57,7 +57,7 @@ extension Transaction {
         let category = Category (id: Int(fields[categoryIdIndex])!,
                                  name: fields[categoryNameIndex],
                                  emoji: fields[categoryIconIndex],
-                                 isIncome: Direction(rawValue: fields[categoryIsIncomeIndex])!)
+                                 isIncome: fields[categoryIsIncomeIndex] == "true" ? true : false)
         let amount = Decimal(string: fields[amountIndex])!
         let transactionDate = fields[transactionDateIndex].convertToDate()!
         let comment = fields[commentIndex]

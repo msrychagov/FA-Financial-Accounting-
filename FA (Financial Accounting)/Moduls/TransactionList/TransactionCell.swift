@@ -11,7 +11,7 @@ struct TransactionCell: View {
     let transaction: Transaction
     var body: some View {
         HStack {
-            if transaction.category.isIncome == .outcome {
+            if transaction.category.direction == .outcome {
                 emoji
             }
             VStack(alignment: .leading, spacing: 3) {
@@ -44,7 +44,7 @@ struct TransactionCell: View {
 #Preview {
     TransactionCell(transaction:  Transaction(id: 2,
                                               account: BankAccount(id: "g5ldpb73", name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
-                                              category: Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: .outcome),
+                                              category: Category(id: 1, name: "Одежда", emoji: "🧢", isIncome: false),
                                               amount: -30.00,
                                               transactionDate: "2025-06-24T23:42:34.083Z".convertToDate()!,
                                               comment: "Покупка футболки",

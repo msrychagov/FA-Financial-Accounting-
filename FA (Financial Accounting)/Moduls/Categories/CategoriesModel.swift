@@ -38,7 +38,7 @@ final class CategoriesViewModel: ObservableObject {
     }
     
     func byDirectionCategories(_ direction: Direction) -> [Category] {
-        return toShowCategories.filter { $0.isIncome == direction }
+        return toShowCategories.filter { $0.direction == direction }
     }
     
     func loadCategories() async throws {

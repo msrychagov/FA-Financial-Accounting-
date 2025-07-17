@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Transaction: Equatable, Identifiable {
+struct Transaction: Equatable, Identifiable, Codable {
     let id: Int
     let account: BankAccount
     let category: Category

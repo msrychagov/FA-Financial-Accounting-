@@ -36,7 +36,7 @@ final class TransactionListModel:ObservableObject {
     }
     
     func filter() {
-        transactions = transactions.filter { $0.category.isIncome == direction }
+        transactions = transactions.filter { $0.category.direction == direction }
     }
     
     func sort(by criteria: SortCriteria, ascending: Bool) {
