@@ -15,7 +15,7 @@ struct NetworkClient {
     func request<RequestBody: Encodable, ResponseBody: Decodable>(
         body: RequestBody? = nil,
         endpoint: Endpoint
-    ) async throws -> ResponseBody {
+    ) async throws -> ResponseBody? {
         guard var components = URLComponents(url: endpoint.url, resolvingAgainstBaseURL: false) else {
             throw NetworkClientErrors.malformedURL
         }
@@ -51,6 +51,8 @@ struct NetworkClient {
         }
         
         switch httpResponse.statusCode {
+        case 204:
+            return nil
         case 200..<300:
             do {
                 return try await Task.detached(priority: .background) {
@@ -78,7 +80,7 @@ struct NetworkClient {
         }
     }
     
-    func request<ResponseBody: Decodable>(endpoint: Endpoint) async throws -> ResponseBody {
+    func request<ResponseBody: Decodable>(endpoint: Endpoint) async throws -> ResponseBody? {
         try await request(body: Optional<EmptyRequest>.none, endpoint: endpoint)
     }
 }

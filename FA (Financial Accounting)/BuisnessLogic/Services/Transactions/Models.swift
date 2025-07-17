@@ -11,32 +11,32 @@ protocol ServerTransactionModel: Encodable {
     var accountId: Int { get }
     var categoryId: Int { get }
     var amount: Decimal { get }
-    var transactionDate: Date { get }
+    var transactionDate: String { get }
     var comment: String { get }
 }
 
-struct UpdateTransactionModel: ServerTransactionModel, Encodable {
+struct UpdateTransactionModel: ServerTransactionModel {
     var accountId: Int
     
     var categoryId: Int
     
     var amount: Decimal
     
-    var transactionDate: Date
+    var transactionDate: String
     
     var comment: String
     
     
 }
 
-struct CreateTransactionModel: ServerTransactionModel, Encodable {
+struct CreateTransactionModel: ServerTransactionModel {
     var accountId: Int
     
     var categoryId: Int
     
     var amount: Decimal
     
-    var transactionDate: Date
+    var transactionDate: String
     
     var comment: String
     
