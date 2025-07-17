@@ -8,6 +8,7 @@ import Foundation
 
 enum TransactionEndpoints {
     case list(accountId: String, startDate: Date, endDate: Date)
+    case details(id: Int)
     case create
     case put(id: Int)
     case delete(id: Int)
@@ -28,14 +29,14 @@ extension TransactionEndpoints: Endpoint {
             return "/account/\(accountId)/period"
         case .create:
             return ""
-        case .put(let id), .delete(let id):
+        case .put(let id), .delete(let id), .details(let id):
             return "/\(id)"
         }
     }
     
     var method: EndpointType {
         switch self {
-        case .list:
+        case .list, .details:
             return .get
         case .create:
             return .post
