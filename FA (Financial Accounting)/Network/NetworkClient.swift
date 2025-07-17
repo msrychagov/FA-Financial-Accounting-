@@ -16,10 +16,10 @@ struct NetworkClient {
         body: RequestBody? = nil,
         endpoint: Endpoint
     ) async throws -> ResponseBody {
-        guard var components = URLComponents(url: endpoint.baseURL, resolvingAgainstBaseURL: false) else {
+        guard var components = URLComponents(url: endpoint.url, resolvingAgainstBaseURL: false) else {
             throw NetworkClientErrors.malformedURL
         }
-        components.path = endpoint.path
+        
         components.queryItems = endpoint.queryItems
         
         guard let url = components.url else {
@@ -79,6 +79,6 @@ struct NetworkClient {
     }
     
     func request<ResponseBody: Decodable>(endpoint: Endpoint) async throws -> ResponseBody {
-        try await request(body: EmptyRequest(), endpoint: endpoint)
+        try await request(body: Optional<EmptyRequest>.none, endpoint: endpoint)
     }
 }

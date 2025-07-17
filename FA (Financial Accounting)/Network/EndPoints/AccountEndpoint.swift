@@ -16,24 +16,6 @@ enum AccountEndpoint {
 
 
 extension AccountEndpoint: Endpoint {
-    var authorized: Bool {
-        true
-    }
-    
-    
-    var baseURL: URL {
-        return URL(string: "\(NetworkClient.Constants.baseURL)/accounts")!
-    }
-    
-    var path: String {
-        switch self {
-        case .list, .create:
-            return ""
-        case .single(id: let id), .put(id: let id), .delete(id: let id):
-            return "/\(id)"
-        }
-    }
-    
     var method: EndpointType {
         switch self {
             
@@ -50,9 +32,24 @@ extension AccountEndpoint: Endpoint {
         }
     }
     
+    var authorized: Bool {
+        true
+    }
+    
     var queryItems: [URLQueryItem]? {
         return nil
     }
     
+    var baseURL: URL {
+        return URL(string: "\(NetworkClient.Constants.baseURL)/accounts")!
+    }
     
+    var url: URL {
+        switch self {
+        case .list, .create:
+            return baseURL
+        case .single(id: let id), .put(id: let id), .delete(id: let id):
+            return baseURL.appendingPathComponent("\(id)")
+        }
+    }
 }

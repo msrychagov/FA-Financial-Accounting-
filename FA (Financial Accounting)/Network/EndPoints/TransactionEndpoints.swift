@@ -7,7 +7,7 @@
 import Foundation
 
 enum TransactionEndpoints {
-    case list(accountId: String, startDate: Date, endDate: Date)
+    case list(accountId: Int, startDate: Date, endDate: Date)
     case details(id: Int)
     case create
     case put(id: Int)
@@ -15,25 +15,6 @@ enum TransactionEndpoints {
 }
 
 extension TransactionEndpoints: Endpoint {
-    var authorized: Bool {
-        true
-    }
-    
-    var baseURL: URL {
-        return URL(string: "\(NetworkClient.Constants.baseURL)/transactions")!
-    }
-    
-    var path: String {
-        switch self {
-        case .list(accountId: let accountId, startDate: let startDate, endDate: let endDate):
-            return "/account/\(accountId)/period"
-        case .create:
-            return ""
-        case .put(let id), .delete(let id), .details(let id):
-            return "/\(id)"
-        }
-    }
-    
     var method: EndpointType {
         switch self {
         case .list, .details:
@@ -47,6 +28,10 @@ extension TransactionEndpoints: Endpoint {
         }
     }
     
+    var authorized: Bool {
+        true
+    }
+    
     var queryItems: [URLQueryItem]? {
         switch self {
             
@@ -57,6 +42,24 @@ extension TransactionEndpoints: Endpoint {
             ]
         default:
             return nil
+        }
+    }
+    
+    var baseURL: URL {
+        return URL(string: "\(NetworkClient.Constants.baseURL)/transactions")!
+    }
+    
+    var url: URL {
+        switch self {
+        case .list(accountId: let accountId, startDate: let startDate, endDate: let endDate):
+            return baseURL
+                .appendingPathComponent("account")
+                .appendingPathComponent("\(accountId)")
+                .appendingPathComponent("period")
+        case .create:
+            return baseURL
+        case .put(let id), .delete(let id), .details(let id):
+            return baseURL.appendingPathComponent("\(id)")
         }
     }
 }
