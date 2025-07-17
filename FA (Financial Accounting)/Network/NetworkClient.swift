@@ -4,7 +4,10 @@ struct NetworkClient {
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
     
-    init(encoder: JSONEncoder, decoder: JSONDecoder) {
+    init(
+        encoder: JSONEncoder = JSONEncoder(),
+        decoder: JSONDecoder = JSONDecoder()
+    ) {
         self.encoder = encoder
         self.decoder = decoder
     }
@@ -73,5 +76,9 @@ struct NetworkClient {
         default:
             throw APIError.unexpectedStatusCode(response)
         }
+    }
+    
+    func request<ResponseBody: Decodable>(endpoint: Endpoint) async throws -> ResponseBody {
+        try await request(body: EmptyRequest(), endpoint: endpoint)
     }
 }
