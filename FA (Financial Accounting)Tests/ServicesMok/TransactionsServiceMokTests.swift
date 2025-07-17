@@ -8,7 +8,7 @@
 import XCTest
 @testable import FA__Financial_Accounting_
 
-final class TransactionsServiceTests: XCTestCase {
+final class TransactionsServiceMokTests: XCTestCase {
     let transactionsService: TransactionsServiceMok = TransactionsServiceMok()
     let formatter = ISO8601DateFormatter()
     override func setUpWithError() throws {
