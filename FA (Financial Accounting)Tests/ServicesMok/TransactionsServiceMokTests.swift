@@ -28,7 +28,7 @@ final class TransactionsServiceMokTests: XCTestCase {
     
     func testcreateTransaction() async throws {
         let transaction = try await transactionsService.createTransaction(
-            accountId: "g5ldpb73",
+            accountId: 1,
             categoryId: 12,
             amount: 250.0,
             transactionDate: formatter.date(from: "2025-07-11T00:00:00.083Z")!,
@@ -37,7 +37,7 @@ final class TransactionsServiceMokTests: XCTestCase {
         let expectedTransaction: Transaction = Transaction(
             id: 10,
             account: BankAccount(
-                id: "g5ldpb73",
+                id: 1,
                 name: "Основной счёт",
                 balance: 15000.50,
                 currency: "RUB"
@@ -46,7 +46,7 @@ final class TransactionsServiceMokTests: XCTestCase {
                 id: 12,
                 name: "Деп",
                 emoji: "💰",
-                isIncome: false
+                direction: .outcome
             ),
             amount: 250.0,
             transactionDate: formatter.date(from: "2025-07-11T00:00:00.083Z")!,
@@ -81,7 +81,7 @@ final class TransactionsServiceMokTests: XCTestCase {
                 id: 2,
                 name: "Зарплата",
                 emoji: "💰",
-                isIncome: true
+                direction: .income
             )
         )
         XCTAssertEqual(puttedTransaction.amount, 123.45)
