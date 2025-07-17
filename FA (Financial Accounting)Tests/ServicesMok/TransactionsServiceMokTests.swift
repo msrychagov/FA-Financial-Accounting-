@@ -9,7 +9,7 @@ import XCTest
 @testable import FA__Financial_Accounting_
 
 final class TransactionsServiceTests: XCTestCase {
-    let transactionsService: TransactionsService = TransactionsService()
+    let transactionsService: TransactionsServiceMok = TransactionsServiceMok()
     let formatter = ISO8601DateFormatter()
     override func setUpWithError() throws {
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -46,7 +46,7 @@ final class TransactionsServiceTests: XCTestCase {
                 id: 12,
                 name: "Деп",
                 emoji: "💰",
-                isIncome: .outcome
+                isIncome: false
             ),
             amount: 250.0,
             transactionDate: formatter.date(from: "2025-07-11T00:00:00.083Z")!,
@@ -62,7 +62,7 @@ final class TransactionsServiceTests: XCTestCase {
         XCTAssertEqual(transaction.account, transaction.account)
         XCTAssertEqual(transaction.comment, expectedTransaction.comment)
         
-        XCTAssertEqual(transactionsService.transactionsToServer.count, 10)
+        XCTAssertEqual(transactionsService.transactionsStorage.count, 10)
     }
     
     func testPutTransaction() async throws {
@@ -81,19 +81,19 @@ final class TransactionsServiceTests: XCTestCase {
                 id: 2,
                 name: "Зарплата",
                 emoji: "💰",
-                isIncome: .income
+                isIncome: true
             )
         )
         XCTAssertEqual(puttedTransaction.amount, 123.45)
         XCTAssertEqual(puttedTransaction.transactionDate, formatter.date(from: "2025-07-11T00:00:00.083Z")!)
         XCTAssertEqual(puttedTransaction.comment, "Test")
         
-        XCTAssertEqual(puttedTransaction, transactionsService.transactionsToServer[1])
+        XCTAssertEqual(puttedTransaction, transactionsService.transactionsStorage[1])
     }
     
     func testDeleteTransaction() async throws {
         try await transactionsService.deleteTransaction(id: 1)
-        XCTAssertNil(transactionsService.transactionsToServer[1])
-        XCTAssertEqual(transactionsService.transactionsToServer.count, 8)
+        XCTAssertNil(transactionsService.transactionsStorage[1])
+        XCTAssertEqual(transactionsService.transactionsStorage.count, 8)
     }
 }
