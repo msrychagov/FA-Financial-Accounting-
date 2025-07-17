@@ -12,10 +12,6 @@ extension Dictionary where Key == String , Value == Any {
             throw Errors.ConvertFromJson.missingKey(key)
         }
         
-        guard let date = stringDate.convertToDate() else {
-            throw Errors.DateFromString.incorrectStringFormat
-        }
-        
-        return date
+        return stringDate.convertToDate()
     }
 }
