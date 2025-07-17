@@ -10,8 +10,8 @@ extension Category {
         let parts: [String] = [
             String(id),
             name,
-            emoji,
-            direction.rawValue
+            String(emoji),
+            direction == .income ? "true" : "false"
         ]
         return parts.joined(separator: ",")
     }

@@ -9,7 +9,7 @@ import Foundation
 extension BankAccount {
     var csvRow: String {
         let parts: [String] = [
-            id,
+            String(id),
             name,
             NSDecimalNumber(decimal: balance).stringValue,
             currency

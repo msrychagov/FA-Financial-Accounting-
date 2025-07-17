@@ -17,7 +17,7 @@ final class DateTableCell: UITableViewCell {
     func configure(border: Border) {
         self.border = border
         configureLabel(text: border == .start ? " Период: начало" : "Период: конец")
-        configurePicker(date: border == .start ? startHistory : generalEnd)
+        configurePicker(date: border == .start ? Date.startBorder : Date.endBorder)
     }
     
     private func configureLabel(text: String) {

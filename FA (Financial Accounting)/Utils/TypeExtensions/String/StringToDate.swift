@@ -18,5 +18,7 @@ extension String: ToDate {
         guard let converted =  formatter.date(from: self) else {
             fatalError("Не удалось преобразовать строку \(self) в дату.")
         }
+        
+        return converted
     }
 }

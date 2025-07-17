@@ -19,11 +19,11 @@ extension Date: DateBorders {
     }
     
     static var startBorder: Date {
-        Calendar.current.date(byAdding: DateComponents(month: -1), to: startOfToday)!
+        Calendar.current.date(byAdding: DateComponents(month: -1), to: Date.startOfToday)!
     }
     
     static var endBorder: Date {
-        Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfToday)!
+        Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: Date.startOfToday)!
     }
     
 }

@@ -6,7 +6,7 @@
 //
 
 extension Array where Element: ConverterToBuisnessModel {
-    func convertToBuisnessModels() rethrows -> [Element.BuisnessModel] {
+    func convertToBuisnessModels() throws -> [Element.BuisnessModel] {
         try map { try $0.convertToBuisnessModel() }
     }
 }

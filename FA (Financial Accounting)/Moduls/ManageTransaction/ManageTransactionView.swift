@@ -11,7 +11,7 @@ struct ManageTransactionView: View {
     @State var viewModel: ManageTransactionViewModel
     @Binding var activeSheet: ActiveSheet?
     @State private var selectedCategory: String = "Выберите категорию"
-    @State private var date: Date = startOfToday
+    @State private var date: Date = Date.startOfToday
     @State private var time: Date = Date()
     @State private var isSelectedCategory: Bool = true
     @State private var comment: String = ""

@@ -56,8 +56,8 @@ struct TransactionListView: View {
                 .ignoresSafeArea(edges: .bottom)
                 .task {
                     try? await transactionsListModel.fetch(
-                        startDate: startOfToday,
-                        endDate: generalEnd
+                        startDate: Date.startOfToday,
+                        endDate: Date.endBorder
                     )
                 }
                 .toolbar {
@@ -74,8 +74,8 @@ struct TransactionListView: View {
             .fullScreenCover(item: $activeSheet, onDismiss: {
                 Task {@MainActor in
                             try? await transactionsListModel.fetch(
-                                startDate: startOfToday,
-                                endDate: generalEnd
+                                startDate: Date.startOfToday,
+                                endDate: Date.endBorder
                             )
                         }
             }) {sheet in
@@ -133,7 +133,7 @@ struct TransactionListView: View {
             HStack {
                 Text(Constants.SumRaw.title)
                 Spacer()
-                Text("\(formatted(transactionsListModel.sum))")
+                Text(transactionsListModel.sum.toString())
             }
             
         }

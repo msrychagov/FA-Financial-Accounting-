@@ -65,7 +65,7 @@ struct DateCell: View {
                 if Calendar.current.isDateInToday(otherTime) {
                     return ...Date()
                 } else {
-                    return ...generalEnd
+                    return ...Date.endBorder
                 }
             }
         }

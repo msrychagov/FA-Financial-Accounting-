@@ -50,20 +50,20 @@ extension Transaction {
         
         let id = Int(fields[idIndex])!
         let account = BankAccount(
-            id: fields[accountIdIndex],
+            id: Int(fields[accountIdIndex]) ?? 0,
             name: fields[accountNameIndex],
             balance: Decimal(string: fields[accountBalanceIndex])!,
             currency: fields[accountCurrencyIndex])
         let category = Category (id: Int(fields[categoryIdIndex])!,
                                  name: fields[categoryNameIndex],
-                                 emoji: fields[categoryIconIndex],
-                                 isIncome: fields[categoryIsIncomeIndex] == "true" ? true : false)
+                                 emoji: fields[categoryIconIndex].convertToCharacter(),
+                                 direction: fields[categoryIsIncomeIndex] == "true" ? .income : .outcome)
         let amount = Decimal(string: fields[amountIndex])!
-        let transactionDate = fields[transactionDateIndex].convertToDate()!
+        let transactionDate = fields[transactionDateIndex].convertToDate()
         let comment = fields[commentIndex]
-        let createdAt = fields[createdAtIndex].convertToDate()!
-        let updatedAt = fields[updatedAtIndex].convertToDate()!
-        
+        let createdAt = fields[createdAtIndex].convertToDate()
+        let updatedAt = fields[updatedAtIndex].convertToDate()
+    
         return Transaction(id: id,
                            account: account,
                            category: category,

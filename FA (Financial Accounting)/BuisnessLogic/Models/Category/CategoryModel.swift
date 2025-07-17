@@ -10,19 +10,13 @@ import Foundation
 struct Category: Equatable, Identifiable, Hashable {
     let id: Int
     let name: String
-    let emoji: String
-    let isIncome: Bool
+    let emoji: Character
+    let direction: Direction
 }
 
 enum Direction: String, Equatable {
     case income
     case outcome
-}
-
-extension Category {
-    var direction: Direction {
-        isIncome ? .income : .outcome
-    }
 }
 
 
