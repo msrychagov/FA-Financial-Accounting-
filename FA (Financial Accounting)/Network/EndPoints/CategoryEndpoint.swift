@@ -37,7 +37,7 @@ extension CategoryEndpoint: Endpoint {
         case .type(let direction):
             return baseURL
                 .appendingPathComponent("type")
-                .appendingPathComponent(direction.rawValue)
+                .appendingPathComponent("\(direction == .income)")
         }
     }
 }
