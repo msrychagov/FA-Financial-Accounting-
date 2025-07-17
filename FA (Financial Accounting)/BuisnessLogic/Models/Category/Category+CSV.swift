@@ -10,7 +10,7 @@ extension Category {
         let parts: [String] = [
             String(id),
             name,
-            emoji,
+            String(emoji),
             direction.rawValue
         ]
         return parts.joined(separator: ",")

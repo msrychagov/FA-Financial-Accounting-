@@ -23,7 +23,7 @@ final class TransactionTableViewCell: UITableViewCell {
         configureTransactionView()
         configureCircleView()
         configureTextView()
-        configureEmojiLabel(emoji: transaction.category.emoji)
+        configureEmojiLabel(emoji: String(transaction.category.emoji))
         configureNameLabel(name: transaction.category.name)
         configureCommentLabel(comment: transaction.comment)
         configureNumbsView()

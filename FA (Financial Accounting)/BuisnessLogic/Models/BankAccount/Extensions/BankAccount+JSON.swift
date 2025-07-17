@@ -13,7 +13,7 @@ extension BankAccount {
     static func parse(jsonObject: Any) -> BankAccount? {
         guard let dict = jsonObject as? [String : Any] else { return nil }
         
-        guard let id = dict["id"] as? String,
+        guard let id = dict["id"] as? Int,
               let name = dict["name"] as? String,
               let currency = dict["currency"] as? String,
               let balance = dict["balance"] as? String else { return nil }

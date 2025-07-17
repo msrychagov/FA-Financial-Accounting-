@@ -78,7 +78,7 @@ public struct CategoriesView: View {
     private func categoryCell(_ category: Category, isLast: Bool) -> some View {
         VStack(alignment: Constants.CategoryCell.vstackAligment) {
             HStack {
-                Text(category.emoji)
+                Text(String(category.emoji))
                     .font(Constants.CategoryCell.emogiFont)
                     .background(
                         Circle()
