@@ -1,12 +1,13 @@
 import Foundation
 
 final class TransactionsService {
-    private let networkClient: NetworkClient
     private let repo: TransactionsRepository
+    private let storage: OfflineTransactionsStorage
+    private let backUp: UnsyncedTransactionsStorage
     
-    init(networkClient: NetworkClient = NetworkClient(), repo: TransactionsRepository = TransactionsRepository()) {
-        self.networkClient = networkClient
+    init(repo: TransactionsRepository = TransactionsRepository(), storage: OfflineTransactionsStorage) {
         self.repo = repo
+        self.storage = storage
     }
     
     func fetchTransactions(
