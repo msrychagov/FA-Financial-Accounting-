@@ -34,20 +34,20 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     let mode: Mode
     private(set) var categories: [Category] = []
     private(set) var viewData: TransactionViewData?
-    private let transactionsService: TransactionsServiceMok
-    private let categoriesService: CategoriesServiceMok
-    private let accountsService: BankAccountsServiceMok
+    private let transactionsService: TransactionsService
+    private let categoriesService: CategoriesService
+    private let accountsService: BankAccountsService
     
     init(
         viewState: ViewState = .idle,
-        transactionsService: TransactionsServiceMok = TransactionsServiceMok(),
-        categoriesService: CategoriesServiceMok = CategoriesServiceMok(),
-        accountsService: BankAccountsServiceMok = BankAccountsServiceMok(),
+        transactionsService: TransactionsService = TransactionsService(),
+        categoriesService: CategoriesService = CategoriesService(),
+        accountsService: BankAccountsService = BankAccountsService(),
         mode: Mode,
         transactionId: Int? = nil,
         direction: Direction
     ) {
-        self.viewState = .idle
+        self.viewState = viewState
         self.transactionsService = transactionsService
         self.categoriesService = categoriesService
         self.mode = mode
@@ -57,38 +57,40 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     }
     
     func validateFields(selectedCategory: String, sum: String, comment: String) -> Bool {
-            guard
-                selectedCategory != "Выберите категорию",
-                !sum.isEmpty,
-                !comment.isEmpty
-            else {
-                alertItem = AlertItem(
-                    title: "Неверный ввод",
-                    message: "Пожалуйста, заполните все поля.",
-                    dismissButton: .default(Text("OK"))
-                )
-                return false
-            }
-            return true
+        guard
+            selectedCategory != "Выберите категорию",
+            !sum.isEmpty,
+            !comment.isEmpty
+        else {
+            alertItem = AlertItem(
+                title: "Неверный ввод",
+                message: "Пожалуйста, заполните все поля.",
+                dismissButton: .default(Text("OK"))
+            )
+            return false
         }
+        return true
+    }
     
     @MainActor
     func createTransaction(selectedCategory: String, sum: String, comment: String, date: Date, time: Date) async throws {
         if validateFields(selectedCategory: selectedCategory, sum: sum, comment: comment) {
             viewState = .loading
-            let accountId = try await accountsService.featchFirst().id
+            do {
+                let accountId = try await accountsService.fetchFirst().id
                 let category = categories.filter { $0.name == selectedCategory }
                 let categoryId = category[0].id
-                let amount: Decimal = Decimal(string: sum)!
                 let newDate: Date = combineDate(date, withTime: time)
-                let newTransaction = try await transactionsService.createTransaction(
-                    accountId: accountId,
-                    categoryId: categoryId,
-                    amount: amount,
-                    transactionDate: newDate,
-                    comment: comment
-                )
+                _ = try await transactionsService.createTransaction(accountId: accountId, categoryId: categoryId, amount: sum, transactionDate: newDate, comment: comment)
                 viewState = .success
+            } catch {
+                viewState = .error(error.localizedDescription)
+                        alertItem = AlertItem(
+                            title: "Не удалось создать транзакцию",
+                            message: error.localizedDescription,
+                            dismissButton: .default(Text("OK"))
+                        )
+            }
         } else {
             viewState = .errorSaving
         }
@@ -96,25 +98,39 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     
     @MainActor
     func deleteTransaction() async throws {
-        try await transactionsService.deleteTransaction(id: transactionId!)
+        viewState = .loading
+        do {
+            try await transactionsService.deleteTransaction(id: transactionId!)
+        } catch {
+            viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось удалить транзакцию",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     @MainActor
     func putTransaction(selectedCategory: String, sum: String, comment: String, date: Date, time: Date) async throws {
         if validateFields(selectedCategory: selectedCategory, sum: sum, comment: comment) {
             viewState = .loading
+            do {
+                let account = try await accountsService.fetchFirst()
+                let accountId = account.id
                 let category = categories.filter { $0.name == selectedCategory }
                 let categoryId = category[0].id
-                let amount: Decimal = Decimal(string: sum)!
-            let newDate = combineDate(date, withTime: time)
-            let newTransaction = try await transactionsService.putTransaction(
-                id: transactionId!,
-                categoryId: categoryId,
-                amount: amount,
-                transactionDate: newDate,
-                comment: comment
-            )
+                let newDate = combineDate(date, withTime: time)
+                _ = try await transactionsService.updateTransaction(id: transactionId!, accountId: accountId, categoryId: categoryId, amount: sum.convertToDecimal(), transactionDate: newDate, comment: comment)
                 viewState = .success
+            } catch {
+                viewState = .error(error.localizedDescription)
+                alertItem = AlertItem(
+                    title: "Не удалось обновить транзакцию",
+                    message: error.localizedDescription,
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         } else {
             viewState = .errorSaving
         }
@@ -124,11 +140,16 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     func loadTransaction() async throws {
         viewState = .loading
         do {
-            let transaction = try await transactionsService.transaction(id: transactionId!)
+            let transaction = try await transactionsService.fetchTransactionDetails(id: transactionId!)
             viewData = mapToViewData(transaction: transaction)
             viewState = .success
         } catch {
             viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось получить детали транзакции",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     
@@ -136,11 +157,16 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     func loadCategories() async throws {
         viewState = .loading
         do {
-            categories = try await categoriesService.loadCategories()
+            categories = try await categoriesService.fetchAll()
             categories = categories.filter { $0.direction == direction }
             viewState = .success
         } catch {
             viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось загрузить категории",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     

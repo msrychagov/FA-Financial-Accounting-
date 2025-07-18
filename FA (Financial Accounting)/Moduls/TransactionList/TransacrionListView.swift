@@ -83,7 +83,6 @@ struct TransactionListView: View {
                 case .create:
                     ManageTransactionView(
                         viewModel: ManageTransactionViewModelImp(
-                            transactionsService: transactionsListModel.service,
                             mode: .create,
                             direction: transactionsListModel.direction
                         ),
@@ -92,7 +91,6 @@ struct TransactionListView: View {
                 case .edit(let transaction):
                     ManageTransactionView(
                         viewModel: ManageTransactionViewModelImp(
-                            transactionsService: transactionsListModel.service,
                             mode: .put,
                             transactionId: transaction.id,
                             direction: transactionsListModel.direction
