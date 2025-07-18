@@ -25,7 +25,7 @@ extension CreateTransactionDTO: ConverterToBuisnessModel {
         let transactionDate = self.transactionDate.convertToDate()
         let createdAt = self.createdAt.convertToDate()
         let updatedAt = self.updatedAt.convertToDate()
-        let account = BankAccount(id: 1, name: "Основной счёт", balance: 100000.00, currency: "RUB")
+        let account = TransactionBankAccount(id: 1, name: "Основной счёт", balance: 100000.00, currency: "RUB")
         let category = Category(id: 1, name: "Зарплата", emoji: "💰", direction: .income)
         return Transaction(
             id: self.id,

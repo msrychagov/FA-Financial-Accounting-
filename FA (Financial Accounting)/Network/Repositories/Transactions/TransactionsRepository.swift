@@ -60,7 +60,7 @@ final class TransactionsRepository {
     
     func deleteTransaction(id: Int) async throws {
         let endpoint = TransactionEndpoints.delete(id: id)
-        let emptyResponse: EmptyResponse? = try await networkClient.request(endpoint: endpoint)
+        let _: EmptyResponse? = try await networkClient.request(endpoint: endpoint)
     }
     
 }

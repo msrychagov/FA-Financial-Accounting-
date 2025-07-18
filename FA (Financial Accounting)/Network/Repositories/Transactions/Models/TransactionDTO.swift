@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct TransactionDTO: Codable {
+struct TransactionDTO: Decodable {
     let id: Int
-    let account: BankAccountDTO
+    let account: TransactionBankAccountDTO
     let category: CategoryDTO
     let amount: String
     let transactionDate: String
