@@ -8,10 +8,11 @@ import Foundation
 
 enum AccountEndpoint {
     case list
-    case single(id: String)
+    case single(id: Int)
     case create
-    case put(id: String)
-    case delete(id: String)
+    case put(id: Int)
+    case delete(id: Int)
+    case history(id: Int)
 }
 
 
@@ -29,6 +30,8 @@ extension AccountEndpoint: Endpoint {
                 .put
         case .delete(id: let id):
                 .delete
+        case .history(id: let id):
+                .get
         }
     }
     
@@ -50,6 +53,11 @@ extension AccountEndpoint: Endpoint {
             return baseURL
         case .single(id: let id), .put(id: let id), .delete(id: let id):
             return baseURL.appendingPathComponent("\(id)")
+        case .history(id: let id):
+            return baseURL
+                .appendingPathComponent("\(id)")
+                .appendingPathComponent("history")
         }
+        
     }
 }
