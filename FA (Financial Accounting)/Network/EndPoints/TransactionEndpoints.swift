@@ -21,9 +21,9 @@ extension TransactionEndpoints: Endpoint {
             return .get
         case .create:
             return .post
-        case .put(id: let id):
+        case .put:
             return .put
-        case .delete(id: let id):
+        case .delete:
             return .delete
         }
     }
@@ -35,7 +35,7 @@ extension TransactionEndpoints: Endpoint {
     var queryItems: [URLQueryItem]? {
         switch self {
             
-        case .list(accountId: let accountId, startDate: let startDate, endDate: let endDate):
+        case .list(_, let startDate, let endDate):
             return [
                 URLQueryItem(name: "startDate", value: startDate.endpointDate()),
                 URLQueryItem(name: "endDate", value: endDate.endpointDate())

@@ -11,6 +11,8 @@ protocol ToString {
     func toString() -> String
 }
 
+
+//TODO: в отдельный форматер
 extension Date: ToString {
     func toString() -> String {
         let formatter = ISO8601DateFormatter()

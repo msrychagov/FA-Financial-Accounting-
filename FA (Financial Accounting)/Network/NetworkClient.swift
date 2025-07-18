@@ -12,6 +12,7 @@ struct NetworkClient {
         self.decoder = decoder
     }
     
+    // Result
     func request<RequestBody: Encodable, ResponseBody: Decodable>(
         body: RequestBody? = nil,
         endpoint: Endpoint
