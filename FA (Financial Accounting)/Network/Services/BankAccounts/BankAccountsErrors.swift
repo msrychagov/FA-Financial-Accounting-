@@ -8,4 +8,5 @@
 enum BankAccountsErrors: Error {
     case emptyAccountsList
     case emptyAccount
+    case accountsNotFound
 }

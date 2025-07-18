@@ -36,4 +36,12 @@ final class BankAccountsService {
     func fetchAccountHistory(id: Int) async throws -> BankAccountHistory {
         try await repo.fetchAccountHistory(id: id)
     }
+    
+    func fetchFirst() async throws -> BankAccount {
+        guard let account = try await fetchAll().first else {
+            throw BankAccountsErrors.accountsNotFound
+        }
+        
+        return account
+    }
 }

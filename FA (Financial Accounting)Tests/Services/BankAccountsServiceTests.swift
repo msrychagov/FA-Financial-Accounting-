@@ -45,4 +45,9 @@ final class BankAccountsServiceTests: XCTestCase {
         let history = try await service.fetchAccountHistory(id: 113)
         print(history)
     }
+    
+    func testFetchFirst() async throws {
+        let account = try await service.fetchFirst()
+        print(account)
+    }
 }
