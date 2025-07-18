@@ -9,7 +9,7 @@ import Foundation
 
 struct Transaction: Equatable, Identifiable {
     let id: Int
-    let account: BankAccount
+    let account: TransactionBankAccount
     let category: Category
     let amount: Decimal
     let transactionDate: Date

@@ -76,7 +76,7 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     func createTransaction(selectedCategory: String, sum: String, comment: String, date: Date, time: Date) async throws {
         if validateFields(selectedCategory: selectedCategory, sum: sum, comment: comment) {
             viewState = .loading
-                let accountId = try await accountsService.fetchFirst().id
+            let accountId = try await accountsService.featchFirst().id
                 let category = categories.filter { $0.name == selectedCategory }
                 let categoryId = category[0].id
                 let amount: Decimal = Decimal(string: sum)!

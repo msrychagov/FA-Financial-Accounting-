@@ -49,7 +49,7 @@ extension Transaction {
         else { return nil }
         
         let id = Int(fields[idIndex])!
-        let account = BankAccount(
+        let account = TransactionBankAccount(
             id: Int(fields[accountIdIndex]) ?? 0,
             name: fields[accountNameIndex],
             balance: Decimal(string: fields[accountBalanceIndex])!,
@@ -89,7 +89,7 @@ extension Transaction {
     }
     
     static var csvHeader: String {
-        return "id,\(BankAccount.csvHeader),\(Category.csvHeader),amount,transactionDate,comment,createdAt,updatedAt"
+        return "id,\(TransactionBankAccount.csvHeader),\(Category.csvHeader),amount,transactionDate,comment,createdAt,updatedAt"
     }
     
     static func toCSV(_ transactions: [Transaction]) -> String {

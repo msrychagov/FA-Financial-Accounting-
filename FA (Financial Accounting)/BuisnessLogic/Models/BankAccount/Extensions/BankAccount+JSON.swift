@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-extension BankAccount {
-    static func parse(jsonObject: Any) -> BankAccount? {
+extension TransactionBankAccount {
+    static func parse(jsonObject: Any) -> TransactionBankAccount? {
         guard let dict = jsonObject as? [String : Any] else { return nil }
         
         guard let id = dict["id"] as? Int,
@@ -18,7 +18,7 @@ extension BankAccount {
               let currency = dict["currency"] as? String,
               let balance = dict["balance"] as? String else { return nil }
         
-        let account = BankAccount(id: id, name: name, balance: Decimal(string: balance)!, currency: currency)
+        let account = TransactionBankAccount(id: id, name: name, balance: Decimal(string: balance)!, currency: currency)
         
         return account
     }

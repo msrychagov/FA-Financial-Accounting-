@@ -36,7 +36,7 @@ final class TransactionsServiceMokTests: XCTestCase {
         )
         let expectedTransaction: Transaction = Transaction(
             id: 10,
-            account: BankAccount(
+            account: TransactionBankAccount(
                 id: 1,
                 name: "Основной счёт",
                 balance: 15000.50,
