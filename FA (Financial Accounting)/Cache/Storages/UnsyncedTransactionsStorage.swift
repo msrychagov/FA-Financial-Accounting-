@@ -6,33 +6,29 @@
 //
 import SwiftData
 
-final class UnsyncedTransactionsStorage: TransactionsStorage {
-    typealias StorageEntity = UnsyncedOperationEntity
-    
+@MainActor
+final class UnsyncedTransactionsStorage: BackUp {
+    typealias Entity = UnsyncedOperationEntity
     private let container: ModelContainer
     
     init() throws {
         do {
             self.container = try ModelContainer(for: UnsyncedOperationEntity.self)
-        } catch {
-            throw StorageErrors.couldNotCreateUsyncedTransactionsContainer
         }
     }
     func fetchAll() async throws -> [UnsyncedOperationEntity] {
-        <#code#>
+        let context = container.mainContext
+        return try context.fetch(FetchDescriptor<UnsyncedOperationEntity>())
     }
     
-    func put() async throws -> UnsyncedOperationEntity {
-        <#code#>
+    func add(_ entity: UnsyncedOperationEntity) async throws {
+        let context = container.mainContext
+        context.insert(entity)
     }
     
-    func delete() {
-        <#code#>
+    func delete(_ entity: UnsyncedOperationEntity) async throws {
+        let context = container.mainContext
+        context.delete(entity)
     }
     
-    func create() async throws -> UnsyncedOperationEntity {
-        <#code#>
-    }
-    
-
 }

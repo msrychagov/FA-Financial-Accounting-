@@ -8,4 +8,6 @@
 enum StorageErrors: Error {
     case couldNotCreateTransactionsContainer
     case couldNotCreateUsyncedTransactionsContainer
+    case entityNotFound
+    case couldNotSaveContext
 }

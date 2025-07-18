@@ -10,12 +10,14 @@ import Foundation
 
 @Model
 final class UnsyncedOperationEntity {
-    @Attribute(.unique) var id: UUID
+    @Attribute(.unique) var id: Int
     
     var type: OperationType
+    var date: Date
     
-    init(id: UUID, type: OperationType) {
+    init(id: Int, type: OperationType, date: Date) {
         self.id = id
         self.type = type
+        self.date = date
     }
 }
