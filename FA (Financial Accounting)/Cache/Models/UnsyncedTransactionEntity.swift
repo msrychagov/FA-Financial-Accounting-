@@ -10,8 +10,8 @@ import Foundation
 
 @Model
 final class UnsyncedOperationEntity {
-    @Attribute(.unique) var id: Int
-    
+    @Relationship
+    var transaction: TransactionEntity
     var type: OperationType
     var date: Date
     

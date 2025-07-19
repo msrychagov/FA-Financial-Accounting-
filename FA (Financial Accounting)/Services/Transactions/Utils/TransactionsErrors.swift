@@ -8,5 +8,10 @@ extension TransactionsRepository {
     enum Errors: Error {
         case emptyTransaction
         case emptyTransactionsList
+        case couldNotConnectToServer
     }
+}
+
+enum TransactionsServiceErrors: Error {
+    case couldNotConnectToServer
 }

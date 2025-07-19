@@ -14,6 +14,8 @@ final class UnsyncedTransactionsStorage: BackUp {
     init() throws {
         do {
             self.container = try ModelContainer(for: UnsyncedOperationEntity.self)
+        } catch {
+            throw StorageErrors.couldNotCreateUsyncedTransactionsContainer
         }
     }
     func fetchAll() async throws -> [UnsyncedOperationEntity] {
@@ -30,5 +32,4 @@ final class UnsyncedTransactionsStorage: BackUp {
         let context = container.mainContext
         context.delete(entity)
     }
-    
 }

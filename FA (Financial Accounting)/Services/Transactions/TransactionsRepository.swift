@@ -23,12 +23,12 @@ final class TransactionsRepository {
         return try transactionsDTO.convertToBuisnessModels()
     }
     
-    func createTransaction(accountId: Int, categoryId: Int, amount: String, transactionDate: Date, comment: String) async throws -> Transaction {
+    func createTransaction(accountId: Int, categoryId: Int, amount: Decimal, transactionDate: Date, comment: String) async throws -> Transaction {
         let endpoint = TransactionEndpoints.create
         let toCreateTransaction = CreateTransactionModel(
             accountId: accountId,
             categoryId: categoryId,
-            amount: amount.convertToDecimal(),
+            amount: amount,
             transactionDate: transactionDate.toString(),
             comment: comment
         )
