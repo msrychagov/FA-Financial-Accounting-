@@ -95,8 +95,8 @@ final class TransactionsServiceMok {
     func fetchTransactions(startDate: Date? = Date.startOfToday, endDate: Date? = Date.endBorder) async throws -> [Transaction] {
         let transactions = transactionsStorage.values
         return transactions.filter {
-            $0.transactionDate >= startDate! &&
-            $0.transactionDate <= endDate!
+            $0.transactionDate >= startDate &&
+            $0.transactionDate <= endDate
         }
     }
     
