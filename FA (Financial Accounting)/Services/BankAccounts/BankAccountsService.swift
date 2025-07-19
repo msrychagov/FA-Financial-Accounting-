@@ -8,17 +8,27 @@ import Foundation
 
 final class BankAccountsService {
     private let repo: BankAccountsRepository
+    private let storage: SwiftDataAccountsStorage
     
-    init(repo: BankAccountsRepository = BankAccountsRepository()) {
+    init(repo: BankAccountsRepository = BankAccountsRepository(), storage: SwiftDataAccountsStorage) {
         self.repo = repo
+        self.storage = storage
     }
     
     func fetchAll() async throws -> [BankAccount] {
-        try await repo.fetchAll()
+        do {
+            let accounts = try await repo.fetchAll()
+            try await saveToStorage(accounts)
+            return accounts
+        } catch {
+            return try await storage.fetchAll()
+        }
     }
     
     func createAccount(name: String, balance: Decimal, currency: String) async throws -> BankAccount {
-        try await repo.createAccount(name: name, balance: balance, currency: currency)
+        let account = try await repo.createAccount(name: name, balance: balance, currency: currency)
+        try await storage.save(account)
+        return account
     }
     
     func fetchAccountDetails(id: Int) async throws -> BankAccountDetails {
@@ -26,7 +36,9 @@ final class BankAccountsService {
     }
     
     func updateAccount(id: Int, name: String, currency: String, balance: Decimal) async throws -> BankAccount {
-        try await repo.updateAccount(id: id, name: name, balance: balance, currency: currency)
+        let account = try await repo.updateAccount(id: id, name: name, balance: balance, currency: currency)
+        try await storage.update(account)
+        return account
     }
     
     func deleteAccount(id: Int) async throws {
@@ -43,5 +55,13 @@ final class BankAccountsService {
         }
         
         return account
+    }
+}
+
+extension BankAccountsService {
+    func saveToStorage(_ accounts: [BankAccount]) async throws {
+        for account in accounts {
+            try await storage.save(account)
+        }
     }
 }

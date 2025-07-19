@@ -24,12 +24,12 @@ struct TabBar: View {
                     Image("outcome")
                     Text("Расходы")
                 }
-            AccountView(viewModel: AccountModel(service: accountsService))
+            AccountView(viewModel: AccountModel())
                 .tabItem {
                     Image("account")
                     Text("Счёт")
                 }
-            CategoriesView(model: CategoriesViewModel(categoriesService: CategoriesService()))
+            CategoriesView(model: CategoriesViewModel())
                 .tabItem {
                     Image("categories")
                     Text("Статьи")

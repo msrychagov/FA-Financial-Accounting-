@@ -5,27 +5,32 @@
 //  Created by Михаил Рычагов on 18.07.2025.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 
 @Model
 final class CategoryEntity {
-    @Attribute(.unique) var id: Int
+    var id: Int
     var name: String
     var emoji: String
-    var direction: Bool
+    var isIncome: Bool
     
-    init(
-        id: Int,
-        name: String,
-        emoji: String,
-        direction: Bool
-    ) {
-        self.id = id
-        self.name = name
-        self.emoji = emoji
-        self.direction = direction
+    init(from category: Category) {
+        self.id = category.id
+        self.name = category.name
+        self.emoji = String(category.emoji)
+        self.isIncome = category.direction == .income
+    }
+    
+    func toCategory() -> Category {
+        Category(
+            id: id,
+            name: name,
+            emoji: Character(emoji),
+            direction: isIncome ? .income : .outcome
+        )
     }
 }
+
 
 

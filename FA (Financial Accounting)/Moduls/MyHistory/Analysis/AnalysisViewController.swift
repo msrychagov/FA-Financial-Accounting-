@@ -17,10 +17,7 @@ final class AnalysisViewController: UIViewController {
     
     
     //MARK: - Lyfecycle
-    init(startDate: Date, endDate: Date, direction: Direction) {
-        let offlineTransactions = try! OfflineTransactionsStorage()
-        let unsynced = try! UnsyncedTransactionsStorage()
-        let service = TransactionsService(storage: offlineTransactions, backUp: unsynced)
+    init(startDate: Date, endDate: Date, direction: Direction, service: TransactionsService = ServiceFactory.shared.createTransactionsService()) {
         vm = AnalysisViewModel(service: service, direction: direction)
         super.init(nibName: nil, bundle: nil)
     }

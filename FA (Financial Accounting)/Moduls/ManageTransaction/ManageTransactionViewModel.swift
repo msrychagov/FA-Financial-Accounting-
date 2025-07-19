@@ -40,16 +40,15 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     
     init(
         viewState: ViewState = .idle,
-        categoriesService: CategoriesService = CategoriesService(),
-        accountsService: BankAccountsService = BankAccountsService(),
+        transactionsService: TransactionsService = ServiceFactory.shared.createTransactionsService(),
+        categoriesService: CategoriesService = ServiceFactory.shared.createCategoriesService(),
+        accountsService: BankAccountsService = ServiceFactory.shared.createBankAccountsService(),
         mode: Mode,
         transactionId: Int? = nil,
         direction: Direction
     ) {
         self.viewState = viewState
-        let offlineTransactions = try! OfflineTransactionsStorage()
-        let unsynced = try! UnsyncedTransactionsStorage()
-        self.transactionsService = TransactionsService(storage: offlineTransactions, backUp: unsynced)
+        self.transactionsService = transactionsService
         self.categoriesService = categoriesService
         self.mode = mode
         self.transactionId = transactionId

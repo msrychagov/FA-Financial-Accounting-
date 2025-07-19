@@ -18,7 +18,7 @@ final class CategoriesViewModel: ObservableObject {
     @Published var viewState: ViewState
     @Published var alertItem: AlertItem?
     
-    init(categoriesService: CategoriesService) {
+    init(categoriesService: CategoriesService = ServiceFactory.shared.createCategoriesService()) {
         self.service = categoriesService
         self.viewState = .idle
         $query

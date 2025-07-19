@@ -8,36 +8,37 @@ import SwiftUI
 
 @Observable
 final class AccountModel {
-    private(set) var account: TransactionBankAccount?
-    private let service: BankAccountsServiceMok
+    private(set) var account: BankAccount?
+    private let service: BankAccountsService
     var balance: Decimal = 0
     var currency: Currency = .rub
     var viewState: ViewState
     var alertItem: AlertItem?
     
     
-    init(service: BankAccountsServiceMok) {
+    init(service: BankAccountsService = ServiceFactory.shared.createBankAccountsService() ) {
         self.service = service
         viewState = .idle
-        Task {
-            do {
-                viewState = .loading
-                account = try await service.featchFirst()
-                balance = account?.balance ?? 0
-                viewState = .success
-            } catch {
-                viewState = .error(error.localizedDescription)
-                alertItem = AlertItem(
-                    title: "Не удалось создать транзакцию",
-                    message: error.localizedDescription,
-                    dismissButton: .default(Text("OK"))
-                )
-            }
+    }
+    
+    func loadAccount() async throws {
+        do {
+            viewState = .loading
+            account = try await service.fetchFirst()
+            balance = account!.balance
+            viewState = .success
+        } catch {
+            viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось создать транзакцию",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
     
     func refreshAccount() async throws {
-        account = try await service.putBankAccount(account: account!, newBalance: balance, newCurrency: currency.rawValue)
+        account = try await service.updateAccount(id: account!.id, name: account!.name, currency: currency.rawValue, balance: balance)
     }
     
     

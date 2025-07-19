@@ -29,16 +29,14 @@ final class TransactionListModel:ObservableObject {
     }
     
     // Добавить TransactionService
-    init(direction: Direction) {
+    init(direction: Direction, service: TransactionsService = ServiceFactory.shared.createTransactionsService()) {
         self.direction = direction
         //        Task {
         //            try await fetch()
         //            filter()
         //        }
         viewState = .idle
-        let offlineTransactions = try! OfflineTransactionsStorage()
-        let unsynced = try! UnsyncedTransactionsStorage()
-        self.service = TransactionsService(storage: offlineTransactions, backUp: unsynced)
+        self.service = service
     }
     
     func filter() {

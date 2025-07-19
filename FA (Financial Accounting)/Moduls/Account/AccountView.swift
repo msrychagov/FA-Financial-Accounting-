@@ -47,7 +47,7 @@ public struct AccountView: View {
             case .success, .errorSaving:
                 List {
                     BalanceCell(
-                        balance: viewModel.balance ?? 0.00,
+                        balance: viewModel.balance,
                         backgroundColor: .accent, isHidden: isBalanceHidden
                     )
                     .listRowSeparator(.hidden)
@@ -83,6 +83,9 @@ public struct AccountView: View {
                 }
             }
         }
+        .task {
+            try? await viewModel.loadAccount()
+        }
         .alert(item: $viewModel.alertItem) { alert in
                     Alert(
                         title: Text(alert.title),
@@ -106,7 +109,3 @@ public struct AccountView: View {
     }
 }
 
-
-#Preview {
-    AccountView(viewModel: AccountModel(service: BankAccountsServiceMok()))
-}

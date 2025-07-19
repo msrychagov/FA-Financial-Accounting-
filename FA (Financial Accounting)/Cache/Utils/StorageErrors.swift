@@ -5,9 +5,31 @@
 //  Created by Михаил Рычагов on 19.07.2025.
 //
 
-enum StorageErrors: Error {
-    case couldNotCreateTransactionsContainer
-    case couldNotCreateUsyncedTransactionsContainer
-    case entityNotFound
-    case couldNotSaveContext
+enum StorageErrors {
+    enum Transactions: Error {
+        case updateTransactionError
+        case deleteTransactionError
+        case addTransactionError
+        case saveContextError
+        case transactionNotFound
+        case fetchError
+        case transactionsStorageError
+    }
+    
+    enum BackUp: Error {
+        case saveContextError
+    }
+    
+    enum Categories: Error {
+        case fetchCategoriesError
+        case replaceCategoriesError
+    }
+    
+    enum Account: Error {
+        case fetchAccountsError
+        case saveAccountError
+        case deleteAccountError
+        case fetchAccountError
+        case updateAccountError
+    }
 }
