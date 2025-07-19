@@ -44,50 +44,59 @@ final class AnalysisViewController: UIViewController {
                 vm.sort(by: .date)
                 dateAndSumSection.reloadData()
             } catch {
-                
+                hideSwiftUILoading()
+                let alert = UIAlertController(
+                    title: "Ошибка загрузки",
+                    message: error.localizedDescription,
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                present(alert, animated: true)
+                return
             }
             hideSwiftUILoading()
         }
     }
     
     // MARK: — UIHostingController с ProgressView
-        private func showSwiftUILoading() {
-            // 1. Создаём SwiftUI‑вью
-            let spinner = ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-                .scaleEffect(1.5) // можно увеличить при желании
-
-            // 2. Оборачиваем в AnyView, чтобы было проще хранить
-            let anyView = AnyView(
-                ZStack {
-                    Color(.systemBackground)
-                        .ignoresSafeArea()
-                    spinner
-                }
-            )
-
-            // 3. Хостим его в UIKit
-            let host = UIHostingController(rootView: anyView)
-            addChild(host)
-            host.view.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(host.view)
-            NSLayoutConstraint.activate([
-                host.view.topAnchor.constraint(equalTo: view.topAnchor),
-                host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ])
-            host.didMove(toParent: self)
-            loadingHost = host
-        }
-
-        private func hideSwiftUILoading() {
-            guard let host = loadingHost else { return }
-            host.willMove(toParent: nil)
-            host.view.removeFromSuperview()
-            host.removeFromParent()
-            loadingHost = nil
-        }
+    private func showSwiftUILoading() {
+        // 1. Создаём SwiftUI‑вью
+        let spinner = ProgressView("Загрузка данных")
+            .frame(maxWidth: .infinity, alignment: .center)
+            .progressViewStyle(CircularProgressViewStyle())
+            .scaleEffect(1.5) // можно увеличить при желании
+        
+        // 2. Оборачиваем в AnyView, чтобы было проще хранить
+        let anyView = AnyView(
+            ZStack {
+                Color(.systemBackground)
+                    .ignoresSafeArea()
+                spinner
+            }
+        )
+        
+        // 3. Хостим его в UIKit
+        let host = UIHostingController(rootView: anyView)
+        addChild(host)
+        host.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(host.view)
+        NSLayoutConstraint.activate([
+            host.view.topAnchor.constraint(equalTo: view.topAnchor),
+            host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+        host.didMove(toParent: self)
+        loadingHost = host
+    }
+    
+    private func hideSwiftUILoading() {
+        guard let host = loadingHost else { return }
+        host.willMove(toParent: nil)
+        host.view.removeFromSuperview()
+        host.removeFromParent()
+        loadingHost = nil
+    }
     
     private func configureUI() {
         view.backgroundColor = .systemGroupedBackground
@@ -101,13 +110,13 @@ final class AnalysisViewController: UIViewController {
         dateAndSumSection.register(SortCell.self, forCellReuseIdentifier: SortCell.reuseIdentifier)
         dateAndSumSection.dataSource = self
         dateAndSumSection.delegate = self
-//        dateAndSumSection.contentInset = .zero
-//        dateAndSumSection.separatorInset = .zero
-//        dateAndSumSection.layoutMargins = .zero
-
-//        if #available(iOS 9.0, *) {
-//            dateAndSumSection.cellLayoutMarginsFollowReadableWidth = true
-//        }
+        //        dateAndSumSection.contentInset = .zero
+        //        dateAndSumSection.separatorInset = .zero
+        //        dateAndSumSection.layoutMargins = .zero
+        
+        //        if #available(iOS 9.0, *) {
+        //            dateAndSumSection.cellLayoutMarginsFollowReadableWidth = true
+        //        }
         view.addSubview(dateAndSumSection)
         dateAndSumSection.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         dateAndSumSection.pinBottom(to: view.bottomAnchor)
@@ -134,7 +143,7 @@ extension AnalysisViewController: UITableViewDataSource {
         }
     }
     
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
