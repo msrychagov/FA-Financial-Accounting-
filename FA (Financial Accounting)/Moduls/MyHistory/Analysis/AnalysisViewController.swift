@@ -12,6 +12,7 @@ final class AnalysisViewController: UIViewController {
     private let vm: AnalysisViewModel
     private let dateAndSumSection: UITableView = UITableView(frame: .zero, style: .insetGrouped)
     private let actionMenuButton: UIButton = UIButton()
+    private var loadingHost: UIHostingController<AnyView>?
     
     
     
@@ -29,15 +30,65 @@ final class AnalysisViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        Task {
-            try await vm.loadData(startDate: Date.startBorder, endDate: Date.endBorder)
-            vm.sort(by: .date)
-            dateAndSumSection.reloadData()
-        }
         configureUI()
     }
     
-    //MARK: - SetUp UI
+    override func viewWillAppear(_ animated: Bool) {
+        showSwiftUILoading()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Task { @MainActor in
+            do {
+                try await vm.loadData(startDate: Date.startBorder, endDate: Date.endBorder)
+                vm.sort(by: .date)
+                dateAndSumSection.reloadData()
+            } catch {
+                
+            }
+            hideSwiftUILoading()
+        }
+    }
+    
+    // MARK: — UIHostingController с ProgressView
+        private func showSwiftUILoading() {
+            // 1. Создаём SwiftUI‑вью
+            let spinner = ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(1.5) // можно увеличить при желании
+
+            // 2. Оборачиваем в AnyView, чтобы было проще хранить
+            let anyView = AnyView(
+                ZStack {
+                    Color(.systemBackground)
+                        .ignoresSafeArea()
+                    spinner
+                }
+            )
+
+            // 3. Хостим его в UIKit
+            let host = UIHostingController(rootView: anyView)
+            addChild(host)
+            host.view.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(host.view)
+            NSLayoutConstraint.activate([
+                host.view.topAnchor.constraint(equalTo: view.topAnchor),
+                host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                host.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            ])
+            host.didMove(toParent: self)
+            loadingHost = host
+        }
+
+        private func hideSwiftUILoading() {
+            guard let host = loadingHost else { return }
+            host.willMove(toParent: nil)
+            host.view.removeFromSuperview()
+            host.removeFromParent()
+            loadingHost = nil
+        }
+    
     private func configureUI() {
         view.backgroundColor = .systemGroupedBackground
         configureDateAndSumSection()
