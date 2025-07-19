@@ -7,7 +7,16 @@
 
 import Foundation
 
-protocol ServerTransactionModel: Encodable {
+
+struct TransactionRequestBody: Codable {
+    var accountId: Int
+    var categoryId: Int
+    var amount: Decimal
+    var transactionDate: String
+    var comment: String
+}
+
+protocol TransactionRequest: Codable {
     var accountId: Int { get }
     var categoryId: Int { get }
     var amount: Decimal { get }
@@ -15,9 +24,9 @@ protocol ServerTransactionModel: Encodable {
     var comment: String { get }
 }
 
-struct UpdateTransactionModel: ServerTransactionModel {
+struct UpdateTransactionModel: TransactionRequest {
     var accountId: Int
-    
+
     var categoryId: Int
     
     var amount: Decimal
@@ -29,7 +38,7 @@ struct UpdateTransactionModel: ServerTransactionModel {
     
 }
 
-struct CreateTransactionModel: ServerTransactionModel {
+struct CreateTransactionModel: TransactionRequest {
     var accountId: Int
     
     var categoryId: Int

@@ -54,4 +54,14 @@ actor SwiftDataCategoriesStorage {
             throw StorageErrors.Categories.replaceCategoriesError
         }
     }
+    
+    func category(for id: Int) async throws -> Category {
+        let descriptor = FetchDescriptor<CategoryEntity> (
+            predicate: #Predicate { $0.id == id }
+        )
+        let models = try context.fetch(descriptor)
+        guard let model = models.first else { throw StorageErrors.Categories.getCategoryError }
+        return model.toCategory()
+
+    }
 }

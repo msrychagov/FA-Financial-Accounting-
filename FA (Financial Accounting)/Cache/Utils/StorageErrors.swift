@@ -12,8 +12,10 @@ enum StorageErrors {
         case addTransactionError
         case saveContextError
         case transactionNotFound
-        case fetchError
+        case fetchListError
         case transactionsStorageError
+        case fetchDetailsError
+        
     }
     
     enum BackUp: Error {
@@ -23,6 +25,7 @@ enum StorageErrors {
     enum Categories: Error {
         case fetchCategoriesError
         case replaceCategoriesError
+        case getCategoryError
     }
     
     enum Account: Error {
@@ -31,5 +34,12 @@ enum StorageErrors {
         case deleteAccountError
         case fetchAccountError
         case updateAccountError
+        case getAccountError
+    }
+    
+    enum BackUpTransactionsOperation: Error {
+        case saveOperationError
+        case deleteOperationError
+        
     }
 }

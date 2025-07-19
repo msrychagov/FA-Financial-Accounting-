@@ -23,7 +23,8 @@ final class AppModelContainer {
         let schema = Schema([
             TransactionEntity.self,
             AccountEntity.self,
-            CategoryEntity.self
+            CategoryEntity.self,
+            TransactionOperationEntity.self
         ])
         
         let modelConfiguration = ModelConfiguration(
@@ -61,6 +62,10 @@ final class AppModelContainer {
     
     func accountsStorage() -> SwiftDataAccountsStorage {
         return SwiftDataAccountsStorage(context: modelContext())
+    }
+    
+    func backupTransactionsOperations() -> SwiftDataBackupTransactionsOperations {
+        return SwiftDataBackupTransactionsOperations(context: modelContext())
     }
 
 }

@@ -23,17 +23,9 @@ final class TransactionsRepository {
         return try transactionsDTO.convertToBuisnessModels()
     }
     
-    func createTransaction(accountId: Int, categoryId: Int, amount: Decimal, transactionDate: Date, comment: String) async throws -> Transaction {
+    func createTransaction(request: TransactionRequestBody) async throws -> Transaction {
         let endpoint = TransactionEndpoints.create
-        let toCreateTransaction = CreateTransactionModel(
-            accountId: accountId,
-            categoryId: categoryId,
-            amount: amount,
-            transactionDate: transactionDate.toString(),
-            comment: comment
-        )
-        
-        guard let newTransaction: CreateTransactionDTO = try await networkClient.request(body: toCreateTransaction, endpoint: endpoint) else {
+        guard let newTransaction: CreateTransactionDTO = try await networkClient.request(body: request, endpoint: endpoint) else {
             throw Errors.emptyTransaction
         }
         

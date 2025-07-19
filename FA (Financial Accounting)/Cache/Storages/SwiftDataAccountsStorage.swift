@@ -75,4 +75,13 @@ actor SwiftDataAccountsStorage {
             throw StorageErrors.Account.deleteAccountError
         }
     }
+    
+    func account(for id: Int) async throws -> BankAccount {
+        let descriptor = FetchDescriptor<AccountEntity>(
+            predicate: #Predicate { $0.id == id }
+        )
+        let models = try context.fetch(descriptor)
+        guard let model = models.first else { throw StorageErrors.Account.getAccountError }
+        return model.toBankAccount()
+    }
 }

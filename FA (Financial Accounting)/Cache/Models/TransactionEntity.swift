@@ -9,6 +9,7 @@ import SwiftData
 
 @Model
 final class TransactionEntity {
+    @Attribute(.unique)
     var id: Int
     var accountId: Int
     var accountName: String

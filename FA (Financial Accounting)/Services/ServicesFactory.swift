@@ -27,7 +27,12 @@ final class ServiceFactory {
     // MARK: - Methods
     
     func createTransactionsService() -> TransactionsService {        
-        return TransactionsService(storage: modelContainer.transactionsStorage())
+        return TransactionsService(
+            storage: modelContainer.transactionsStorage(),
+            accountsStorage: modelContainer.accountsStorage(),
+            categoriesStorage: modelContainer.categoriesStorage(),
+            backup: modelContainer.backupTransactionsOperations()
+        )
     }
     
     func createBankAccountsService() -> BankAccountsService {

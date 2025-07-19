@@ -28,6 +28,12 @@ actor SwiftDataTransactionsStorage {
         self.context = modelContext
     }
     
+    func fetchAll() async throws -> [Transaction] {
+        let descriptor = FetchDescriptor<TransactionEntity>()
+        let models = try context.fetch(descriptor)
+        return models.map( {$0.toTransaction() })
+    }
+    
     func fetch(from startDate: Date, to endDate: Date) async throws -> [Transaction] {
         let descriptor = FetchDescriptor<TransactionEntity>(
             predicate: #Predicate<TransactionEntity> { $0.transactionDate >= startDate && $0.transactionDate <= endDate }
@@ -37,7 +43,7 @@ actor SwiftDataTransactionsStorage {
             let models = try context.fetch(descriptor)
             return models.map( { $0.toTransaction() })
         } catch {
-            throw StorageErrors.Transactions.fetchError
+            throw StorageErrors.Transactions.fetchListError
         }
     }
     
@@ -76,6 +82,21 @@ actor SwiftDataTransactionsStorage {
         try context.save()
     }
     
+    func delete(for id: Int) async throws {
+        let descriptor = FetchDescriptor<TransactionEntity>(
+            predicate: #Predicate { $0.id == id }
+        )
+        do {
+            let models = try context.fetch(descriptor)
+            for model in models {
+                context.delete(model)
+            }
+            try context.save()
+        } catch {
+            throw StorageErrors.Transactions.deleteTransactionError
+        }
+    }
+    
     func save(_ transaction: Transaction) async throws {
         let transactionTd = transaction.id
         let model = TransactionEntity(from: transaction)
@@ -93,5 +114,18 @@ actor SwiftDataTransactionsStorage {
             throw StorageErrors.Transactions.saveContextError
         }
     }
-
+    
+    func getTransaction(id: Int) async throws -> Transaction {
+        let descriptor = FetchDescriptor<TransactionEntity>(
+            predicate: #Predicate { $0.id == id }
+        )
+        
+        do {
+            let models = try context.fetch(descriptor)
+            guard let model = models.first else { throw StorageErrors.Transactions.fetchDetailsError }
+            return model.toTransaction()
+        } catch {
+            throw StorageErrors.Transactions.fetchDetailsError
+        }
+    }
 }

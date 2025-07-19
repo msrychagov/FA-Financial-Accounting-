@@ -16,6 +16,12 @@ struct BankAccount {
     let updatedAt: Date
 }
 
+extension BankAccount {
+    func toTransactionBankAccount() -> TransactionBankAccount {
+        TransactionBankAccount(id: id, name: name, balance: balance, currency: currency)
+    }
+}
+
 struct BankAccountDTO: Decodable {
     let id: Int
     let userId: Int
