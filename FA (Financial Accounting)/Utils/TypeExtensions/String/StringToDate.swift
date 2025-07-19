@@ -14,7 +14,11 @@ protocol ToDate {
 extension String: ToDate {
     func convertToDate() -> Date {
         let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        var opts: ISO8601DateFormatter.Options = [.withInternetDateTime]
+        if self.contains(".") {
+          opts.insert(.withFractionalSeconds)
+        }
+        formatter.formatOptions = opts
         guard let converted =  formatter.date(from: self) else {
             fatalError("Не удалось преобразовать строку \(self) в дату.")
         }

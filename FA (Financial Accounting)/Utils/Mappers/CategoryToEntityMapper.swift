@@ -7,6 +7,6 @@
 
 struct CategoryToEntityMapper {
     func map(_ category: Category) -> CategoryEntity {
-        CategoryEntity(id: category.id, name: category.name, emoji: category.emoji, direction: category.direction)
+        CategoryEntity(id: category.id, name: category.name, emoji: String(category.emoji), direction: category.direction == .income)
     }
 }

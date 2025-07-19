@@ -6,15 +6,21 @@
 //
 import Foundation
 import Combine
+import SwiftUI
 
+@MainActor
 final class CategoriesViewModel: ObservableObject {
-    private let service: CategoriesServiceMok
+    private let service: CategoriesService
     @Published var toShowCategories: [Category] = []
     @Published var query: String = ""
     private var cancellables = Set<AnyCancellable>()
+    private var categories: [Category] = []
+    @Published var viewState: ViewState
+    @Published var alertItem: AlertItem?
     
-    init(categoriesService: CategoriesServiceMok) {
+    init(categoriesService: CategoriesService) {
         self.service = categoriesService
+        self.viewState = .idle
         $query
 //            .removeDuplicates()
 //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
@@ -26,10 +32,10 @@ final class CategoriesViewModel: ObservableObject {
     
     func filterBySearching(_ inputText: String) {
         if inputText.isEmpty {
-            toShowCategories = service.categories
+            toShowCategories = categories
         } else {
             // Раскладка
-            toShowCategories = service.categories.filter {
+            toShowCategories = categories.filter {
                 $0.name.lowercased().levenshteinDistance(
                     to: inputText.lowercased()
                 ) <= 2 || $0.name.lowercased().contains(inputText.lowercased())
@@ -42,6 +48,18 @@ final class CategoriesViewModel: ObservableObject {
     }
     
     func loadCategories() async throws {
-        toShowCategories = try await service.loadCategories()
+        do {
+            viewState = .loading
+            categories = try await service.fetchAll()
+            toShowCategories = categories
+            viewState = .success
+        } catch {
+            viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось загрузить категории",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }

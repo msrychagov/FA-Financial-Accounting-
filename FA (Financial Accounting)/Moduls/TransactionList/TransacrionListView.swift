@@ -40,36 +40,52 @@ struct TransactionListView: View {
     var body: some View {
         GeometryReader { geo in
             NavigationView {
-                List {
-                    sum
-                    transactionsList
-                }
-                .navigationTitle(
-                    transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
-                )
-                .overlay(
-                    plusButton
-                        .padding(.bottom, geo.safeAreaInsets.bottom + 16)
-                        .padding(.trailing, 16),
-                    alignment: .bottomTrailing
-                )
-                .ignoresSafeArea(edges: .bottom)
-                .task {
-                    try? await transactionsListModel.fetch(
-                        startDate: Date.startOfToday,
-                        endDate: Date.endBorder
-                    )
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction, service: transactionsListModel.service))
-                        } label: {
-                            Constants.ToolBar.clockLabel
-                        }
-                        .foregroundColor(Constants.ToolBar.tintColor)
+                switch transactionsListModel.viewState {
+                case .idle, .loading:
+                    ProgressView("Загрузка данных")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                case .error(let error):
+                    Text(error)
+                case .success, .errorSaving:
+                    List {
+                        sum
+                        transactionsList
                     }
+                    .navigationTitle(
+                        transactionsListModel.direction == .income ? Constants.Titles.income : Constants.Titles.outcome
+                    )
+                    .overlay(
+                        plusButton
+                            .padding(.bottom, geo.safeAreaInsets.bottom + 16)
+                            .padding(.trailing, 16),
+                        alignment: .bottomTrailing
+                    )
+                    .ignoresSafeArea(edges: .bottom)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink {
+                                MyHistoryView(transactionsList: TransactionListModel(direction: transactionsListModel.direction))
+                            } label: {
+                                Constants.ToolBar.clockLabel
+                            }
+                            .foregroundColor(Constants.ToolBar.tintColor)
+                        }
+                    }
+                    .accentColor(Constants.ToolBar.tintColor)
                 }
+            }
+            .alert(item: $transactionsListModel.alertItem) { alert in
+                        Alert(
+                            title: Text(alert.title),
+                            message: Text(alert.message),
+                            dismissButton: alert.dismissButton
+                        )
+                    }
+            .task {
+                try? await transactionsListModel.fetch(
+                    startDate: Date.startOfToday,
+                    endDate: Date.endBorder
+                )
             }
             .fullScreenCover(item: $activeSheet, onDismiss: {
                 Task {@MainActor in
@@ -99,7 +115,6 @@ struct TransactionListView: View {
                     )
                 }
             }
-            .accentColor(Constants.ToolBar.tintColor)
         }
     }
     

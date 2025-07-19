@@ -12,13 +12,27 @@ final class AccountModel {
     private let service: BankAccountsServiceMok
     var balance: Decimal = 0
     var currency: Currency = .rub
+    var viewState: ViewState
+    var alertItem: AlertItem?
     
     
     init(service: BankAccountsServiceMok) {
         self.service = service
+        viewState = .idle
         Task {
-            account = try await service.featchFirst()
-            balance = account?.balance ?? 0
+            do {
+                viewState = .loading
+                account = try await service.featchFirst()
+                balance = account?.balance ?? 0
+                viewState = .success
+            } catch {
+                viewState = .error(error.localizedDescription)
+                alertItem = AlertItem(
+                    title: "Не удалось создать транзакцию",
+                    message: error.localizedDescription,
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     

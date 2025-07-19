@@ -15,14 +15,14 @@ final class TransactionsService {
         accountId: Int,
         from startDate: Date = Date.startBorder,
         to endDate: Date = Date.endBorder
-    ) async throws -> [TransactionEntity] {
+    ) async throws -> [Transaction] {
         var fetchedTransactions: [TransactionEntity] = []
         var syncedOperations: Set<UnsyncedOperationEntity> = []
         let unsyncedOperations = try await backUp.fetchAll()
         for operation in unsyncedOperations {
                 let transaction = operation.transaction
                 switch operation.type {
-                case .create:
+                case OperationType.create.rawValue:
                     try await createTransaction(
                         accountId: transaction.account.id,
                         categoryId: transaction.category.id,
@@ -30,9 +30,9 @@ final class TransactionsService {
                         transactionDate: transaction.transactionDate,
                         comment: transaction.comment
                     )
-                case .delete:
+                case OperationType.delete.rawValue:
                     try await deleteTransaction(id: transaction.id)
-                case .put:
+                case OperationType.put.rawValue:
                     try await updateTransaction(
                         id: transaction.id,
                         accountId: transaction.account.id,
@@ -41,6 +41,8 @@ final class TransactionsService {
                         transactionDate: transaction.transactionDate,
                         comment: transaction.comment
                     )
+                default:
+                    break
                 }
                 syncedOperations.insert(operation)
                 try await backUp.delete(operation)
@@ -54,7 +56,7 @@ final class TransactionsService {
         } catch {
             fetchedTransactions = try await mergeTransactions(unsyncedOperations: unsyncedOperations, syncedTransactions: syncedOperations)
         }
-        return fetchedTransactions
+        return try await repo.fetchTransactionsList(accountId: accountId, from: startDate, to: endDate)
     }
     
     func createTransaction(
@@ -100,7 +102,7 @@ final class TransactionsService {
         var mergedTransactions: Set<TransactionEntity> = []
         for operation in unsyncedOperations {
             /// Если не синхронизировали операцию или синхронизировали и не удалили
-            if (!syncedTransactions.contains(operation) || syncedTransactions.contains(operation) && operation.type != .delete){
+            if (!syncedTransactions.contains(operation) || syncedTransactions.contains(operation) && OperationType(rawValue: operation.type) != .delete){
                 mergedTransactions.insert(operation.transaction)
             }
         }
@@ -110,6 +112,8 @@ final class TransactionsService {
             mergedTransactions.insert(transaction)
         }
         
-        return Array(mergedTransactions)
+        let array = Array(mergedTransactions)
+        
+        return array
     }
 }

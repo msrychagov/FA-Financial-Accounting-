@@ -15,20 +15,35 @@ public struct CategoriesView: View {
     //MARK: Body
     public var body: some View {
         NavigationView {
-            List {
-                //                title
-                if !model.byDirectionCategories(.income).isEmpty {
-                    categoriesList(direction: .income)
+            switch model.viewState {
+            case .idle, .loading:
+                ProgressView("Загрузка данных")
+                    .frame(maxWidth: .infinity, alignment: .center)
+            case .error(let error):
+                Text(error)
+            case .success, .errorSaving:
+                List {
+                    //                title
+                    if !model.byDirectionCategories(.income).isEmpty {
+                        categoriesList(direction: .income)
+                    }
+                    if !model.byDirectionCategories(.outcome).isEmpty {
+                        categoriesList(direction: .outcome)
+                    }
                 }
-                if !model.byDirectionCategories(.outcome).isEmpty {
-                    categoriesList(direction: .outcome)
+                .navigationTitle(Constants.TitleSection.title)
+                .searchable(text: $model.query, prompt: Constants.Search.placeholder)
+            }
+        }
+        .alert(item: $model.alertItem) { alert in
+                    Alert(
+                        title: Text(alert.title),
+                        message: Text(alert.message),
+                        dismissButton: alert.dismissButton
+                    )
                 }
-            }
-            .navigationTitle(Constants.TitleSection.title)
-            .searchable(text: $model.query, prompt: Constants.Search.placeholder)
-            .task {
-                try? await model.loadCategories()
-            }
+        .task {
+            try? await model.loadCategories()
         }
         
     }
@@ -97,8 +112,4 @@ public struct CategoriesView: View {
         }
         
     }
-}
-
-#Preview {
-    CategoriesView(model: .init(categoriesService: CategoriesServiceMok()))
 }

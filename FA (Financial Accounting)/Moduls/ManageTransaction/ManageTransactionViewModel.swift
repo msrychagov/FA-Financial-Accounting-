@@ -40,7 +40,6 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
     
     init(
         viewState: ViewState = .idle,
-        transactionsService: TransactionsService = TransactionsService(),
         categoriesService: CategoriesService = CategoriesService(),
         accountsService: BankAccountsService = BankAccountsService(),
         mode: Mode,
@@ -48,7 +47,9 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
         direction: Direction
     ) {
         self.viewState = viewState
-        self.transactionsService = transactionsService
+        let offlineTransactions = try! OfflineTransactionsStorage()
+        let unsynced = try! UnsyncedTransactionsStorage()
+        self.transactionsService = TransactionsService(storage: offlineTransactions, backUp: unsynced)
         self.categoriesService = categoriesService
         self.mode = mode
         self.transactionId = transactionId
@@ -81,7 +82,7 @@ final class ManageTransactionViewModelImp:  ManageTransactionViewModel {
                 let category = categories.filter { $0.name == selectedCategory }
                 let categoryId = category[0].id
                 let newDate: Date = combineDate(date, withTime: time)
-                _ = try await transactionsService.createTransaction(accountId: accountId, categoryId: categoryId, amount: sum, transactionDate: newDate, comment: comment)
+                _ = try await transactionsService.createTransaction(accountId: accountId, categoryId: categoryId, amount: sum.convertToDecimal(), transactionDate: newDate, comment: comment)
                 viewState = .success
             } catch {
                 viewState = .error(error.localizedDescription)

@@ -11,6 +11,7 @@ final class UnsyncedTransactionsStorage: BackUp {
     typealias Entity = UnsyncedOperationEntity
     private let container: ModelContainer
     
+    nonisolated
     init() throws {
         do {
             self.container = try ModelContainer(for: UnsyncedOperationEntity.self)

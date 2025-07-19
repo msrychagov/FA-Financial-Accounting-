@@ -14,6 +14,7 @@ final class OfflineTransactionsStorage: TransactionsStorage {
     
     private let container: ModelContainer
     
+    nonisolated
     init() throws {
         do {
             self.container = try ModelContainer(for: TransactionEntity.self, CategoryEntity.self, AccountEntity.self)
@@ -64,4 +65,11 @@ final class OfflineTransactionsStorage: TransactionsStorage {
             throw StorageErrors.couldNotSaveContext
         }
     }
+    
+    func fetchAllMapped() async throws -> [Transaction] {
+        let entities = try container.mainContext.fetch(
+          FetchDescriptor<TransactionEntity>()
+        )
+        return entities.map(EntityToTransaction().map)
+      }
 }

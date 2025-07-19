@@ -14,12 +14,12 @@ struct TabBar: View {
     let accountsService: BankAccountsServiceMok
     var body: some View {
         TabView {
-            TransactionListView(transactionsListModel: TransactionListModel(direction: .income, service: transactionsService))
+            TransactionListView(transactionsListModel: TransactionListModel(direction: .income))
                 .tabItem {
                     Image("income")
                     Text("Доходы")
                 }
-            TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome, service: transactionsService))
+            TransactionListView(transactionsListModel: TransactionListModel(direction: .outcome))
                 .tabItem {
                     Image("outcome")
                     Text("Расходы")
@@ -29,7 +29,7 @@ struct TabBar: View {
                     Image("account")
                     Text("Счёт")
                 }
-            CategoriesView(model: CategoriesViewModel(categoriesService: CategoriesServiceMok()))
+            CategoriesView(model: CategoriesViewModel(categoriesService: CategoriesService()))
                 .tabItem {
                     Image("categories")
                     Text("Статьи")

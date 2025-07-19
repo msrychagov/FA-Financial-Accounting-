@@ -16,7 +16,10 @@ final class AnalysisViewController: UIViewController {
     
     
     //MARK: - Lyfecycle
-    init(startDate: Date, endDate: Date, service: TransactionsServiceMok, direction: Direction) {
+    init(startDate: Date, endDate: Date, direction: Direction) {
+        let offlineTransactions = try! OfflineTransactionsStorage()
+        let unsynced = try! UnsyncedTransactionsStorage()
+        let service = TransactionsService(storage: offlineTransactions, backUp: unsynced)
         vm = AnalysisViewModel(service: service, direction: direction)
         super.init(nibName: nil, bundle: nil)
     }
@@ -176,7 +179,3 @@ extension AnalysisViewController: DateDelegate {
     }
 }
 
-
-#Preview {
-    AnalysisViewController(startDate: Date.startBorder, endDate: Date.endBorder, service: TransactionsServiceMok(), direction: .outcome)
-}

@@ -12,14 +12,14 @@ import Foundation
 final class CategoryEntity {
     @Attribute(.unique) var id: Int
     var name: String
-    var emoji: Character
-    var direction: Direction
+    var emoji: String
+    var direction: Bool
     
     init(
         id: Int,
         name: String,
-        emoji: Character,
-        direction: Direction
+        emoji: String,
+        direction: Bool
     ) {
         self.id = id
         self.name = name

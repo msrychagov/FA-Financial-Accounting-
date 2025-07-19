@@ -12,11 +12,11 @@ import Foundation
 final class UnsyncedOperationEntity {
     @Relationship
     var transaction: TransactionEntity
-    var type: OperationType
+    var type: String
     var date: Date
     
-    init(id: Int, type: OperationType, date: Date) {
-        self.id = id
+    init(transaction: TransactionEntity, type: String, date: Date) {
+        self.transaction = transaction
         self.type = type
         self.date = date
     }
