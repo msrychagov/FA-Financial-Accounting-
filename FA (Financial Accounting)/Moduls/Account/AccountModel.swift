@@ -14,31 +14,31 @@ final class AccountModel {
     var currency: Currency = .rub
     var viewState: ViewState
     var alertItem: AlertItem?
+    let transactionsService: TransactionsService
     
     
-    init(service: BankAccountsService = ServiceFactory.shared.createBankAccountsService() ) {
+    init(service: BankAccountsService = ServiceFactory.shared.createBankAccountsService(),
+         transactionsService: TransactionsService = ServiceFactory.shared.createTransactionsService()) {
         self.service = service
+        self.transactionsService = transactionsService
         viewState = .idle
     }
     
-    func loadAccount() async throws {
-        do {
-            viewState = .loading
-            account = try await service.fetchFirst()
-            balance = account!.balance
-            viewState = .success
-        } catch {
-            viewState = .error(error.localizedDescription)
-            alertItem = AlertItem(
-                title: "Не удалось создать транзакцию",
-                message: error.localizedDescription,
-                dismissButton: .default(Text("OK"))
-            )
+    func loadAccount() async {
+            do {
+                viewState = .loading
+                try? await transactionsService.syncOperations()
+                account = try await service.fetchAll().first
+                balance = account?.balance ?? 0
+                viewState = .success
+            } catch {
+                viewState = .error(error.localizedDescription)
+            }
         }
-    }
     
     func refreshAccount() async throws {
         account = try await service.updateAccount(id: account!.id, name: account!.name, currency: currency.rawValue, balance: balance)
+        balance = account?.balance ?? 0
     }
     
     

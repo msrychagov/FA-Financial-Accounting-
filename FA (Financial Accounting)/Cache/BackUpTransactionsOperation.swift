@@ -27,10 +27,3 @@ struct TransactionsOperation {
             self.transactionRequest = transactionRequest
         }
 }
-
-
-enum OperationType: String {
-    case create
-    case update
-    case delete
-}

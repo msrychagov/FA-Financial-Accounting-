@@ -1,5 +1,5 @@
 //
-//  SwiftDataBackupTransactionsOperation.swift
+//  SwiftDataBackupAccountOperation.swift
 //  FA (Financial Accounting)
 //
 //  Created by Михаил Рычагов on 20.07.2025.
@@ -8,21 +8,17 @@
 import SwiftData
 import Foundation
 
-protocol BackupOperations {
-    associatedtype Operation
-    func saveOperation(_ operation: Operation) async throws
-    func removeOpeartion(with id: String) async throws
-}
 
-actor SwiftDataBackupTransactionsOperations: BackupOperations {
-    typealias Operation = TransactionsOperation
+actor SwiftDataBackupAccountsOperations: BackupOperations {
+    
+    typealias Operation = AccountOperation
     private let context: ModelContext
     
-    var operations: [TransactionsOperation] {
+    var operations: [AccountOperation] {
         get async throws {
-            let descriptor = FetchDescriptor<TransactionOperationEntity>()
+            let descriptor = FetchDescriptor<AccountOperationEntity>()
             let models = try context.fetch(descriptor)
-            return models.map({ $0.toTransactionOperation() })
+            return models.map({ $0.toAccountOperation() })
         }
     }
     
@@ -32,9 +28,9 @@ actor SwiftDataBackupTransactionsOperations: BackupOperations {
     
     
     
-    func saveOperation(_ operation: TransactionsOperation) async throws {
+    func saveOperation(_ operation: AccountOperation) async throws {
         do {
-            let model = TransactionOperationEntity(from: operation)
+            let model = AccountOperationEntity(from: operation)
             context.insert(model)
             try context.save()
         } catch {
@@ -43,7 +39,7 @@ actor SwiftDataBackupTransactionsOperations: BackupOperations {
     }
     
     func removeOpeartion(with id: String) async throws {
-        let descripter = FetchDescriptor<TransactionOperationEntity>(
+        let descripter = FetchDescriptor<AccountOperationEntity>(
             predicate: #Predicate { $0.id == id }
         )
         do {

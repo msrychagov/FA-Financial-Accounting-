@@ -67,5 +67,9 @@ final class AppModelContainer {
     func backupTransactionsOperations() -> SwiftDataBackupTransactionsOperations {
         return SwiftDataBackupTransactionsOperations(context: modelContext())
     }
+    
+    func backupAccountsOperations() -> SwiftDataBackupAccountsOperations {
+        return SwiftDataBackupAccountsOperations(context: modelContext())
+    }
 
 }

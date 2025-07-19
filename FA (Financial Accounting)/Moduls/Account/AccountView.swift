@@ -31,7 +31,6 @@ public struct AccountView: View {
     @State
     private var showingCurrencyDialog = false
     
-    
     @State private var isBalanceHidden: Bool = false
     
     
@@ -84,6 +83,7 @@ public struct AccountView: View {
             }
         }
         .task {
+            try? await viewModel.transactionsService.syncOperations()
             try? await viewModel.loadAccount()
         }
         .alert(item: $viewModel.alertItem) { alert in

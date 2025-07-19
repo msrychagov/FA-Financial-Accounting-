@@ -45,7 +45,7 @@ actor SwiftDataAccountsStorage {
     func update(_ account: BankAccount) async throws {
         let accountId  = account.id
         let descriptor = FetchDescriptor<AccountEntity>(
-            predicate: #Predicate { $0.id == accountId}
+            predicate: #Predicate { $0.id == accountId }
         )
         do {
             let models = try context.fetch(descriptor)
@@ -64,6 +64,21 @@ actor SwiftDataAccountsStorage {
         let accountId  = account.id
         let descriptor = FetchDescriptor<AccountEntity>(
             predicate: #Predicate { $0.id == accountId}
+        )
+        do {
+            let models = try context.fetch(descriptor)
+            if let model = models.first {
+                context.delete(model)
+                try context.save()
+            }
+        } catch {
+            throw StorageErrors.Account.deleteAccountError
+        }
+    }
+    
+    func delete(for id: Int) async throws {
+        let descriptor = FetchDescriptor<AccountEntity>(
+            predicate: #Predicate { $0.id == id}
         )
         do {
             let models = try context.fetch(descriptor)

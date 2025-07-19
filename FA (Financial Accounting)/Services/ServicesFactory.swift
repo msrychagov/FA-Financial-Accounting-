@@ -31,12 +31,13 @@ final class ServiceFactory {
             storage: modelContainer.transactionsStorage(),
             accountsStorage: modelContainer.accountsStorage(),
             categoriesStorage: modelContainer.categoriesStorage(),
-            backup: modelContainer.backupTransactionsOperations()
+            backup: modelContainer.backupTransactionsOperations(),
+            accountsService: createBankAccountsService()
         )
     }
     
     func createBankAccountsService() -> BankAccountsService {
-        return BankAccountsService(storage: modelContainer.accountsStorage())
+        return BankAccountsService(storage: modelContainer.accountsStorage(), backup: modelContainer.backupAccountsOperations())
     }
     
     func createCategoriesService() -> CategoriesService {

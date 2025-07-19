@@ -7,19 +7,22 @@ final class TransactionsService {
     private let accountsStorage: SwiftDataAccountsStorage
     private let categoriesStorage: SwiftDataCategoriesStorage
     private let backup: SwiftDataBackupTransactionsOperations
+    private let accountsService: BankAccountsService
     
     init(
         repo: TransactionsRepository = TransactionsRepository(),
         storage: SwiftDataTransactionsStorage,
         accountsStorage: SwiftDataAccountsStorage,
         categoriesStorage: SwiftDataCategoriesStorage,
-        backup: SwiftDataBackupTransactionsOperations
+        backup: SwiftDataBackupTransactionsOperations,
+        accountsService: BankAccountsService
     ) {
         self.repo = repo
         self.storage = storage
         self.accountsStorage = accountsStorage
         self.categoriesStorage = categoriesStorage
         self.backup = backup
+        self.accountsService = accountsService
     }
     
     func fetchTransactions(
@@ -27,8 +30,8 @@ final class TransactionsService {
         from startDate: Date = Date.startBorder,
         to endDate: Date = Date.endBorder
     ) async throws -> [Transaction] {
-        try? await syncOperations()
         do {
+            try await syncOperations()
             let transactions = try await repo.fetchTransactionsList(accountId: accountId, from: startDate, to: endDate)
             try await saveToStorage(transactions)
             return transactions
@@ -56,10 +59,20 @@ final class TransactionsService {
         )
         do {
             let _ = try await repo.createTransaction(request: transactionRequest)
+            let category = try await categoriesStorage.category(for: categoryId)
+            try await adjustAccountBalance(
+                    accountId: accountId,
+                    delta: signedDelta(amount: amount, category: category)
+            )
+
+
         } catch {
             let localId = try await generateUniqueLocalId()
             let operation = TransactionsOperation(transactionId: localId, type: .create, transactionRequest: transactionRequest)
             try await backup.saveOperation(operation)
+            let transaction = try await makeTransaction(from: transactionRequest, with: localId)
+            try await storage.save(transaction)
+            try await adjustAccountBalance(accountId: accountId, delta: amount)
         }
     }
     
@@ -74,31 +87,47 @@ final class TransactionsService {
     
     func updateTransaction(id: Int, accountId: Int, categoryId: Int, amount: Decimal, transactionDate: Date, comment: String) async throws {
         
+        let oldTx = try await storage.getTransaction(id: id)
+
         do {
-            let transaction = try await repo.updateTransaction(id: id, accountId: accountId, categoryId: categoryId, amount: amount, transactionDate: transactionDate, comment: comment)
-            try await storage.update(transaction)
+            let newTx = try await repo.updateTransaction(id: id, accountId: accountId, categoryId: categoryId, amount: amount, transactionDate: transactionDate, comment: comment)
+            try await storage.update(newTx)
+
+            let delta = signedDelta(amount: newTx.amount, category: newTx.category)
+                      - signedDelta(amount: oldTx.amount, category: oldTx.category)
+            try await adjustAccountBalance(accountId: accountId, delta: delta)
         } catch {
             let request = TransactionRequestBody(accountId: accountId, categoryId: categoryId, amount: amount, transactionDate: transactionDate.toString(), comment: comment)
             let operation = TransactionsOperation(transactionId: id, type: .update, transactionRequest: request)
             try await backup.saveOperation(operation)
+            let transaction = try await makeTransaction(from: request, with: id)
+            try await storage.update(transaction)
+            let account = try await accountsStorage.account(for: accountId)
+            let delta = amount - account.balance
+            try await adjustAccountBalance(accountId: accountId, delta: delta)
         }
     }
     
     func deleteTransaction(id: Int) async throws {
+        let tx = try await storage.getTransaction(id: id)
+        let delta = -signedDelta(amount: tx.amount, category: tx.category)
+
         do {
             try await repo.deleteTransaction(id: id)
+            try await storage.delete(for: id)
+            try await adjustAccountBalance(accountId: tx.account.id, delta: delta)
         } catch {
-            let transaction = try await storage.getTransaction(id: id)
-            let request = TransactionRequestBody(accountId: transaction.account.id, categoryId: transaction.category.id, amount: transaction.amount, transactionDate: transaction.transactionDate.toString(), comment: transaction.comment)
+            let request = TransactionRequestBody(accountId: tx.account.id, categoryId: tx.category.id, amount: tx.amount, transactionDate: tx.transactionDate.toString(), comment: tx.comment)
             let operation = TransactionsOperation(transactionId: id, type: .delete, transactionRequest: request)
             try await backup.saveOperation(operation)
             try await storage.delete(for: id)
+            try await adjustAccountBalance(accountId: tx.account.id, delta: -tx.amount)
         }
     }
 }
 
-private extension TransactionsService {
-    private func saveToStorage(_ transactions: [Transaction]) async throws {
+extension TransactionsService {
+    func saveToStorage(_ transactions: [Transaction]) async throws {
         for transaction in transactions {
             try await storage.save(transaction)
         }
@@ -116,6 +145,7 @@ private extension TransactionsService {
     }
     
     func syncOperations() async throws {
+        guard Connectivity.shared.isReachable else { return }
         let unsyncedOperations = try await backup.operations
         for operation in unsyncedOperations {
             let request = operation.transactionRequest
@@ -178,6 +208,24 @@ private extension TransactionsService {
         }
         return Array(dict.values)
     }
+    
+    func signedDelta(amount: Decimal, category: Category) -> Decimal {
+        category.direction == .income ? amount : -amount
+    }
+
+    func adjustAccountBalance(
+            accountId: Int,
+            delta: Decimal
+        ) async throws {
+            let account = try await accountsStorage.account(for: accountId)
+            let newBalance = account.balance + delta
+            _ = try await accountsService.updateAccount(
+                id: accountId,
+                name: account.name,
+                currency: account.currency,
+                balance: newBalance
+            )
+        }
 }
 
 extension Transaction {

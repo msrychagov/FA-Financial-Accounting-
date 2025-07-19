@@ -37,7 +37,7 @@ enum StorageErrors {
         case getAccountError
     }
     
-    enum BackUpTransactionsOperation: Error {
+    enum Backup: Error {
         case saveOperationError
         case deleteOperationError
         

@@ -20,7 +20,6 @@ final class CategoriesService {
             try await saveToStorage(categories)
             return categories
         } catch {
-            print(try await categoriesStorage.fetchAll().count)
             return try await categoriesStorage.fetchAll()
         }
     }
