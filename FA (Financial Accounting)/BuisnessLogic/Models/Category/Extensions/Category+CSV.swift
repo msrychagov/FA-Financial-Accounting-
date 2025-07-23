@@ -11,7 +11,7 @@ extension Category {
             String(id),
             name,
             String(emoji),
-            direction.rawValue
+            direction == .income ? "true" : "false"
         ]
         return parts.joined(separator: ",")
     }

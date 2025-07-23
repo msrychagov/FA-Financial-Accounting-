@@ -12,14 +12,14 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     var fileCache: TransactionFileCache?
     var formatter: ISO8601DateFormatter?
     var testTransaction: Transaction?
-    var testAccount: BankAccount?
+    var testAccount: TransactionBankAccount?
     
     override func setUpWithError() throws {
         fileCache = TransactionFileCache()
         formatter = ISO8601DateFormatter()
         formatter!.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         let testCategory = Category(id: 1, name: "Зарплата", emoji: "💰", direction: .income)
-        testAccount = BankAccount(id: 1, name: "Основной счёт", balance: 1000.00, currency: "RUB")
+        testAccount = TransactionBankAccount(id: 1, name: "Основной счёт", balance: 1000.00, currency: "RUB")
         testTransaction = Transaction(id: 1,
                                       account: testAccount!,
                                       category: testCategory,
@@ -118,7 +118,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "balance": "1000.00",
             "currency": "RUB"
         ]
-        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        let parsedBankAccount = TransactionBankAccount.parse(jsonObject: bankAccountJSON)
         
         XCTAssertNotNil(parsedBankAccount, "parse(jsonObject:) должен вернуть не-nil для корректных данных")
         XCTAssertEqual(parsedBankAccount, testAccount)
@@ -126,7 +126,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     
     func testBankAccountIncorrectJSON1Parse() {
         let bankAccountJSON: Any = ""
-        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        let parsedBankAccount = TransactionBankAccount.parse(jsonObject: bankAccountJSON)
         
         XCTAssertNil(parsedBankAccount)
     }
@@ -138,7 +138,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "balance": "1000.00",
             "currency": "RUB"
         ]
-        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        let parsedBankAccount = TransactionBankAccount.parse(jsonObject: bankAccountJSON)
         
         XCTAssertNil(parsedBankAccount)
     }
@@ -151,7 +151,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "balance": "1000.00",
             "currency": "RUB"
         ]
-        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        let parsedBankAccount = TransactionBankAccount.parse(jsonObject: bankAccountJSON)
         
         XCTAssertNil(parsedBankAccount)
     }
@@ -164,7 +164,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
             "balance": "aaa",
             "currency": "RUB"
         ]
-        let parsedBankAccount = BankAccount.parse(jsonObject: bankAccountJSON)
+        let parsedBankAccount = TransactionBankAccount.parse(jsonObject: bankAccountJSON)
         
         XCTAssertNil(parsedBankAccount)
     }
@@ -173,7 +173,7 @@ final class FA__Financial_Accounting_Tests: XCTestCase {
     
     func testAccountEncoding() {
         let jsonAccount = testAccount?.jsonObject
-        let account = BankAccount.parse(jsonObject: jsonAccount)
+        let account = TransactionBankAccount.parse(jsonObject: jsonAccount)
         XCTAssertNotNil(account)
         XCTAssertEqual(account, testAccount)
     }

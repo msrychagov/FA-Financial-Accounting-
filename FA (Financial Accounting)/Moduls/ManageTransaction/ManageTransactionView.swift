@@ -11,7 +11,7 @@ struct ManageTransactionView: View {
     @State var viewModel: ManageTransactionViewModel
     @Binding var activeSheet: ActiveSheet?
     @State private var selectedCategory: String = "Выберите категорию"
-    @State private var date: Date = Date.startBorder
+    @State private var date: Date = Date.startOfToday
     @State private var time: Date = Date()
     @State private var isSelectedCategory: Bool = true
     @State private var comment: String = ""
@@ -47,14 +47,33 @@ struct ManageTransactionView: View {
         .task {
             guard !didLoad else { return }
             didLoad = true
+
+            // 1. Категории
             try? await viewModel.loadCategories()
+
             if viewModel.mode == .put {
-                try? await viewModel.loadTransaction()
-                selectedCategory = (viewModel.viewData?.categoryName)!
-                date = viewModel.viewData!.date
-                time = viewModel.viewData!.date
-                comment = viewModel.viewData!.comment
-                sum = viewModel.viewData!.amount
+                do {
+                    try await viewModel.loadTransaction()
+                    if let data = viewModel.viewData {
+                        selectedCategory = data.categoryName
+                        date            = data.date
+                        time            = data.date
+                        comment         = data.comment
+                        sum             = data.amount
+                    } else {
+                        viewModel.alertItem = AlertItem(
+                            title: "Ошибка",
+                            message: "Не удалось загрузить данные транзакции.",
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                } catch {
+                    viewModel.alertItem = AlertItem(
+                        title: "Ошибка",
+                        message: error.localizedDescription,
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
         }
     }

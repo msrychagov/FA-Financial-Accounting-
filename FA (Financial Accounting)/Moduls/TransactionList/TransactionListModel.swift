@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import SwiftUI
 
 enum SortCriteria {
     case date, amount
@@ -15,7 +16,9 @@ enum SortCriteria {
 final class TransactionListModel:ObservableObject {
     @Published private(set) var transactions: [Transaction] = []
     let direction: Direction
-    let service: TransactionsServiceMok
+    let service: TransactionsService
+    var viewState: ViewState
+    var alertItem: AlertItem?
     
     var sum: Decimal {
         var sum: Decimal = 0
@@ -26,12 +29,13 @@ final class TransactionListModel:ObservableObject {
     }
     
     // Добавить TransactionService
-    init(direction: Direction, service: TransactionsServiceMok) {
+    init(direction: Direction, service: TransactionsService = ServiceFactory.shared.createTransactionsService()) {
         self.direction = direction
         //        Task {
         //            try await fetch()
         //            filter()
         //        }
+        viewState = .idle
         self.service = service
     }
     
@@ -62,11 +66,20 @@ final class TransactionListModel:ObservableObject {
     
     @MainActor
     func fetch(startDate: Date, endDate: Date) async throws {
-        transactions = try await service.fetchTransactions(
-            startDate: startDate,
-            endDate: endDate
-        )
-        filter()
+        do {
+            viewState = .loading
+            transactions = try await service.fetchTransactions(accountId: 113, from: startDate, to: endDate)
+            filter()
+            viewState = .success
+        } catch {
+            viewState = .error(error.localizedDescription)
+            alertItem = AlertItem(
+                title: "Не удалось загрузить список транзакций",
+                message: error.localizedDescription,
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        
         
     }
     

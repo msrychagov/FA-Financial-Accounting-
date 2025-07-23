@@ -6,7 +6,7 @@
 //
 import Foundation
 
-extension BankAccount {
+extension TransactionBankAccount {
     var csvRow: String {
         let parts: [String] = [
             String(id),

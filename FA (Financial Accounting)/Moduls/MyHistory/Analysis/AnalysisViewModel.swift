@@ -7,18 +7,18 @@
 import Foundation
 
 final class AnalysisViewModel {
-    private let transactionsService: TransactionsServiceMok
+    private let transactionsService: TransactionsService
     private(set) var transactions: [Transaction] = []
     let direction: Direction
     
-    init(service: TransactionsServiceMok, direction: Direction) {
+    init(service: TransactionsService, direction: Direction) {
         self.transactionsService = service
         self.direction = direction
     }
     
     @MainActor
     func loadData(startDate: Date, endDate: Date) async throws {
-        let allTransactions = try await transactionsService.fetchTransactions(startDate: startDate, endDate: endDate)
+        let allTransactions = try await transactionsService.fetchTransactions(accountId: 113, from: startDate, to: endDate)
         transactions = allTransactions.filter { $0.category.direction == self.direction }
     }
     

@@ -31,50 +31,68 @@ public struct AccountView: View {
     @State
     private var showingCurrencyDialog = false
     
-    
     @State private var isBalanceHidden: Bool = false
     
     
     // MARK: Views
     public var body: some View {
         NavigationStack {
-            List {
-                BalanceCell(
-                    balance: viewModel.balance ?? 0.00,
-                    backgroundColor: .accent, isHidden: isBalanceHidden
+            switch viewModel.viewState {
+            case .idle, .loading:
+                ProgressView("Загрузка данных")
+                    .frame(maxWidth: .infinity, alignment: .center)
+            case .error(let error):
+                Text(error)
+            case .success, .errorSaving:
+                List {
+                    BalanceCell(
+                        balance: viewModel.balance,
+                        backgroundColor: .accent, isHidden: isBalanceHidden
+                    )
+                    .listRowSeparator(.hidden)
+                    Section {}
+                    currencyRow
+                }
+                .background(
+                    ShakeDetector {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            isBalanceHidden.toggle()
+                        }
+                    }
                 )
-                .listRowSeparator(.hidden)
-                Section {}
-                currencyRow
-            }
-            .background(
-                ShakeDetector {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        isBalanceHidden.toggle()
+                .refreshable {
+                    do {
+                        try await viewModel.refreshAccount()
+                    }
+                    catch {
+                        print("Не удалось обновить счёт:", error)
                     }
                 }
-            )
-            .refreshable {
-                do {
-                    try await viewModel.refreshAccount()
-                }
-                catch {
-                    print("Не удалось обновить счёт:", error)
-                }
-            }
-            .tint(.secondAccent)
-            .navigationTitle("Мой счёт")
-            .toolbar {
-                ToolbarItem {
-                    NavigationLink("Редактировать") {
-                        EdditingAccountView(
-                            viewModel: $viewModel
-                        )
+                .tint(.secondAccent)
+                .navigationTitle("Мой счёт")
+                .toolbar {
+                    ToolbarItem {
+                        NavigationLink("Редактировать") {
+                            EdditingAccountView(
+                                viewModel: $viewModel
+                            )
+                        }
+                        .tint(.secondAccent)
                     }
-                    .tint(.secondAccent)
                 }
             }
         }
+        .task {
+            try? await viewModel.transactionsService.syncOperations()
+            try? await viewModel.loadAccount()
+        }
+        .alert(item: $viewModel.alertItem) { alert in
+                    Alert(
+                        title: Text(alert.title),
+                        message: Text(alert.message),
+                        dismissButton: alert.dismissButton
+                    )
+                }
     }
     
     private var currencyRow: some View {
@@ -91,7 +109,3 @@ public struct AccountView: View {
     }
 }
 
-
-#Preview {
-    AccountView(viewModel: AccountModel(service: BankAccountsServiceMok()))
-}

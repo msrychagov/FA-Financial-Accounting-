@@ -11,7 +11,7 @@ final class TransactionsServiceMok {
     let categoriesService: CategoriesServiceMok = CategoriesServiceMok()
     var transactionsStorage: [Int:Transaction] = [
             1 : Transaction(id: 1,
-                            account: BankAccount(id: 1, name: "Основной счёт", balance: 15000.50, currency: "RUB"),
+                            account: TransactionBankAccount(id: 1, name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                             category: Category(id: 2, name: "Зарплата", emoji: "💰", direction: .income),
                             amount: 1000.00,
                             transactionDate: "2025-07-11T20:42:34.083Z".convertToDate(),
@@ -19,7 +19,7 @@ final class TransactionsServiceMok {
                             createdAt: "2025-07-12T23:42:34.083Z".convertToDate(),
                             updatedAt: "2025-06-12T23:42:34.083Z".convertToDate()),
             2:Transaction(id: 2,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", direction: .outcome),
                           amount: 61.00,
                           transactionDate: "2025-07-11T23:42:34.083Z".convertToDate(),
@@ -27,7 +27,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-24T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-24T23:42:34.083Z".convertToDate()),
             3:Transaction(id: 3,
-                          account: BankAccount(id: 1, name: "Основной счёт", balance: 15000.50, currency: "RUB"),
+                          account: TransactionBankAccount(id: 1, name: "Основной счёт", balance: 15000.50, currency: "RUB"),
                           category: Category(id: 3, name: "Подработка", emoji: "💰", direction: .income),
                           amount: 500.00,
                           transactionDate: "2025-07-12T23:43:34.083Z".convertToDate(),
@@ -35,7 +35,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             4:Transaction(id: 4,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 1, name: "Одежда", emoji: "👕", direction: .outcome),
                           amount: 666.00,
                           transactionDate: "2025-07-09T23:42:34.083Z".convertToDate(),
@@ -43,7 +43,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             5:Transaction(id: 5,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 2, name: "На собаку", emoji: "🐕", direction: .outcome),
                           amount: 1000.00,
                           transactionDate: "2025-07-10T23:42:34.083Z".convertToDate(),
@@ -51,7 +51,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             6:Transaction(id: 6,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 7, name: "Ремонт", emoji: "🔨", direction: .outcome),
                           amount: 30.00,
                           transactionDate: "2025-07-11T23:42:34.083Z".convertToDate(),
@@ -59,7 +59,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             7:Transaction(id: 7,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 4, name: "Аптека", emoji: "⛑️", direction: .outcome),
                           amount: 30.00,
                           transactionDate: "2025-06-24T23:42:34.083Z".convertToDate(),
@@ -67,7 +67,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             8:Transaction(id: 8,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 5, name: "На любимую", emoji: "❤️", direction: .outcome),
                           amount: 30.00,
                           transactionDate: "2025-07-13T23:42:34.083Z".convertToDate(),
@@ -75,7 +75,7 @@ final class TransactionsServiceMok {
                           createdAt: "2025-06-13T23:42:34.083Z".convertToDate(),
                           updatedAt: "2025-06-13T23:42:34.083Z".convertToDate()),
             9:Transaction(id: 9,
-                          account: BankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
+                          account: TransactionBankAccount(id: 1, name: "Дополнительный счёт", balance: 1000.00, currency: "USD"),
                           category: Category(id: 6, name: "Ставки", emoji: "⚽️", direction: .outcome),
                           amount: 50000.00,
                           transactionDate: "2025-07-12T23:42:34.083Z".convertToDate(),
@@ -92,7 +92,7 @@ final class TransactionsServiceMok {
         }
     }
     
-    func fetchTransactions(startDate: Date = Date.startBorder, endDate: Date = Date.endBorder) async throws -> [Transaction] {
+    func fetchTransactions(startDate: Date = Date.startOfToday, endDate: Date = Date.endBorder) async throws -> [Transaction] {
         let transactions = transactionsStorage.values
         return transactions.filter {
             $0.transactionDate >= startDate &&

@@ -10,10 +10,9 @@ import SwiftUI
 struct AnalysisViewControllerRepresentable: UIViewControllerRepresentable {
     let startDate: Date
     let endDate: Date
-    let service = TransactionsServiceMok()
     let direction: Direction
     func makeUIViewController(context: Context) -> UIViewController {
-        AnalysisViewController(startDate: startDate, endDate: endDate, service: service, direction: direction)
+        AnalysisViewController(startDate: startDate, endDate: endDate, direction: direction)
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {

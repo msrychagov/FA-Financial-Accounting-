@@ -1,23 +1,18 @@
-//
-//  ToString.swift
-//  FA (Financial Accounting)
-//
-//  Created by Михаил Рычагов on 17.07.2025.
-//
-
 import Foundation
 
 extension Decimal: ToString {
     func toString() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.maximumFractionDigits = 2
         
         guard let formatted = formatter.string(from: NSDecimalNumber(decimal: self)) else {
-            fatalError("Не удалось преобразовать Decimal число \(self) в строку.")
+            fatalError("Не получилось преобразовать число в строку")
         }
         
         return formatted
     }
+    
+    
 }
