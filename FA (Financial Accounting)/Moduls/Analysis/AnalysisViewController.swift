@@ -57,13 +57,10 @@ final class AnalysisViewController: UIViewController {
     
     // MARK: — UIHostingController с ProgressView
     private func showSwiftUILoading() {
-        // 1. Создаём SwiftUI‑вью
         let spinner = ProgressView("Загрузка данных")
             .frame(maxWidth: .infinity, alignment: .center)
             .progressViewStyle(CircularProgressViewStyle())
-            .scaleEffect(1.5) // можно увеличить при желании
         
-        // 2. Оборачиваем в AnyView, чтобы было проще хранить
         let anyView = AnyView(
             ZStack {
                 Color(.systemBackground)
@@ -72,7 +69,6 @@ final class AnalysisViewController: UIViewController {
             }
         )
         
-        // 3. Хостим его в UIKit
         let host = UIHostingController(rootView: anyView)
         addChild(host)
         host.view.translatesAutoresizingMaskIntoConstraints = false
@@ -107,13 +103,6 @@ final class AnalysisViewController: UIViewController {
         dateAndSumSection.register(SortCell.self, forCellReuseIdentifier: SortCell.reuseIdentifier)
         dateAndSumSection.dataSource = self
         dateAndSumSection.delegate = self
-        //        dateAndSumSection.contentInset = .zero
-        //        dateAndSumSection.separatorInset = .zero
-        //        dateAndSumSection.layoutMargins = .zero
-        
-        //        if #available(iOS 9.0, *) {
-        //            dateAndSumSection.cellLayoutMarginsFollowReadableWidth = true
-        //        }
         view.addSubview(dateAndSumSection)
         dateAndSumSection.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         dateAndSumSection.pinBottom(to: view.bottomAnchor)
