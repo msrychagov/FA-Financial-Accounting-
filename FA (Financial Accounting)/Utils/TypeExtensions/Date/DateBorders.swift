@@ -26,4 +26,8 @@ extension Date: DateBorders {
         Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: Date.startOfToday)!
     }
     
+    static var startForMonthly: Date {
+        Calendar.current.date(byAdding: DateComponents(year: -2), to: Date.startBorder)!
+    }
+    
 }

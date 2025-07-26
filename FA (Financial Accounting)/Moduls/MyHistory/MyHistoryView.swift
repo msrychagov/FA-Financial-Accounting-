@@ -16,41 +16,72 @@ struct MyHistoryView: View {
     var startDate: Date = Date.startBorder
     @State
     var endDate: Date = Date.endBorder
+    @State
+    var activeSheet: ActiveSheet?
+    
     var body: some View {
-            List {
-                criterias
-                transactionsListSection
-            }
-            .navigationTitle("Моя история")
-            //            .toolbarColorScheme(.dark)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate, direction: transactionsList.direction)
-                            .navigationTitle("Анализ")
-                            .navigationBarTitleDisplayMode(.large)
-                    } label: {
-                        Image(systemName: "newspaper")
-                    }
-                    .foregroundColor(.secondAccent)
+        List {
+            criterias
+            transactionsListSection
+        }
+        .navigationTitle("Моя история")
+        //            .toolbarColorScheme(.dark)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    AnalysisViewControllerRepresentable(startDate: startDate, endDate: endDate, direction: transactionsList.direction)
+                        .navigationTitle("Анализ")
+                        .navigationBarTitleDisplayMode(.large)
+                } label: {
+                    Image(systemName: "newspaper")
                 }
-                
+                .foregroundColor(.secondAccent)
             }
-            .task {
+            
+        }
+        .task { @MainActor in
+            try? await transactionsList.fetch(
+                startDate: startDate,
+                endDate: endDate
+            )
+        }
+        .onChange(of: [startDate, endDate]) {_ in
+            Task {
                 try? await transactionsList.fetch(
                     startDate: startDate,
                     endDate: endDate
                 )
             }
-            .onChange(of: [startDate, endDate]) {_ in
-                Task {
-                    try? await transactionsList.fetch(
-                        startDate: startDate,
-                        endDate: endDate
-                    )
-                }
         }
         
+        .fullScreenCover(item: $activeSheet, onDismiss: {
+            Task {
+                try? await transactionsList.fetch(
+                    startDate: Date.startOfToday,
+                    endDate: Date.endBorder
+                )
+            }
+        }) {sheet in
+            switch sheet {
+            case .create:
+                ManageTransactionView(
+                    viewModel: ManageTransactionViewModelImp(
+                        mode: .create,
+                        direction: transactionsList.direction
+                    ),
+                    activeSheet: $activeSheet
+                )
+            case .edit(let transaction):
+                ManageTransactionView(
+                    viewModel: ManageTransactionViewModelImp(
+                        mode: .put,
+                        transactionId: transaction.id,
+                        direction: transactionsList.direction
+                    ),
+                    activeSheet: $activeSheet
+                )
+            }
+        }
     }
     
     var criterias: some View {
@@ -72,12 +103,12 @@ struct MyHistoryView: View {
     private var transactionsListSection: some View {
         Section("Операции") {
             ForEach(transactionsList.transactions) { transaction in
-                NavigationLink {
-                    Text("See soon")
+                Button {
+                    activeSheet = .edit(transaction)
                 } label: {
                     TransactionCell(transaction: transaction)
-                    
                 }
+                .tint(.primary)
             }
         }
     }

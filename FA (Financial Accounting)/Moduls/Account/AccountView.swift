@@ -32,7 +32,13 @@ public struct AccountView: View {
     private var showingCurrencyDialog = false
     
     @State private var isBalanceHidden: Bool = false
-    
+    private let segments = ["По дням", "По месяцам"]
+    @State private var selectedIndex = 0
+    private var selectedHistory: [BalanceOnDate] {
+        selectedIndex == 0
+        ? viewModel.balanceOnDate
+        : viewModel.balanceInMonth
+    }
     
     // MARK: Views
     public var body: some View {
@@ -52,6 +58,9 @@ public struct AccountView: View {
                     .listRowSeparator(.hidden)
                     Section {}
                     currencyRow
+                    Section {}
+                    chart
+                        .listRowBackground(Color.clear)
                 }
                 .background(
                     ShakeDetector {
@@ -84,15 +93,22 @@ public struct AccountView: View {
         }
         .task {
             try? await viewModel.transactionsService.syncOperations()
-            try? await viewModel.loadAccount()
+            await viewModel.loadAccount()
+            await viewModel.getHistory()
         }
+        //        .onChange(of: selectedIndex) { newIndex in
+        //            viewModel.period = (newIndex == 0 ? .daily : .monthly)
+        //            Task {
+        //                await viewModel.getHistory()
+        //            }
+        //        }
         .alert(item: $viewModel.alertItem) { alert in
-                    Alert(
-                        title: Text(alert.title),
-                        message: Text(alert.message),
-                        dismissButton: alert.dismissButton
-                    )
-                }
+            Alert(
+                title: Text(alert.title),
+                message: Text(alert.message),
+                dismissButton: alert.dismissButton
+            )
+        }
     }
     
     private var currencyRow: some View {
@@ -106,6 +122,21 @@ public struct AccountView: View {
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         
+    }
+    
+    private var chart: some View {
+        VStack {
+            Picker("Выберите сегмент", selection: $selectedIndex) {
+                ForEach(0..<segments.count, id: \.self) { idx in
+                    Text(segments[idx]).tag(idx)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+            AccountHistoryChart(history: selectedHistory)
+                .animation(.easeInOut(duration: 0.5), value: selectedIndex)
+                .frame(height: 200)
+        }
     }
 }
 

@@ -75,12 +75,12 @@ struct TransactionListView: View {
                 }
             }
             .alert(item: $transactionsListModel.alertItem) { alert in
-                        Alert(
-                            title: Text(alert.title),
-                            message: Text(alert.message),
-                            dismissButton: alert.dismissButton
-                        )
-                    }
+                Alert(
+                    title: Text(alert.title),
+                    message: Text(alert.message),
+                    dismissButton: alert.dismissButton
+                )
+            }
             .task {
                 try? await transactionsListModel.fetch(
                     startDate: Date.startOfToday,
@@ -88,12 +88,12 @@ struct TransactionListView: View {
                 )
             }
             .fullScreenCover(item: $activeSheet, onDismiss: {
-                Task {@MainActor in
-                            try? await transactionsListModel.fetch(
-                                startDate: Date.startOfToday,
-                                endDate: Date.endBorder
-                            )
-                        }
+                Task {
+                    try? await transactionsListModel.fetch(
+                        startDate: Date.startOfToday,
+                        endDate: Date.endBorder
+                    )
+                }
             }) {sheet in
                 switch sheet {
                 case .create:

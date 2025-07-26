@@ -6,6 +6,7 @@
 //
 import UIKit
 import SwiftUI
+import PieChart
 
 final class AnalysisViewController: UIViewController {
     //MARK: - Variables
@@ -13,6 +14,7 @@ final class AnalysisViewController: UIViewController {
     private let dateAndSumSection: UITableView = UITableView(frame: .zero, style: .insetGrouped)
     private let actionMenuButton: UIButton = UIButton()
     private var loadingHost: UIHostingController<AnyView>?
+    private var pieChart: PieChartView = PieChartView()
     
     
     
@@ -40,6 +42,7 @@ final class AnalysisViewController: UIViewController {
                 try await vm.loadData(startDate: Date.startBorder, endDate: Date.endBorder)
                 vm.sort(by: .date)
                 dateAndSumSection.reloadData()
+                pieChart.animateTransition(to: vm.entities)
             } catch {
                 hideSwiftUILoading()
                 let alert = UIAlertController(
@@ -63,7 +66,7 @@ final class AnalysisViewController: UIViewController {
         
         let anyView = AnyView(
             ZStack {
-                Color(.systemBackground)
+                Color(.systemGroupedBackground)
                     .ignoresSafeArea()
                 spinner
             }
@@ -93,7 +96,17 @@ final class AnalysisViewController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .systemGroupedBackground
+        configurePieChart()
         configureDateAndSumSection()
+    }
+    
+    private func configurePieChart() {
+        pieChart.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(pieChart)
+        pieChart.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor, 8)
+        pieChart.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor, 8)
+        pieChart.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        pieChart.setHeight(250)
     }
     
     private func configureDateAndSumSection() {
@@ -104,7 +117,7 @@ final class AnalysisViewController: UIViewController {
         dateAndSumSection.dataSource = self
         dateAndSumSection.delegate = self
         view.addSubview(dateAndSumSection)
-        dateAndSumSection.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        dateAndSumSection.pinTop(to: pieChart.bottomAnchor)
         dateAndSumSection.pinBottom(to: view.bottomAnchor)
         dateAndSumSection.pinLeft(to: view.safeAreaLayoutGuide.leadingAnchor)
         dateAndSumSection.pinRight(to: view.safeAreaLayoutGuide.trailingAnchor)
@@ -188,6 +201,7 @@ extension AnalysisViewController: MenuDelegate {
     func menu(_ sortingType: SortingType) {
         vm.sort(by: sortingType)
         dateAndSumSection.reloadSections([1], with: .none)
+        pieChart.animateTransition(to: vm.entities)
     }
 }
 
@@ -214,6 +228,7 @@ extension AnalysisViewController: DateDelegate {
         let endCell = dateAndSumSection.cellForRow(at: IndexPath(row: 1, section: 0)) as! DateTableCell
         Task {
             try await vm.loadData(startDate: startCell.getDate(), endDate: endCell.getDate())
+            pieChart.animateTransition(to: vm.entities)
             UIView.performWithoutAnimation {
                 dateAndSumSection.reloadSections([1], with: .none)
                 dateAndSumSection.layoutIfNeeded()
