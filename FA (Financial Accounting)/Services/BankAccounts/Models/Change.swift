@@ -15,7 +15,7 @@ struct Change {
     let id: Int
     let accountId: Int
     let changeType: ChangeType
-    let previousState: BankAccountState
+    let previousState: BankAccountState?
     let newState: BankAccountState
     let changeTimestamp: Date
     let createdAt: Date
@@ -25,7 +25,7 @@ struct ChangeDTO: Decodable {
     let id: Int
     let accountId: Int
     let changeType: String
-    let previousState: BankAccountStateDTO
+    let previousState: BankAccountStateDTO?
     let newState: BankAccountStateDTO
     let changeTimestamp: String
     let createdAt: String
@@ -36,7 +36,7 @@ extension ChangeDTO: ConverterToBuisnessModel {
     
     func convertToBuisnessModel() throws -> Change {
         let changeType = ChangeType(rawValue: self.changeType)
-        let previousState = try self.previousState.convertToBuisnessModel()
+        let previousState = try self.previousState?.convertToBuisnessModel()
         let newState = try self.newState.convertToBuisnessModel()
         let changeTimestamp = self.changeTimestamp.convertToDate()
         let createdAt = self.createdAt.convertToDate()

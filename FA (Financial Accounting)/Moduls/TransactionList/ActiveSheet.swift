@@ -6,13 +6,13 @@
 //
 
 enum ActiveSheet: Identifiable {
-  case create
+    case create
     case edit(Transaction)
-  
-  var id: String {
-    switch self {
-    case .create:      return "sheet.create"
-    case .edit(let transaction): return "sheet.edit.\(transaction.id)"
+    
+    var id: String {
+        switch self {
+        case .create:      return "sheet.create"
+        case .edit(let transaction): return "sheet.edit.\(transaction.id)"
+        }
     }
-  }
 }

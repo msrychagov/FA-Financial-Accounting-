@@ -68,7 +68,7 @@ final class TransactionListModel:ObservableObject {
     func fetch(startDate: Date, endDate: Date) async throws {
         do {
             viewState = .loading
-            transactions = try await service.fetchTransactions(accountId: 113, from: startDate, to: endDate)
+            transactions = try await service.fetchTransactions(accountId: 820, from: startDate, to: endDate)
             filter()
             viewState = .success
         } catch {

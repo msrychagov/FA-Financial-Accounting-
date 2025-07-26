@@ -9,7 +9,7 @@ import XCTest
 @testable import FA__Financial_Accounting_
 
 final class BankAccountsServiceTests: XCTestCase {
-    let service = BankAccountsService()
+    let service = ServiceFactory.shared.createBankAccountsService()
     
     override func setUpWithError() throws {
         

@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Lottie
 
 @main
 struct FA__Financial_Accounting_App: App {
+    @State private var showSplash = true
+    
     init() {
         tabBar()
         navBar()
@@ -42,8 +45,20 @@ struct FA__Financial_Accounting_App: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                ContentView()
+                    .opacity(showSplash ? 0 : 1)
+
+                if showSplash {
+                    LottieView(name: "upload") {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            self.showSplash = false
+                        }
+                    }
+                }
+            }
+
         }
-    }
+      }
 }
 
