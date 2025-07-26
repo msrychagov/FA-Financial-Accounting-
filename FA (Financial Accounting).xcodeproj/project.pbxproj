@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F5063A872E346DF800F6220C /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F5063A862E346DF800F6220C /* PieChart */; };
-		F56861E42E32D398005D7F50 /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F56861E32E32D398005D7F50 /* PieChart */; };
-		F56861E62E32D40B005D7F50 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F5872DE42E32C78500CDC3D1 /* Lottie */; };
-		F5872DCA2E32234200CDC3D1 /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F5872DC92E32234200CDC3D1 /* PieChart */; };
+		F5434F432E3482D6009C9560 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F5434F422E3482D6009C9560 /* AppCore */; };
+		F5CD6CD42E34800B00EB4A1C /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F5CD6CD32E34800B00EB4A1C /* PieChart */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,10 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5063A872E346DF800F6220C /* PieChart in Frameworks */,
-				F56861E62E32D40B005D7F50 /* Lottie in Frameworks */,
-				F56861E42E32D398005D7F50 /* PieChart in Frameworks */,
-				F5872DCA2E32234200CDC3D1 /* PieChart in Frameworks */,
+				F5CD6CD42E34800B00EB4A1C /* PieChart in Frameworks */,
+				F5434F432E3482D6009C9560 /* AppCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,10 +119,8 @@
 			);
 			name = "FA (Financial Accounting)";
 			packageProductDependencies = (
-				F5872DC92E32234200CDC3D1 /* PieChart */,
-				F5872DE42E32C78500CDC3D1 /* Lottie */,
-				F56861E32E32D398005D7F50 /* PieChart */,
-				F5063A862E346DF800F6220C /* PieChart */,
+				F5CD6CD32E34800B00EB4A1C /* PieChart */,
+				F5434F422E3482D6009C9560 /* AppCore */,
 			);
 			productName = "FA (Financial Accounting)";
 			productReference = F5C84EE22E2AC0F30070F301 /* FA (Financial Accounting).app */;
@@ -211,8 +205,8 @@
 			mainGroup = F58A8D1B2DF8721A005986FC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F5872DE32E32C78500CDC3D1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				F5063A852E346DF800F6220C /* XCLocalSwiftPackageReference "../Packages/Utilities" */,
+				F5CD6CD22E34800B00EB4A1C /* XCLocalSwiftPackageReference "../Packages/Utilities" */,
+				F5434F412E3482D6009C9560 /* XCLocalSwiftPackageReference "AppCorePackage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F58A8D1B2DF8721A005986FC;
@@ -579,40 +573,24 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		F5063A852E346DF800F6220C /* XCLocalSwiftPackageReference "../Packages/Utilities" */ = {
+		F5434F412E3482D6009C9560 /* XCLocalSwiftPackageReference "AppCorePackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AppCorePackage;
+		};
+		F5CD6CD22E34800B00EB4A1C /* XCLocalSwiftPackageReference "../Packages/Utilities" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../Packages/Utilities;
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		F5872DE32E32C78500CDC3D1 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		F5063A862E346DF800F6220C /* PieChart */ = {
+		F5434F422E3482D6009C9560 /* AppCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppCore;
+		};
+		F5CD6CD32E34800B00EB4A1C /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PieChart;
-		};
-		F56861E32E32D398005D7F50 /* PieChart */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PieChart;
-		};
-		F5872DC92E32234200CDC3D1 /* PieChart */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PieChart;
-		};
-		F5872DE42E32C78500CDC3D1 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5872DE32E32C78500CDC3D1 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

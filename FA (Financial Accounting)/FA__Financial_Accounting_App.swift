@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Lottie
+import AppCore
 
 @main
 struct FA__Financial_Accounting_App: App {
