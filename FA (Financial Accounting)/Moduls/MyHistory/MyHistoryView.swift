@@ -10,7 +10,7 @@ import SwiftUI
 struct MyHistoryView: View {
     @State
     var showingAnalysis = false
-    @State
+    @StateObject
     var transactionsList: TransactionListModel
     @State
     var startDate: Date = Date.startBorder
@@ -39,7 +39,7 @@ struct MyHistoryView: View {
             }
             
         }
-        .task { @MainActor in
+        .task {
             try? await transactionsList.fetch(
                 startDate: startDate,
                 endDate: endDate
