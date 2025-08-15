@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F5434F432E3482D6009C9560 /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = F5434F422E3482D6009C9560 /* AppCore */; };
-		F5CD6CD42E34800B00EB4A1C /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F5CD6CD32E34800B00EB4A1C /* PieChart */; };
+		F53445012E4FCBDD00D14363 /* PieChart in Frameworks */ = {isa = PBXBuildFile; productRef = F53445002E4FCBDD00D14363 /* PieChart */; };
+		F53445042E4FCBED00D14363 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F53445032E4FCBED00D14363 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,9 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F5C84EE22E2AC0F30070F301 /* FA (Financial Accounting).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FA (Financial Accounting).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5C84EE32E2AC0F30070F301 /* FA (Financial Accounting)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5C84EE42E2AC0F30070F301 /* FA (Financial Accounting)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FA (Financial Accounting).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,8 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5CD6CD42E34800B00EB4A1C /* PieChart in Frameworks */,
-				F5434F432E3482D6009C9560 /* AppCore in Frameworks */,
+				F53445012E4FCBDD00D14363 /* PieChart in Frameworks */,
+				F53445042E4FCBED00D14363 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F56861E52E32D3B2005D7F50 /* Frameworks */ = {
+		F531702D2E4FC840009155F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -92,10 +92,10 @@
 				F58A8D3C2DF8721C005986FC /* FA (Financial Accounting)Tests */,
 				F58A8D462DF8721C005986FC /* FA (Financial Accounting)UITests */,
 				F58A8D262DF8721A005986FC /* FA (Financial Accounting) */,
-				F5C84EE22E2AC0F30070F301 /* FA (Financial Accounting).app */,
-				F5C84EE32E2AC0F30070F301 /* FA (Financial Accounting)Tests.xctest */,
-				F5C84EE42E2AC0F30070F301 /* FA (Financial Accounting)UITests.xctest */,
-				F56861E52E32D3B2005D7F50 /* Frameworks */,
+				F531702D2E4FC840009155F6 /* Frameworks */,
+				F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */,
+				F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */,
+				F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,11 +119,11 @@
 			);
 			name = "FA (Financial Accounting)";
 			packageProductDependencies = (
-				F5CD6CD32E34800B00EB4A1C /* PieChart */,
-				F5434F422E3482D6009C9560 /* AppCore */,
+				F53445002E4FCBDD00D14363 /* PieChart */,
+				F53445032E4FCBED00D14363 /* Lottie */,
 			);
 			productName = "FA (Financial Accounting)";
-			productReference = F5C84EE22E2AC0F30070F301 /* FA (Financial Accounting).app */;
+			productReference = F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */;
 			productType = "com.apple.product-type.application";
 		};
 		F58A8D382DF8721C005986FC /* FA (Financial Accounting)Tests */ = {
@@ -146,7 +146,7 @@
 			packageProductDependencies = (
 			);
 			productName = "FA (Financial Accounting)Tests";
-			productReference = F5C84EE32E2AC0F30070F301 /* FA (Financial Accounting)Tests.xctest */;
+			productReference = F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F58A8D422DF8721C005986FC /* FA (Financial Accounting)UITests */ = {
@@ -169,7 +169,7 @@
 			packageProductDependencies = (
 			);
 			productName = "FA (Financial Accounting)UITests";
-			productReference = F5C84EE42E2AC0F30070F301 /* FA (Financial Accounting)UITests.xctest */;
+			productReference = F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -205,8 +205,8 @@
 			mainGroup = F58A8D1B2DF8721A005986FC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F5CD6CD22E34800B00EB4A1C /* XCLocalSwiftPackageReference "../Packages/Utilities" */,
-				F5434F412E3482D6009C9560 /* XCLocalSwiftPackageReference "AppCorePackage" */,
+				F53443BD2E4FCA9A00D14363 /* XCLocalSwiftPackageReference "Utilities" */,
+				F53445022E4FCBED00D14363 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F58A8D1B2DF8721A005986FC;
@@ -573,24 +573,32 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		F5434F412E3482D6009C9560 /* XCLocalSwiftPackageReference "AppCorePackage" */ = {
+		F53443BD2E4FCA9A00D14363 /* XCLocalSwiftPackageReference "Utilities" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = AppCorePackage;
-		};
-		F5CD6CD22E34800B00EB4A1C /* XCLocalSwiftPackageReference "../Packages/Utilities" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Packages/Utilities;
+			relativePath = Utilities;
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCSwiftPackageProductDependency section */
-		F5434F422E3482D6009C9560 /* AppCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppCore;
+/* Begin XCRemoteSwiftPackageReference section */
+		F53445022E4FCBED00D14363 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.5.2;
+			};
 		};
-		F5CD6CD32E34800B00EB4A1C /* PieChart */ = {
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F53445002E4FCBDD00D14363 /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PieChart;
+		};
+		F53445032E4FCBED00D14363 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F53445022E4FCBED00D14363 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
