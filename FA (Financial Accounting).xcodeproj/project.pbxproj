@@ -29,9 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FA (Financial Accounting).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FA (Financial Accounting)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5AC999A2E4FD47F0092C9B4 /* FA (Financial Accounting).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "FA (Financial Accounting).app"; path = "/Users/mixail.rychagov/Downloads/FA/build/Debug-iphoneos/FA (Financial Accounting).app"; sourceTree = "<absolute>"; };
+		F5AC999B2E4FD47F0092C9B4 /* FA (Financial Accounting)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "FA (Financial Accounting)Tests.xctest"; path = "/Users/mixail.rychagov/Downloads/FA/build/Debug-iphoneos/FA (Financial Accounting).app/PlugIns/FA (Financial Accounting)Tests.xctest"; sourceTree = "<absolute>"; };
+		F5AC999C2E4FD47F0092C9B4 /* FA (Financial Accounting)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "FA (Financial Accounting)UITests.xctest"; path = "/Users/mixail.rychagov/Downloads/FA/build/Debug-iphoneos/FA (Financial Accounting)UITests-Runner.app/PlugIns/FA (Financial Accounting)UITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,23 +79,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F531702D2E4FC840009155F6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		F58A8D1B2DF8721A005986FC = {
 			isa = PBXGroup;
 			children = (
 				F58A8D3C2DF8721C005986FC /* FA (Financial Accounting)Tests */,
 				F58A8D462DF8721C005986FC /* FA (Financial Accounting)UITests */,
 				F58A8D262DF8721A005986FC /* FA (Financial Accounting) */,
-				F531702D2E4FC840009155F6 /* Frameworks */,
-				F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */,
-				F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */,
-				F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,7 +112,7 @@
 				F53445032E4FCBED00D14363 /* Lottie */,
 			);
 			productName = "FA (Financial Accounting)";
-			productReference = F534427C2E4FCA3800D14363 /* FA (Financial Accounting).app */;
+			productReference = F5AC999A2E4FD47F0092C9B4 /* FA (Financial Accounting).app */;
 			productType = "com.apple.product-type.application";
 		};
 		F58A8D382DF8721C005986FC /* FA (Financial Accounting)Tests */ = {
@@ -146,7 +135,7 @@
 			packageProductDependencies = (
 			);
 			productName = "FA (Financial Accounting)Tests";
-			productReference = F534427D2E4FCA3800D14363 /* FA (Financial Accounting)Tests.xctest */;
+			productReference = F5AC999B2E4FD47F0092C9B4 /* FA (Financial Accounting)Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F58A8D422DF8721C005986FC /* FA (Financial Accounting)UITests */ = {
@@ -169,7 +158,7 @@
 			packageProductDependencies = (
 			);
 			productName = "FA (Financial Accounting)UITests";
-			productReference = F534427E2E4FCA3800D14363 /* FA (Financial Accounting)UITests.xctest */;
+			productReference = F5AC999C2E4FD47F0092C9B4 /* FA (Financial Accounting)UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
